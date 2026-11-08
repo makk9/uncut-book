@@ -44,7 +44,8 @@ for budget in (20_000, 40_000, 80_000, 120_000, 200_000):
     for x in p["picks"]:
         by[x["buyer"]].append(x)
     check(all(len(v) <= 2 for v in by.values()), "no collector over 2 pieces")
-    check(all(sum(x["resale"] for x in v) <= COLLECTORS[c]["capacity"] * 1.1 + 1e-6 for c, v in by.items()), "no collector over capacity plus 10% tolerance")
+    check(all(sum(x["resale"] for x in v) <= COLLECTORS[c]["capacity"] * 1.25 + 1e-6 for c, v in by.items()), "no collector over capacity plus the 25% ceiling")
+    check(abs(sum(x["value"] for x in p["picks"]) - p["stretch_cost"] - p["value"]) <= 2, "reported value includes the stretch cost")
     check(len({x["lot"] for x in p["picks"]}) == len(p["picks"]), "each lot bought once")
     check(all(x["rank"] <= 8 for x in p["picks"]), "every buyer ranks their lot within the cutoff")
     check(all(next(r for r in d["demand"][x["lot"]] if r["collector"] == x["buyer"])["rank"] == x["rank"] for x in p["picks"]),
@@ -121,8 +122,8 @@ for label, res in (("Max value", 0), ("Balanced", 0.5), ("Buyer-proof", 0.9)):
     c = next(x for x in r["compare"] if x["key"] == "book")
     print(f"    {label:12} pieces {c['pieces']:2} value ${c['value']:>8,.0f} one-buyer loss ${c['worst_loss']:>7,.0f} solve {r['meta']['solve_ms']}ms")
 
-print("\n[8] capacity tolerance")
-for tol in (0.0, 0.05, 0.10, 0.25):
+print("\n[8] capacity ceiling and stretch cost")
+for tol in (0.0, 0.10, 0.25, 0.50):
     r = solve(budget=80_000, capacity_tolerance=tol)
     p = r["portfolio"]
     by = defaultdict(float)

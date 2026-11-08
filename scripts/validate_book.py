@@ -201,6 +201,35 @@ check([x["lot"] for x in r["picks"]] == ["B"], "with budget for one, it takes th
 p = opt.Problem([{"id": "A", "ask": 10, "resale": 20}], [{"id": "x", "capacity": 100}], np.array([[1.0]]), blocked={("A", "x")})
 check(not opt.solve(p, opt.Params(budget=100, capacity_tolerance=0.0))["picks"], "a passed collector is not placed")
 
+
+
+def soft(lots, cap, ranks, **kw):
+    p = opt.Problem([{"id": i, "ask": a, "resale": r} for i, a, r in lots], [{"id": "x", "capacity": cap}], np.array(ranks, float))
+    return opt.solve(p, opt.Params(budget=1000, **kw))
+
+
+r = soft([("A", 50, 110)], 100, [[1]], capacity_tolerance=0.5, stretch_cost=0.5)
+check(r["picks"] and r["stretch_cost"] == 5 and r["value"] == 55, "10 over capacity costs 5 at 50 cents a dollar, value 60 becomes 55")
+r = soft([("A", 50, 160)], 100, [[1]], capacity_tolerance=0.5, stretch_cost=0.5)
+check(not r["picks"], "a lot above the ceiling is still ruled out")
+r = soft([("A", 50, 110)], 100, [[1]], capacity_tolerance=0.5, stretch_cost=10)
+check(not r["picks"], "a high enough stretch cost makes a lot not worth buying")
+r = soft([("A", 30, 60), ("B", 30, 60)], 100, [[1], [1]], capacity_tolerance=0.5, stretch_cost=0.5)
+check(len(r["picks"]) == 2 and r["stretch_cost"] == 10, "two lots fine alone are charged together for the 20 over")
+r = soft([("A", 50, 110)], 100, [[1]], capacity_tolerance=0.0, stretch_cost=0.5)
+check(not r["picks"], "a zero ceiling behaves like the old hard limit")
+p_ = opt.Problem([{"id": "A", "ask": 50, "resale": 110}, {"id": "B", "ask": 50, "resale": 110}], [{"id": "x", "capacity": 100}, {"id": "y", "capacity": 200}], np.array([[1.0, 1.0], [1.0, 1.0]]))
+q_ = opt.Params(budget=50, capacity_tolerance=0.5, stretch_cost=0.5)
+r = opt.solve(p_, q_)
+check(r["picks"][0]["buyer"] == "y" and r["stretch_cost"] == 0, "given the choice it places with the collector who has room")
+check(opt.evaluate(p_, q_, [0])["value"] == r["value"], "evaluate and solve score the same placement the same")
+pf = opt.Problem([{"id": "A", "ask": 50, "resale": 60}, {"id": "B", "ask": 10, "resale": 40}], [{"id": "x", "capacity": 200}],
+                 np.array([[8.0], [1.0]]), forced={"A"})
+rf = opt.solve(pf, opt.Params(budget=100, slots=2, capacity_tolerance=0.5, stretch_cost=0.5))
+check(next(x for x in rf["picks"] if x["lot"] == "A")["buyer"] == "x", "a forced lot is placed when placing beats its holding charge")
+r_s = opt.solve(p_, opt.Params(budget=50, capacity_tolerance=0.5, stretch_cost=0.5, resilience=0.5))
+check(len(r_s["picks"]) == 1, "resilience mode still solves with the soft limit")
+
 print("\n[4] overlap on the real rankings, $80k")
 lots = [{"id": l["id"], "ask": l["ask"], "resale": l["resale"]} for l in LOTS]
 buyers = [{"id": c["id"], "capacity": c["capacity"]} for c in CS]
@@ -229,7 +258,7 @@ used = Counter(x["buyer"] for x in joint["picks"])
 check(all(v <= q.slots for v in used.values()), "slots respected")
 for c in CS:
     placed = sum(x["resale"] for x in joint["picks"] if x["buyer"] == c["id"])
-    if placed > c["capacity"] * 1.1 + 1e-6:
+    if placed > opt.limit(c, q) + 1e-6:
         check(False, f"{c['name']} over capacity")
 print("\nFAILURES:", failures)
 sys.exit(1 if failures else 0)

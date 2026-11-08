@@ -25,7 +25,8 @@ class Params:
     max_rank: int = 8             # a collector is only a candidate buyer down to this rank
     slots: int = 2                # lots earmarked per collector in one cycle
     resilience: float = 0.0       # 0 = maximize value, 1 = maximize worst single-buyer loss
-    capacity_tolerance: float = 0.10  # capacity is a rough estimate, so allow this much over it
+    capacity_tolerance: float = 0.25  # the furthest over capacity a collector can be placed
+    stretch_cost: float = 0.50    # value lost per dollar placed over a collector's capacity
 
 
 @dataclass
@@ -38,8 +39,14 @@ class Problem:
 
 
 def limit(c: dict, q: Params) -> float:
-    """The most this collector can be placed against, tolerance included."""
+    """The most this collector can be placed against. Capacity itself is a rough estimate,
+    so going over it costs value (`stretch_cost`) instead of ruling a lot out."""
     return c["capacity"] * (1 + q.capacity_tolerance)
+
+
+def can_exceed(amounts: list[float], capacity: float, slots: int) -> bool:
+    """Could this collector's largest `slots` lots go over capacity? If not, no overflow row is needed."""
+    return sum(sorted(amounts, reverse=True)[:slots]) > capacity
 
 
 def fit_from_rank(ranks: np.ndarray, decay: float) -> np.ndarray:
@@ -66,7 +73,7 @@ def _eligible(p: Problem, q: Params) -> list[tuple[int, int]]:
     return pairs
 
 
-def solve(p: Problem, q: Params) -> dict:
+def solve(p: Problem, q: Params, gap: float = 0.002, time_limit: float = 4.0) -> dict:
     """Pick lots and buyers. With resilience > 0, also protect the worst single buyer loss."""
     n, pairs = len(p.lots), _eligible(p, q)
     forced = {i for i, l in enumerate(p.lots) if l["id"] in p.forced}
@@ -76,10 +83,11 @@ def solve(p: Problem, q: Params) -> dict:
     ask = np.array([l["ask"] for l in p.lots], float)
     resale = np.array([l["resale"] for l in p.lots], float)
     m = len(p.collectors)
-    # variables: x[n], y[len(pairs)], then for resilience: y_s[m * len(pairs)], z
+    # variables: x[n], y[len(pairs)], over[m], then for resilience: y_s[m * len(pairs)], over_s[m * m], z
     np_ = len(pairs)
     use_scen = q.resilience > 0
-    nvars = n + np_ + (m * np_ + 1 if use_scen else 0)
+    over_at = n + np_
+    nvars = n + np_ + m + (m * np_ + m * m + 1 if use_scen else 0)
     rows, cols, vals, lo, hi = [], [], [], [], []
     r = 0
 
@@ -98,17 +106,28 @@ def solve(p: Problem, q: Params) -> dict:
         idx = [k for k, (_, b) in enumerate(pairs) if b == j]
         if idx:
             add([(n + k, resale[pairs[k][0]]) for k in idx], -np.inf, limit(c, q))
+            if can_exceed([resale[pairs[k][0]] for k in idx], c["capacity"], q.slots):
+                add([(n + k, resale[pairs[k][0]]) for k in idx] + [(over_at + j, -1.0)], -np.inf, c["capacity"])
+                for k in idx:  # one lot's own overflow is known exactly, which keeps the solve fast
+                    extra = resale[pairs[k][0]] - c["capacity"]
+                    if extra > 0:
+                        add([(n + k, extra), (over_at + j, -1.0)], -np.inf, 0)
             add([(n + k, 1.0) for k in idx], -np.inf, q.slots)
 
     c_obj = np.zeros(nvars)
     w_nom = 1 - q.resilience if use_scen else 1.0
     for k, (i, j) in enumerate(pairs):
-        c_obj[n + k] = -w_nom * v[i, j]
+        # an unplaced forced lot still costs its holding charge, so placing one saves that charge
+        saved = q.holding_penalty * ask[i] if i in forced else 0.0
+        c_obj[n + k] = -w_nom * (v[i, j] + saved)
+    for j in range(m):
+        c_obj[over_at + j] = w_nom * q.stretch_cost
 
     if use_scen:
         zi = nvars - 1
         c_obj[zi] = -q.resilience
-        base = n + np_
+        base = over_at + m
+        over_s_at = base + m * np_
         for s in range(m):  # re-placement after collector s walks; a lot may go unplaced
             at = lambda k: base + s * np_ + k
             for i in range(n):
@@ -120,9 +139,13 @@ def solve(p: Problem, q: Params) -> dict:
                 idx = [k for k, (_, b) in enumerate(pairs) if b == j]
                 if idx:
                     add([(at(k), resale[pairs[k][0]]) for k in idx], -np.inf, limit(c, q))
+                    if can_exceed([resale[pairs[k][0]] for k in idx], c["capacity"], q.slots):
+                        add([(at(k), resale[pairs[k][0]]) for k in idx] + [(over_s_at + s * m + j, -1.0)],
+                            -np.inf, c["capacity"])
                     add([(at(k), 1.0) for k in idx], -np.inf, q.slots)
             add([(zi, 1.0)] + [(at(k), -v[a, b]) for k, (a, b) in enumerate(pairs) if b != s]
-                + [(i, q.holding_penalty * ask[i]) for i in range(n)], -np.inf, 0)
+                + [(i, q.holding_penalty * ask[i]) for i in range(n)]
+                + [(over_s_at + s * m + j, q.stretch_cost) for j in range(m)], -np.inf, 0)
 
     integrality = np.zeros(nvars)
     integrality[: n + np_] = 1
@@ -130,11 +153,13 @@ def solve(p: Problem, q: Params) -> dict:
     lb = np.zeros(nvars)
     for i in forced:
         lb[i] = 1
+    ub[over_at:over_at + m] = np.inf
     if use_scen:
+        ub[over_s_at:over_s_at + m * m] = np.inf
         lb[-1], ub[-1] = -np.inf, np.inf
     A = csr_matrix((vals, (rows, cols)), shape=(r, nvars))
     res = milp(c_obj, constraints=LinearConstraint(A, lo, hi), integrality=integrality,
-               bounds=Bounds(lb, ub), options={"time_limit": 4.0, "mip_rel_gap": 0.002})
+               bounds=Bounds(lb, ub), options={"time_limit": time_limit, "mip_rel_gap": gap})
     if res.x is None:
         return _result(p, q, {})
     assign = {i: j for k, (i, j) in enumerate(pairs) if res.x[n + k] > 0.5}
@@ -149,6 +174,7 @@ def place(p: Problem, q: Params, chosen: list[int], drop: int | None = None) -> 
     v = value_matrix(p, q)
     resale = [l["resale"] for l in p.lots]
     n = len(pairs)
+    m = len(p.collectors)
     rows, cols, vals, hi = [], [], [], []
     r = 0
     for i in chosen:
@@ -160,12 +186,21 @@ def place(p: Problem, q: Params, chosen: list[int], drop: int | None = None) -> 
         if idx:
             rows += [r] * len(idx); cols += idx; vals += [resale[pairs[k][0]] for k in idx]
             hi.append(limit(c, q)); r += 1
+            if can_exceed([resale[pairs[k][0]] for k in idx], c["capacity"], q.slots):
+                rows += [r] * (len(idx) + 1); cols += idx + [n + j]
+                vals += [resale[pairs[k][0]] for k in idx] + [-1.0]; hi.append(c["capacity"]); r += 1
+                for k in idx:
+                    extra = resale[pairs[k][0]] - c["capacity"]
+                    if extra > 0:
+                        rows += [r, r]; cols += [k, n + j]; vals += [extra, -1.0]; hi.append(0.0); r += 1
             rows += [r] * len(idx); cols += idx; vals += [1.0] * len(idx); hi.append(q.slots); r += 1
     # value here is relative to leaving a lot unplaced, so a bad buyer is never forced
     ask = [l["ask"] for l in p.lots]
-    obj = [-(v[i, j] + q.holding_penalty * ask[i]) for i, j in pairs]
-    res = milp(obj, constraints=LinearConstraint(csr_matrix((vals, (rows, cols)), shape=(r, n)), -np.inf, hi),
-               integrality=np.ones(n), bounds=Bounds(0, 1), options={"time_limit": 2.0})
+    obj = [-(v[i, j] + q.holding_penalty * ask[i]) for i, j in pairs] + [q.stretch_cost] * m
+    integrality = np.array([1.0] * n + [0.0] * m)
+    upper = np.array([1.0] * n + [np.inf] * m)
+    res = milp(obj, constraints=LinearConstraint(csr_matrix((vals, (rows, cols)), shape=(r, n + m)), -np.inf, hi),
+               integrality=integrality, bounds=Bounds(0, upper), options={"time_limit": 0.5, "mip_rel_gap": 0.005})
     if res.x is None:
         return {}
     return {pairs[k][0]: pairs[k][1] for k in range(n) if res.x[k] > 0.5}
@@ -188,13 +223,18 @@ def _result(p: Problem, q: Params, assign: dict[int, int], chosen: list[int] | N
             "value": round(float(v[i, j]), 0) if j is not None else round(-q.holding_penalty * lot["ask"], 0),
         })
     spent = sum(x["ask"] for x in picks)
+    placed = [0.0] * len(p.collectors)
+    for i, j in assign.items():
+        placed[j] += p.lots[i]["resale"]
+    stretch = q.stretch_cost * sum(max(0.0, total - c["capacity"]) for total, c in zip(placed, p.collectors))
     return {
         "picks": picks,
         "spent": spent,
         "budget": q.budget,
         "unspent": q.budget - spent,
         "gross_margin": sum(x["resale"] - x["ask"] for x in picks),
-        "value": round(sum(x["value"] for x in picks), 0),
+        "value": round(sum(x["value"] for x in picks) - stretch, 0),
+        "stretch_cost": round(stretch, 0),
         "unplaced_capital": sum(x["ask"] for x in picks if x["buyer"] is None),
     }
 
@@ -227,7 +267,9 @@ def frontier(p: Problem, q: Params, budgets: list[float]) -> list[dict]:
     """Value bought by each budget: where does the next dollar stop earning?"""
     out = []
     for b in budgets:
-        r = solve(p, Params(**{**q.__dict__, "budget": b, "resilience": 0.0}))
+        # a trend line for the chart: within-capacity placement solves in milliseconds, so a
+        # signal or setting change isn't held up by 20 harder solves
+        r = solve(p, Params(**{**q.__dict__, "budget": b, "resilience": 0.0, "capacity_tolerance": 0.0}))
         out.append({"budget": b, "value": r["value"], "spent": r["spent"], "pieces": len(r["picks"])})
     return out
 

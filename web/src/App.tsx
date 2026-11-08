@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState, type CSSProperties } from "react";
 
 type Credit = { title: string; author: string; license: string; license_url: string; source: string; landing_url: string };
 type Piece = {
@@ -9,12 +9,13 @@ type TimelineEvent = { type: string; q?: string; id?: string; name?: string; ima
 type Collector = {
   id: string; name: string; city: string; blurb: string; capacity: number; capacity_note: string;
   lifetime_spend: number; orders: number; timeline: TimelineEvent[]; event_count: number;
+  purchases: { count: number; low: number | null; typical: number | null; high: number | null };
 };
 type Book = { lots: Piece[]; holdings: Piece[]; collectors: Collector[]; live: boolean };
 type Pick_ = { lot: string; ask: number; resale: number; buyer: string | null; rank: number | null; fit: number; value: number };
-type Demand = { collector: string; rank: number; rank_full: number; rank_orders: number; rank_tags: number; fit: number; affordable: boolean; over_by: number; stretch: number; passed: boolean };
+type Demand = { collector: string; rank: number; rank_full: number; rank_orders: number; rank_tags: number; fit: number; affordable: boolean; over_by: number; stretch: number; vs_largest: number | null; passed: boolean };
 type Result = {
-  portfolio: { picks: Pick_[]; spent: number; budget: number; unspent: number; gross_margin: number; value: number; unplaced_capital: number };
+  portfolio: { picks: Pick_[]; spent: number; budget: number; unspent: number; gross_margin: number; value: number; stretch_cost: number; unplaced_capital: number };
   stress: { collector: string; value: number; value_lost: number; unplaced_capital: number; unplaced: string[] }[];
   compare: { key: string; name: string; note: string; lots: string[]; spent: number; gross_margin: number; value: number; unplaced_capital: number; pieces: number; worst_loss: number }[];
   frontier: { budget: number; value: number; spent: number; pieces: number }[];
@@ -24,7 +25,7 @@ type Result = {
   meta: { source: string; rank_ms: number; solve_ms: number; calls: number };
 };
 type Signal = { type: "search" | "view"; q?: string; id?: string };
-type Settings = { fit_decay: number; holding_penalty: number; max_rank: number; slots: number; recency: number; capacity_tolerance: number; relative: number };
+type Settings = { fit_decay: number; holding_penalty: number; max_rank: number; slots: number; recency: number; capacity_tolerance: number; stretch_cost: number; relative: number };
 type WhatIf = { feasible: boolean; reason?: string; already_in?: boolean; value_delta?: number; margin_delta?: number; displaced?: string[]; added?: string[]; buyer?: string | null; rank?: number | null };
 
 const usd = (n: number) => `$${Math.round(n).toLocaleString("en-US")}`;
@@ -35,7 +36,9 @@ const MODES = [
   { key: "balanced", label: "Balanced", res: 0.5 },
   { key: "hardened", label: "Buyer-proof", res: 0.9 },
 ];
-const DEFAULTS: Settings = { fit_decay: 4, holding_penalty: 0.15, max_rank: 8, slots: 2, recency: 0.6, capacity_tolerance: 0.1, relative: 1 };
+const DEFAULTS: Settings = { fit_decay: 4, holding_penalty: 0.15, max_rank: 8, slots: 2, recency: 0.6, capacity_tolerance: 0.25, stretch_cost: 0.5, relative: 1 };
+const fill = (v: number, min: number, max: number) => ({ "--p": `${((v - min) / (max - min)) * 100}%` }) as CSSProperties;
+type Toast = { head: string; ms: number; added: string[]; removed: string[] };
 
 export default function App() {
   const [book, setBook] = useState<Book | null>(null);
@@ -52,7 +55,7 @@ export default function App() {
   const [lotOpen, setLotOpen] = useState<string | null>(null);
   const [collectorOpen, setCollectorOpen] = useState<string | null>(null);
   const [credits, setCredits] = useState(false);
-  const [toast, setToast] = useState<string | null>(null);
+  const [toast, setToast] = useState<Toast | null>(null);
   const [flash, setFlash] = useState<Set<string>>(new Set());
   const prevPicks = useRef<Set<string> | null>(null);
   const pendingToast = useRef<string | null>(null);
@@ -100,10 +103,7 @@ export default function App() {
     const removed = [...prev].filter((x) => !now.has(x));
     setFlash(new Set(added));
     if (pendingToast.current) {
-      const change = added.length || removed.length
-        ? [...added.map((x) => `+ ${lotBy[x]?.name}`), ...removed.map((x) => `− ${lotBy[x]?.name}`)].join("   ")
-        : "Portfolio holds.";
-      setToast(`${pendingToast.current} Re-ranked in ${res.meta.rank_ms} ms. ${change}`);
+      setToast({ head: pendingToast.current, ms: res.meta.rank_ms, added: added.map((x) => lotBy[x]?.name), removed: removed.map((x) => lotBy[x]?.name) });
       pendingToast.current = null;
       setTimeout(() => setToast(null), 8000);
     }
@@ -120,6 +120,15 @@ export default function App() {
     setPasses((cur) => (cur.some(([l, c]) => l === lot && c === cid) ? cur.filter(([l, c]) => !(l === lot && c === cid)) : [...cur, [lot, cid]]));
   }, []);
 
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key !== "Escape") return;
+      setLotOpen(null); setCollectorOpen(null); setCredits(false);
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, []);
+
   if (!book) return <div className="pad muted">{err ?? "Opening the book…"}</div>;
 
   const p = res?.portfolio;
@@ -128,67 +137,88 @@ export default function App() {
   const signalCount = Object.values(signals).reduce((a, b) => a + b.length, 0);
   const placedTo = (cid: string) => (p?.picks ?? []).filter((x) => x.buyer === cid);
   const stretchOf = (lot: string, cid: string) => res?.demand[lot]?.find((r) => r.collector === cid)?.stretch ?? 0;
+  const timesLargest = (lot: string, cid: string) => res?.demand[lot]?.find((r) => r.collector === cid)?.vs_largest ?? 0;
 
   return (
     <div className="app">
       <div className="bar">
-        <span className="logo">THE BOOK</span>
+        <span className="brand">
+          <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M7 2.5h10L21.5 7v10L17 21.5H7L2.5 17V7z" fill="var(--emerald-deep)" stroke="var(--emerald)" strokeWidth="1.3" />
+            <path d="M9 7h6l2 2v6l-2 2H9l-2-2V9z" fill="none" stroke="var(--emerald)" strokeWidth="1.1" />
+          </svg>
+          <span className="logo">The Book</span>
+        </span>
         <span className="tag">Know your buyers. Own the right stones.</span>
         <span className="spacer" />
-        <span className="pill">
+        <span className="status">
           <span className={`dot ${res?.meta.source === "snapshot" ? "off" : ""} ${busy ? "busy" : ""}`} />
-          {res ? `BehaviorGPT ${res.meta.source} · ${res.meta.calls} rankings · ${res.meta.rank_ms} ms · solve ${res.meta.solve_ms} ms` : "Reading the book…"}
+          {res ? `BehaviorGPT ${res.meta.source}: ${res.meta.calls} rankings in ${res.meta.rank_ms} ms, solved in ${res.meta.solve_ms} ms` : "Reading the book…"}
         </span>
-        <span className="pill demo">REPRESENTATIVE DATA, NOT MARKET PRICES</span>
+        <span className="invented">Invented data, not market prices</span>
       </div>
 
-      <div className="strip">
-        <div className="cell">
-          <div className="up muted">Acquisition budget</div>
-          <div className="big budget">{usd(budget)}</div>
-          <input className="slider" aria-label="Acquisition budget" type="range" min={10000} max={200000} step={1000} value={budget}
+      <div className="band">
+        <div className="band-budget">
+          <label className="lbl" htmlFor="budget">Acquisition budget</label>
+          <div className="budget">{usd(budget)}</div>
+          <input id="budget" className="range" type="range" min={10000} max={200000} step={1000} value={budget} style={fill(budget, 10000, 200000)}
             onChange={(e) => setBudget(+e.target.value)} />
         </div>
-        <Stat label="Deployed" value={p ? usd(p.spent) : "…"} sub={p ? `${usd(p.unspent)} kept dry` : ""} />
-        <Stat label="Pieces" value={p ? String(p.picks.length) : "…"} sub={`of ${book.lots.length} lots offered`} />
-        <Stat label="Paper margin" value={p ? usd(p.gross_margin) : "…"} sub="Your resale estimates minus ask" />
-        <Stat label="Fit-weighted value" value={p ? usd(p.value) : "…"} sub="Margin × rank fit, less holding" tone="em" />
-        <Stat label="If one buyer walks" value={book_ ? `−${usd(book_.worst_loss)}` : "…"} sub={res?.stress[0] ? `Worst case: ${colBy[res.stress[0].collector]?.name}` : ""} tone="am" />
+        <div className="band-alloc">
+          <div className="alloc-line" aria-live="polite">
+            {!p ? "Reading the book…"
+              : focus ? (() => {
+                const mine = placedTo(focus);
+                return mine.length
+                  ? <><b>{colBy[focus]?.name}</b> carries {mine.length} {mine.length > 1 ? "pieces" : "piece"}, <b>{usd(mine.reduce((a, x) => a + x.ask, 0))}</b> of the buys.</>
+                  : <>Nothing in the buys is placed with <b>{colBy[focus]?.name}</b>.</>;
+              })()
+              : p.picks.length === 0 ? "Nothing clears the bar at this budget."
+              : <><b>{usd(p.spent)}</b> deployed on <b>{p.picks.length}</b> of {book.lots.length} lots, {usd(p.unspent)} kept dry.</>}
+          </div>
+          <Allocation picks={p?.picks ?? []} budget={budget} spent={p?.spent ?? 0} lotBy={lotBy} colBy={colBy} focus={focus} flash={flash}
+            open={(id) => { setCollectorOpen(null); setCredits(false); setLotOpen(id); }} />
+        </div>
+        <div className="band-ledger">
+          <Line label="Paper margin" sub="Your resale estimates minus ask" value={p ? usd(p.gross_margin) : "…"} />
+          <Line label="Fit-weighted value" sub="Margin × rank fit, less holding" value={p ? usd(p.value) : "…"} />
+          <Line label="If one buyer walks" sub={res?.stress[0] ? `Worst case: ${colBy[res.stress[0].collector]?.name}` : ""} value={book_ ? `−${usd(book_.worst_loss)}` : "…"} tone="am" />
+        </div>
       </div>
 
       {err && <div className="pad red">{err}</div>}
 
       <div className="main">
         <div className="col">
-          <div className="head"><span className="up">Collector book</span><span className="muted num">{book.collectors.length}</span></div>
+          <div className="head"><h2>Collector book</h2><span className="aside">{book.collectors.length} collectors</span></div>
           <div className="scroll collectors-scroll">
             {book.collectors.map((c) => {
               const placed = placedTo(c.id);
               const live = signals[c.id]?.length ?? 0;
               return (
                 <button key={c.id} className={`collector ${focus === c.id ? "on" : ""}`}
-                  onMouseEnter={() => setFocus(c.id)} onMouseLeave={() => setFocus(null)} onFocus={() => setFocus(c.id)}
+                  onMouseEnter={() => setFocus(c.id)} onMouseLeave={() => setFocus(null)} onFocus={() => setFocus(c.id)} onBlur={() => setFocus(null)}
                   onClick={() => setCollectorOpen(c.id)}>
-                  <div className="c-top"><span>{c.name}</span><span className="num ink2">{usdK(c.capacity)}</span></div>
-                  <div className="c-meta">
-                    <span>{c.city}</span>
-                    <span>
-                      {live > 0 && <span className="chip a">{live} signal{live > 1 ? "s" : ""}</span>}{" "}
-                      {placed.length > 0 && <span className="chip g">{placed.length} placed</span>}
-                    </span>
+                  <div className="c-name">{c.name}</div>
+                  <div className="c-cap">{usdK(c.capacity)}</div>
+                  <div className="c-city">{live > 0 ? <span className="am">{live} {live > 1 ? "signals" : "signal"} today</span> : c.city}</div>
+                  <div className="c-placed" aria-label={placed.length ? `${placed.length} placed` : undefined}>
+                    {placed.map((x) => <img key={x.lot} src={lotBy[x.lot]?.image} alt="" title={lotBy[x.lot]?.name} />)}
                   </div>
                 </button>
               );
             })}
           </div>
-          <div className="pad note">Hover a collector to see the batch through their ranking. Click to log a signal.</div>
+          <div className="pad note">Hover a collector to light the lots by their ranking. Click to log a signal.</div>
         </div>
 
-        <div className="col">
+        <div className="col col-radar">
           <div className="head">
-            <span className="up">Deal Radar · {book.lots.length} incoming lots</span>
-            <span className="muted" style={{ fontSize: 11 }}>
-              {focus ? `Numbers show ${colBy[focus]?.name}'s ranking` : "Green outline: in the portfolio"}
+            <h2>Deal Radar</h2>
+            <span className="aside">{book.lots.length} incoming lots</span>
+            <span className="aside push">
+              {focus ? `Lit by ${colBy[focus]?.name}'s ranking, brightest first` : "Lit lots are in the proposed buys"}
             </span>
           </div>
           <div className="scroll">
@@ -196,18 +226,18 @@ export default function App() {
               {book.lots.map((l) => {
                 const pick = picks[l.id];
                 const d = focus ? res?.demand[l.id]?.find((x) => x.collector === focus) : null;
+                const lit = d ? ({ "--b": 0.14 + 0.86 * d.fit, "--s": 0.35 + 0.65 * d.fit }) as CSSProperties : undefined;
                 return (
-                  <button key={l.id} className={`lot ${pick ? "in" : ""} ${flash.has(l.id) ? "flash" : ""}`} onClick={() => setLotOpen(l.id)}>
+                  <button key={l.id} className={`lot ${pick ? "in" : ""} ${flash.has(l.id) ? "flash" : ""}`} style={lit} title={l.name} onClick={() => setLotOpen(l.id)}>
                     <div className="thumb">
-                      <img src={l.image} alt={l.name} loading="lazy" />
-                      <span className="badge chip n">{String(l.lot_no).padStart(2, "0")}</span>
-                      {d ? <span className={`badge-r chip ${d.rank <= 3 ? "g" : d.rank <= settings.max_rank ? "a" : "n"}`}>#{d.rank}</span>
-                        : l.ask === trophyAsk ? <span className="badge-r chip a">TROPHY</span> : null}
+                      <img src={l.image} alt="" loading="lazy" />
+                      {d ? <span className={`plate rank ${d.rank <= 3 ? "top" : d.rank <= settings.max_rank ? "near" : ""}`}>#{d.rank}</span>
+                        : l.ask === trophyAsk ? <span className="plate trophy">Trophy</span> : null}
                     </div>
-                    <div className="body">
-                      <div className="name">{l.name}</div>
-                      <div className="px"><span>{usd(l.ask)}</span><span className="muted">→ {usd(l.resale)}</span></div>
-                      <div className="to">{pick ? (pick.buyer ? <>for <b>{colBy[pick.buyer]?.name}</b> · #{pick.rank}</> : <span className="am">no buyer placed</span>) : "pass"}</div>
+                    <div className="ticket">
+                      <div className="t-name"><span className="t-no">{l.lot_no}</span>{l.name}</div>
+                      <div className="t-px"><span>{usd(l.ask)}</span><span className="est">est. {usd(l.resale)}</span></div>
+                      <div className="t-to">{pick ? (pick.buyer ? <>For <b>{colBy[pick.buyer]?.name}</b>, #{pick.rank}</> : <span className="am">No buyer placed</span>) : "Pass"}</div>
                     </div>
                   </button>
                 );
@@ -216,17 +246,17 @@ export default function App() {
             {res && (
               <div className="lower">
                 <div>
-                  <div className="head"><span className="up">What the next dollar buys</span></div>
+                  <div className="head flat"><h3>What the next dollar buys</h3></div>
                   <Frontier data={res.frontier} budget={budget} />
                 </div>
                 <div>
-                  <div className="head"><span className="up">Same budget, other ways to choose</span></div>
+                  <div className="head flat"><h3>Same budget, other ways to choose</h3></div>
                   <table>
                     <thead><tr><th>Strategy</th><th>Pieces</th><th>Paper margin</th><th>Fit value</th><th>Unplaced</th><th>One buyer walks</th></tr></thead>
                     <tbody>
                       {res.compare.map((c) => (
                         <tr key={c.key} className={c.key === "book" ? "hl" : ""} title={c.note}>
-                          <td className="text">{c.name}<div className="muted" style={{ fontSize: 10.5 }}>{c.note}</div></td>
+                          <td className="text">{c.name}<div className="sub">{c.note}</div></td>
                           <td>{c.pieces}</td><td>{usdK(c.gross_margin)}</td><td>{usdK(c.value)}</td>
                           <td>{c.unplaced_capital ? usdK(c.unplaced_capital) : "–"}</td><td>{c.worst_loss ? `−${usdK(c.worst_loss)}` : "–"}</td>
                         </tr>
@@ -238,8 +268,8 @@ export default function App() {
               </div>
             )}
             {res && (
-              <div>
-                <div className="head"><span className="up">Your current inventory, read against the same collectors</span></div>
+              <div className="section-top table-scroll">
+                <div className="head flat"><h3>Your current inventory, read against the same collectors</h3></div>
                 <table>
                   <thead><tr><th>Piece</th><th>Cost basis</th><th>Collectors in range</th><th>Closest collector</th><th>Status</th></tr></thead>
                   <tbody>
@@ -248,8 +278,8 @@ export default function App() {
                         <td className="text">{lotBy[h.id]?.name}</td>
                         <td>{usd(lotBy[h.id]?.ask ?? 0)}</td>
                         <td>{h.reach}</td>
-                        <td className="text" style={{ textAlign: "right" }}>{colBy[h.best[0]?.collector]?.name} · #{h.best[0]?.rank}</td>
-                        <td><span className={`chip ${h.status === "live" ? "g" : h.status === "thin" ? "a" : "r"}`}>{h.status === "stale" ? "Stale: move it" : h.status === "thin" ? "Thin: one collector" : "In demand"}</span></td>
+                        <td className="text" style={{ textAlign: "right" }}>{colBy[h.best[0]?.collector]?.name}, #{h.best[0]?.rank}</td>
+                        <td className={h.status === "live" ? "em" : h.status === "thin" ? "am" : "red"}>{h.status === "stale" ? "Stale: move it" : h.status === "thin" ? "Thin: one collector" : "In demand"}</td>
                       </tr>
                     ))}
                   </tbody>
@@ -259,43 +289,45 @@ export default function App() {
           </div>
         </div>
 
-        <div className="col">
+        <div className="col col-desk">
           <div className="head">
-            <span className="up">Capital Desk · proposed buys</span>
-            <button className="link" onClick={() => setShowSettings((s) => !s)}>{showSettings ? "Hide assumptions" : "Assumptions"}</button>
+            <h2>Capital Desk</h2>
+            <span className="aside">Proposed buys</span>
+            <button className="link push" onClick={() => setShowSettings((s) => !s)}>{showSettings ? "Hide assumptions" : "Assumptions"}</button>
           </div>
-          <div className="pad row" style={{ justifyContent: "space-between", borderBottom: "1px solid var(--line)" }}>
-            <div className="seg" role="group" aria-label="Objective">
+          <div className="desk-tools">
+            <div className="segctl" role="group" aria-label="Objective">
               {MODES.map((m) => <button key={m.key} className={mode === m.key ? "on" : ""} aria-pressed={mode === m.key} onClick={() => setMode(m.key)}>{m.label}</button>)}
             </div>
-            {signalCount + passes.length > 0 && <button className="link" onClick={() => { setSignals({}); setPasses([]); }}>Reset {signalCount + passes.length} edit{signalCount + passes.length > 1 ? "s" : ""}</button>}
+            {signalCount + passes.length > 0 && <button className="link" onClick={() => { setSignals({}); setPasses([]); }}>Reset {signalCount + passes.length} {signalCount + passes.length > 1 ? "edits" : "edit"}</button>}
           </div>
           {showSettings && <Assumptions s={settings} set={setSettings} />}
           <div className="scroll">
-            {p && (
-              <div className="capbar" title={`${usd(p.spent)} of ${usd(budget)}`}>
-                {p.picks.map((x) => <i key={x.lot} style={{ flexBasis: `${(x.ask / budget) * 100}%` }} />)}
-              </div>
-            )}
             {p?.picks.length === 0 && <div className="pad muted">Nothing clears the bar at this budget. Raise it or relax the assumptions.</div>}
             {p?.picks.map((x) => (
               <button key={x.lot} className="pick" onClick={() => setLotOpen(x.lot)}>
                 <img src={lotBy[x.lot]?.image} alt="" />
                 <div style={{ minWidth: 0 }}>
-                  <div className="n">{lotBy[x.lot]?.name}</div>
-                  <div className="b">{x.buyer ? <>Call <span className="em">{colBy[x.buyer]?.name}</span> · ranks it #{x.rank} of {book.lots.length}{stretchOf(x.lot, x.buyer) > 0 && <span className="am"> · {usd(stretchOf(x.lot, x.buyer))} over capacity</span>}</> : <span className="am">No buyer placed</span>}</div>
+                  <div className="n" title={lotBy[x.lot]?.name}>{lotBy[x.lot]?.name}</div>
+                  <div className="b">{x.buyer ? <>Call <span className="who">{colBy[x.buyer]?.name}</span>, ranks it #{x.rank} of {book.lots.length}{stretchOf(x.lot, x.buyer) > 0 && <span className="am">, {usd(stretchOf(x.lot, x.buyer))} over capacity</span>}{timesLargest(x.lot, x.buyer) > 1 && <span>, {timesLargest(x.lot, x.buyer).toFixed(1)}× their largest purchase</span>}</> : <span className="am">No buyer placed</span>}</div>
                 </div>
-                <div className="r">{usd(x.ask)}<div className="muted">→ {usd(x.resale)}</div></div>
+                <div className="r">{usd(x.ask)}<div>est. {usd(x.resale)}</div></div>
               </button>
             ))}
+            {p && p.picks.length > 0 && (
+              <div className="total">
+                <span>Total, {p.picks.length} {p.picks.length > 1 ? "pieces" : "piece"}</span>
+                <span className="r">{usd(p.spent)}<div>est. {usd(p.spent + p.gross_margin)}</div></span>
+              </div>
+            )}
             {res && res.stress.length > 0 && (
               <>
-                <div className="head" style={{ marginTop: 10 }}><span className="up">If this buyer walks</span><span className="muted" style={{ fontSize: 11 }}>portfolio is re-placed</span></div>
+                <div className="head flat"><h3>If this buyer walks</h3><span className="aside push">The buys are re-placed</span></div>
                 <table>
                   <thead><tr><th>Buyer lost</th><th>Value lost</th><th>Left unplaced</th></tr></thead>
                   <tbody>
                     {res.stress.slice(0, 6).map((s) => (
-                      <tr key={s.collector}><td className="text">{colBy[s.collector]?.name}</td><td>{s.value_lost >= 1 ? `−${usd(s.value_lost)}` : "$0"}</td><td>{s.unplaced_capital ? <span className="am">{usd(s.unplaced_capital)}</span> : "none"}</td></tr>
+                      <tr key={s.collector} onMouseEnter={() => setFocus(s.collector)} onMouseLeave={() => setFocus(null)}><td className="text">{colBy[s.collector]?.name}</td><td>{s.value_lost >= 1 ? `−${usd(s.value_lost)}` : "$0"}</td><td>{s.unplaced_capital ? <span className="am">{usd(s.unplaced_capital)}</span> : "none"}</td></tr>
                     ))}
                   </tbody>
                 </table>
@@ -323,25 +355,55 @@ export default function App() {
           addSearch={(q) => addSignal(collectorOpen, { type: "search", q }, `asked about “${q}”`)} />
       )}
       {credits && <Credits lots={Object.values(lotBy)} onClose={() => setCredits(false)} />}
-      {toast && <div className="toast" role="status">{toast}</div>}
+      {toast && (
+        <div className="toast" role="status">
+          <div>{toast.head} Re-ranked in {toast.ms} ms.</div>
+          {toast.added.map((n) => <div className="tl" key={n}><span className="in">In</span><span>{n}</span></div>)}
+          {toast.removed.map((n) => <div className="tl" key={n}><span className="out">Out</span><span className="ink2">{n}</span></div>)}
+          {toast.added.length + toast.removed.length === 0 && <div className="note">The proposed buys hold.</div>}
+        </div>
+      )}
     </div>
   );
 }
 
-function Stat({ label, value, sub, tone }: { label: string; value: string; sub?: string; tone?: string }) {
+function Line({ label, sub, value, tone }: { label: string; sub?: string; value: string; tone?: string }) {
   return (
-    <div className="cell">
-      <div className="up muted">{label}</div>
-      <div className={`big ${tone ?? ""}`}>{value}</div>
-      <div className="sub">{sub}</div>
+    <div className="line">
+      <div className="line-l"><div>{label}</div><div>{sub}</div></div>
+      <div className={`line-v ${tone ?? ""}`}>{value}</div>
+    </div>
+  );
+}
+
+function Allocation({ picks, budget, spent, lotBy, colBy, focus, flash, open }: {
+  picks: Pick_[]; budget: number; spent: number; lotBy: Record<string, Piece>; colBy: Record<string, Collector>; focus: string | null; flash: Set<string>; open: (id: string) => void;
+}) {
+  const ordered = [...picks].sort((a, b) => (lotBy[a.lot]?.lot_no ?? 0) - (lotBy[b.lot]?.lot_no ?? 0));
+  const dry = budget - spent;
+  return (
+    <div className="alloc" role="group" aria-label={`${usd(spent)} of ${usd(budget)} allocated across ${picks.length} lots`}>
+      {ordered.map((x) => {
+        const pct = (x.ask / budget) * 100;
+        const name = lotBy[x.lot]?.name;
+        const said = `${name}, ${usd(x.ask)}, ${x.buyer ? `for ${colBy[x.buyer]?.name}` : "no buyer placed"}`;
+        const cls = ["seg", focus && x.buyer !== focus ? "dim" : "", x.buyer ? "" : "unplaced", flash.has(x.lot) ? "flash" : ""].join(" ");
+        return (
+          <button key={x.lot} className={cls} style={{ flexBasis: `${pct}%` }} title={said} aria-label={said} onClick={() => open(x.lot)}>
+            <img src={lotBy[x.lot]?.image} alt="" />
+            <span className="seg-px">{usdK(x.ask)}</span>
+          </button>
+        );
+      })}
+      <div className="alloc-dry" title={`${usd(dry)} kept dry`}>{dry / budget >= 0.09 && `${usdK(dry)} dry`}</div>
     </div>
   );
 }
 
 function Assumptions({ s, set }: { s: Settings; set: (x: Settings) => void }) {
   const Row = (k: keyof Settings, label: string, min: number, max: number, step: number, fmt: (n: number) => string) => (
-    <label key={k}>{label}: <span className="num">{fmt(s[k])}</span>
-      <input type="range" min={min} max={max} step={step} value={s[k]} onChange={(e) => set({ ...s, [k]: +e.target.value })} />
+    <label key={k}>{label}: <span className="ink2">{fmt(s[k])}</span>
+      <input className="range" type="range" min={min} max={max} step={step} value={s[k]} style={fill(s[k], min, max)} onChange={(e) => set({ ...s, [k]: +e.target.value })} />
     </label>
   );
   return (
@@ -351,7 +413,8 @@ function Assumptions({ s, set }: { s: Settings; set: (x: Settings) => void }) {
       {Row("fit_decay", "Fit falls off by rank", 1, 12, 0.5, (n) => `${n}`)}
       {Row("max_rank", "Candidate buyer down to rank", 1, 24, 1, (n) => `#${n}`)}
       {Row("slots", "Pieces per collector", 1, 5, 1, (n) => `${n}`)}
-      {Row("capacity_tolerance", "Allow over computed capacity", 0, 0.25, 0.01, (n) => `${Math.round(n * 100)}%`)}
+      {Row("stretch_cost", "Value lost per $1 over capacity", 0, 2, 0.1, (n) => `$${n.toFixed(2)}`)}
+      {Row("capacity_tolerance", "Furthest over capacity", 0, 1, 0.05, (n) => `${Math.round(n * 100)}%`)}
       {Row("holding_penalty", "Holding penalty on ask", 0, 0.5, 0.01, (n) => `${Math.round(n * 100)}%`)}
     </div>
   );
@@ -396,20 +459,20 @@ function Frontier({ data, budget }: { data: Result["frontier"]; budget: number }
           }} onMouseLeave={() => setHover(null)}>
           {yTicks.map((t) => (
             <g key={t}>
-              <line x1={L} x2={w - R} y1={y(t)} y2={y(t)} stroke="var(--line)" />
-              <text x={L - 6} y={y(t) + 3} textAnchor="end" fill="var(--muted)" fontSize={10} fontFamily="var(--mono)">{usdK(Math.round(t))}</text>
+              <line x1={L} x2={w - R} y1={y(t)} y2={y(t)} stroke="var(--rule)" />
+              <text x={L - 6} y={y(t) + 4} textAnchor="end" fill="var(--muted)" fontSize={11}>{usdK(Math.round(t))}</text>
             </g>
           ))}
           {[50000, 100000, 150000, 200000].map((t) => (
-            <text key={t} x={x(t)} y={h - 8} textAnchor="middle" fill="var(--muted)" fontSize={10} fontFamily="var(--mono)">{usdK(t)}</text>
+            <text key={t} x={Math.min(x(t), w - R - 16)} y={h - 7} textAnchor="middle" fill="var(--muted)" fontSize={11}>{usdK(t)}</text>
           ))}
-          <path d={line} fill="none" stroke="var(--emerald)" strokeWidth={2} strokeLinejoin="round" strokeLinecap="round" />
+          <path d={line} fill="none" stroke="var(--emerald-line)" strokeWidth={2} strokeLinejoin="round" strokeLinecap="round" />
           <line x1={x(budget)} x2={x(budget)} y1={T} y2={h - B} stroke="var(--amber)" strokeWidth={1} strokeDasharray="3 3" />
-          {nearest && <circle cx={x(nearest.budget)} cy={y(nearest.value)} r={4.5} fill="var(--amber)" stroke="var(--bg)" strokeWidth={2} />}
+          {nearest && <circle cx={x(nearest.budget)} cy={y(nearest.value)} r={4.5} fill="var(--amber)" stroke="var(--surface)" strokeWidth={2} />}
           {hv && (
             <>
-              <line x1={x(hv.budget)} x2={x(hv.budget)} y1={T} y2={h - B} stroke="var(--line-2)" />
-              <circle cx={x(hv.budget)} cy={y(hv.value)} r={4} fill="var(--emerald)" stroke="var(--bg)" strokeWidth={2} />
+              <line x1={x(hv.budget)} x2={x(hv.budget)} y1={T} y2={h - B} stroke="var(--rule-char)" />
+              <circle cx={x(hv.budget)} cy={y(hv.value)} r={4} fill="var(--emerald-line)" stroke="var(--surface)" strokeWidth={2} />
             </>
           )}
         </svg>
@@ -459,23 +522,25 @@ function LotDrawer({ lot, res, colBy, lotBy, body, total, passes, togglePass, ma
     <>
       <div className="scrim" onClick={onClose} />
       <aside className="drawer" aria-label={lot.name}>
-        <div className="dhead"><span className="up muted">Lot {String(lot.lot_no).padStart(2, "0")}</span><button className="btn" onClick={onClose}>Close</button></div>
+        <div className="dhead"><span className="lbl">{lot.lot_no ? `Lot ${lot.lot_no}` : "In your inventory"}</span><button className="btn" onClick={onClose}>Close</button></div>
         <img className="hero" src={lot.image} alt={lot.name} />
         <div className="dsec">
-          <h2>{lot.name}</h2>
+          <h2 className="title">{lot.name}</h2>
           <div className="note" style={{ marginTop: 4 }}>{lot.description}</div>
-          <div className="kv" style={{ marginTop: 10 }}>
-            <div><div className="up muted">Ask</div><div className="big">{usd(lot.ask)}</div></div>
-            <div><div className="up muted">Your resale est.</div><div className="big">{usd(lot.resale)}</div></div>
-            <div><div className="up muted">Paper margin</div><div className="big">{Math.round(((lot.resale - lot.ask) / lot.ask) * 100)}%</div></div>
+          <div className="kv">
+            <div><div className="lbl">Ask</div><div className="fig">{usd(lot.ask)}</div></div>
+            <div><div className="lbl">Your resale est.</div><div className="fig">{usd(lot.resale)}</div></div>
+            <div><div className="lbl">Paper margin</div><div className="fig">{Math.round(((lot.resale - lot.ask) / lot.ask) * 100)}%</div></div>
           </div>
         </div>
         <div className="dsec">
-          <span className="up">Decision</span>
+          <h3>Decision</h3>
           <div>{reason}</div>
-          <div className="row" style={{ marginTop: 8 }}>
-            {!pick && <button className="btn primary" disabled={loading} onClick={force}>{loading ? "Solving…" : "Force it in: what does it cost?"}</button>}
-          </div>
+          {!pick && (
+            <div className="row" style={{ marginTop: 8 }}>
+              <button className="btn primary" disabled={loading} onClick={force}>{loading ? "Solving…" : "See the cost of forcing it in"}</button>
+            </div>
+          )}
           {what && (what.feasible ? (
             <div style={{ marginTop: 8 }}>
               <div>Insisting on this lot changes fit-weighted value by <b className={(what.value_delta ?? 0) < 0 ? "red" : "em"}>{signed(what.value_delta ?? 0)}</b> and paper margin by <span className="num">{signed(what.margin_delta ?? 0)}</span>.</div>
@@ -485,8 +550,8 @@ function LotDrawer({ lot, res, colBy, lotBy, body, total, passes, togglePass, ma
             </div>
           ) : <div className="note" style={{ marginTop: 8 }}>{what.reason}</div>)}
         </div>
-        <div className="dsec" style={{ padding: 0 }}>
-          <span className="up" style={{ padding: "12px 14px 6px" }}>Who ranks it where</span>
+        <div className="dsec flush">
+          <h3>Who ranks it where</h3>
           <table>
             <thead><tr><th>Collector</th><th title="Recent behavior and purchases blended, then adjusted for how much more this collector ranks the lot than the book does">Book</th><th title="Full behavior sequence">Seq</th><th title="Purchases only">Buys</th><th title="Tag-overlap baseline, not BehaviorGPT">Tags</th><th></th></tr></thead>
             <tbody>
@@ -494,7 +559,7 @@ function LotDrawer({ lot, res, colBy, lotBy, body, total, passes, togglePass, ma
                 const passed = passes.some(([l, c]) => l === lot.id && c === r.collector);
                 return (
                   <tr key={r.collector} className={`${pick?.buyer === r.collector ? "hl" : ""} ${passed ? "dim" : ""}`}>
-                    <td className="text">{colBy[r.collector]?.name}{!r.affordable && <span className="muted"> · over by {usd(r.over_by)}</span>}{r.stretch > 0 && <span className="am"> · {usd(r.stretch)} into tolerance</span>}</td>
+                    <td className="text">{colBy[r.collector]?.name}{!r.affordable && <span className="muted">, {usd(r.over_by)} past the limit</span>}{r.stretch > 0 && <span className="am">, {usd(r.stretch)} over capacity</span>}{r.vs_largest !== null && <span className="muted">, {r.vs_largest.toFixed(1)}× largest purchase</span>}</td>
                     <td>#{r.rank}</td><td>#{r.rank_full}</td><td>#{r.rank_orders}</td>
                     <td className={Math.abs(r.rank_tags - r.rank_full) >= 8 ? "am" : ""}>#{r.rank_tags}</td>
                     <td><span className="row" style={{ justifyContent: "flex-end" }}>
@@ -538,43 +603,43 @@ function CollectorDrawer({ c, res, lotBy, signals, tolerance, onClose, addSearch
     <>
       <div className="scrim" onClick={onClose} />
       <aside className="drawer" aria-label={c.name}>
-        <div className="dhead"><span className="up muted">Collector</span><button className="btn" onClick={onClose}>Close</button></div>
+        <div className="dhead"><span className="lbl">Collector</span><button className="btn" onClick={onClose}>Close</button></div>
         <div className="dsec">
-          <h2>{c.name}</h2>
+          <h2 className="title">{c.name}</h2>
           <div className="muted">{c.city}</div>
           <div className="note" style={{ marginTop: 4 }}>{c.blurb}</div>
-          <div className="kv" style={{ marginTop: 10 }}>
-            <div><div className="up muted">Capacity</div><div className="big">{usdK(c.capacity)}</div></div>
-            <div><div className="up muted">Past spend</div><div className="big">{usdK(c.lifetime_spend)}</div></div>
-            <div><div className="up muted">Purchases</div><div className="big">{c.orders}</div></div>
+          <div className="kv">
+            <div><div className="lbl">Capacity</div><div className="fig">{usdK(c.capacity)}</div></div>
+            <div><div className="lbl">Past spend</div><div className="fig">{usdK(c.lifetime_spend)}</div></div>
+            <div><div className="lbl">Purchases</div><div className="fig">{c.orders}</div></div>
           </div>
-          <div className="note" style={{ marginTop: 6 }}>{c.capacity_note} With the current {Math.round(tolerance * 100)}% tolerance, the limit used is {usd(c.capacity * (1 + tolerance))}.</div>
+          <div className="note" style={{ marginTop: 6 }}>{c.purchases.count > 0 && <>Past purchases ran {usd(c.purchases.low!)} to {usd(c.purchases.high!)}, typically {usd(c.purchases.typical!)}. </>}{c.capacity_note} Going over capacity lowers a lot's value, up to a limit of {usd(c.capacity * (1 + tolerance))}.</div>
         </div>
         <div className="dsec">
-          <span className="up">Log a signal from today</span>
+          <h3>Log a signal from today</h3>
           <form className="row" onSubmit={(e) => { e.preventDefault(); submit(q); }}>
             <input className="input" style={{ flex: 1, minWidth: 180 }} value={q} maxLength={120} placeholder="They called asking about…" onChange={(e) => setQ(e.target.value)} />
             <button className="btn primary" type="submit">Re-rank live</button>
           </form>
           <div className="row" style={{ marginTop: 6 }}>
             {["sapphire ring", "gold chain", "art deco", "loose emerald", "tennis bracelet"].map((s) => (
-              <button key={s} className="chip n" onClick={() => submit(s)}>{s}</button>
+              <button key={s} className="sug" onClick={() => submit(s)}>{s}</button>
             ))}
           </div>
           {signals.length > 0 && <div className="note" style={{ marginTop: 6 }}>Logged today: {signals.map((s) => (s.q ? `“${s.q}”` : lotBy[s.id!]?.name)).join(", ")}</div>}
         </div>
         {drift && (
           <div className="dsec">
-            <span className="up">Recent behavior vs what they buy</span>
+            <h3>Recent behavior vs what they buy</h3>
             <div className="note" style={{ marginBottom: 6 }}>Average gap of {drift.gap} places across this batch between the two rankings.</div>
             <div className="row" style={{ alignItems: "flex-start" }}>
-              <div style={{ flex: 1, minWidth: 180 }}><div className="em" style={{ fontSize: 12 }}>Rising with recent behavior</div>{drift.rising.map((x) => <div key={x} className="note">{lotBy[x]?.name}</div>)}</div>
-              <div style={{ flex: 1, minWidth: 180 }}><div className="am" style={{ fontSize: 12 }}>Fading</div>{drift.fading.map((x) => <div key={x} className="note">{lotBy[x]?.name}</div>)}</div>
+              <div style={{ flex: 1, minWidth: 180 }}><div className="em" style={{ fontSize: 12.5, fontWeight: 500 }}>Rising with recent behavior</div>{drift.rising.map((x) => <div key={x} className="note">{lotBy[x]?.name}</div>)}</div>
+              <div style={{ flex: 1, minWidth: 180 }}><div className="am" style={{ fontSize: 12.5, fontWeight: 500 }}>Fading</div>{drift.fading.map((x) => <div key={x} className="note">{lotBy[x]?.name}</div>)}</div>
             </div>
           </div>
         )}
         <div className="dsec">
-          <span className="up">Last events BehaviorGPT read ({c.event_count} in all, invented)</span>
+          <h3>Last events BehaviorGPT read ({c.event_count} in all, invented)</h3>
           {c.timeline.map((e, i) => (
             <div className="event" key={i}>
               <span className={e.type === "order" ? "em" : "muted"}>{label(e)}</span>
@@ -584,7 +649,7 @@ function CollectorDrawer({ c, res, lotBy, signals, tolerance, onClose, addSearch
           ))}
         </div>
         <div className="dsec">
-          <span className="up">Source for them: next in the wider catalog</span>
+          <h3>Source for them: next in the wider catalog</h3>
           {wider === null && <div className="muted">Ranking…</div>}
           {wider?.length === 0 && <div className="muted">Needs a live BehaviorGPT connection.</div>}
           {wider?.map((w) => (
@@ -604,7 +669,7 @@ function Credits({ lots, onClose }: { lots: Piece[]; onClose: () => void }) {
     <>
       <div className="scrim" onClick={onClose} />
       <aside className="drawer" aria-label="Photo credits">
-        <div className="dhead"><span className="up muted">Photo credits</span><button className="btn" onClick={onClose}>Close</button></div>
+        <div className="dhead"><span className="lbl">Photo credits</span><button className="btn" onClick={onClose}>Close</button></div>
         <div className="dsec note">Photos stand in for fictional lots. Descriptions, asks and resale figures are invented and say nothing about the pictured objects or their owners. The full list for every image is in CREDITS.md in the repository.</div>
         <div className="dsec">
           {credited.length === 0 && <div className="note">Lot art is placeholder for now, so there are no photos to credit yet.</div>}

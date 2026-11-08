@@ -46,11 +46,20 @@ class Request(BaseModel):
     max_rank: int = Field(default=8, ge=1, le=24)
     slots: int = Field(default=2, ge=1, le=6)
     resilience: float = Field(default=0.0, ge=0, le=1)
-    capacity_tolerance: float = Field(default=0.10, ge=0, le=0.5)
+    capacity_tolerance: float = Field(default=0.25, ge=0, le=1)
+    stretch_cost: float = Field(default=0.50, ge=0, le=5)
     recency: float = Field(default=0.6, ge=0, le=1)
     relative: float = Field(default=1.0, ge=0, le=3)
     signals: dict[str, list[Signal]] = Field(default_factory=dict)
     passes: list[tuple[str, str]] = Field(default_factory=list)
+
+
+def purchases(c: dict) -> dict:
+    """What the history actually shows this collector paying. A fact from their record, not a prediction."""
+    paid = sorted(PIECES[e["id"]]["resale"] for e in c["events"] if e["type"] == "order")
+    if not paid:
+        return {"count": 0, "low": None, "typical": None, "high": None}
+    return {"count": len(paid), "low": paid[0], "typical": paid[len(paid) // 2], "high": paid[-1]}
 
 
 def tag_set(p: dict) -> set[str]:
@@ -118,6 +127,7 @@ def book():
             for e in c["events"][-14:]
         ],
         "event_count": len(c["events"]),
+        "purchases": purchases(c),
     } for c in COLLECTORS]
     return {
         "lots": [public(p) for p in LOTS],
@@ -156,7 +166,7 @@ async def build(req: Request):
     problem = opt.Problem(lots, buyers, ranks, blocked)
     q = opt.Params(budget=req.budget, fit_decay=req.fit_decay, holding_penalty=req.holding_penalty,
                    max_rank=req.max_rank, slots=req.slots, resilience=req.resilience,
-                   capacity_tolerance=req.capacity_tolerance)
+                   capacity_tolerance=req.capacity_tolerance, stretch_cost=req.stretch_cost)
     return raw, sources, rank_ms, lens, tags, ranks, tag_ranks, lots, buyers, blocked, problem, q
 
 
@@ -165,7 +175,7 @@ FRONTIER_CACHE: dict[bytes, list] = {}
 
 def cached_frontier(problem, q, blocked) -> list[dict]:
     """The curve does not depend on the budget being looked at, so a slider drag reuses it."""
-    key = (problem.ranks.tobytes() + repr((q.fit_decay, q.holding_penalty, q.max_rank, q.slots, q.capacity_tolerance,
+    key = (problem.ranks.tobytes() + repr((q.fit_decay, q.holding_penalty, q.max_rank, q.slots, q.capacity_tolerance, q.stretch_cost,
                                            sorted(blocked))).encode())
     if key not in FRONTIER_CACHE:
         if len(FRONTIER_CACHE) > 256:
@@ -243,6 +253,7 @@ async def portfolio(req: Request):
             "rank_tags": tags[c["id"]][l],
             "fit": round(float(fit[i, j]), 3),
             "affordable": LOTS[i]["resale"] <= opt.limit(c, q),
+            "vs_largest": round(LOTS[i]["resale"] / purchases(c)["high"], 2) if purchases(c)["high"] else None,
             "over_by": round(max(0.0, LOTS[i]["resale"] - opt.limit(c, q))),
             "stretch": round(max(0.0, LOTS[i]["resale"] - c["capacity"])) if LOTS[i]["resale"] <= opt.limit(c, q) else 0,
             "passed": (l, c["id"]) in blocked,
