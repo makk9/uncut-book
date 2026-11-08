@@ -1,0 +1,1405 @@
+[
+ {
+  "id": "l000",
+  "role": "lot",
+  "lot_no": 1,
+  "name": "3.02 ct Oval Diamond Solitaire",
+  "form": "Ring",
+  "era": "Contemporary",
+  "style": "bridal",
+  "stones": [
+   "Diamond"
+  ],
+  "metals": [
+   "Platinum"
+  ],
+  "description": "Platinum four-prong setting, knife-edge band, GIA F VS2",
+  "ask": 28000,
+  "resale": 36500,
+  "image": "/img/l000.svg",
+  "image_url": null,
+  "credit": null
+ },
+ {
+  "id": "l001",
+  "role": "lot",
+  "lot_no": 2,
+  "name": "Art Deco Filigree Diamond Ring, c. 1925",
+  "form": "Ring",
+  "era": "Art Deco",
+  "style": "estate",
+  "stones": [
+   "Diamond"
+  ],
+  "metals": [
+   "Platinum"
+  ],
+  "description": "Old European cut center in pierced platinum filigree with milgrain edges",
+  "ask": 9500,
+  "resale": 14800,
+  "image": "/img/l001.svg",
+  "image_url": null,
+  "credit": null
+ },
+ {
+  "id": "l002",
+  "role": "lot",
+  "lot_no": 3,
+  "name": "5.1 ct Ceylon Sapphire Cocktail Ring",
+  "form": "Ring",
+  "era": "Contemporary",
+  "style": "statement",
+  "stones": [
+   "Sapphire",
+   "Diamond"
+  ],
+  "metals": [
+   "Platinum"
+  ],
+  "description": "Unheated cornflower blue cushion sapphire with tapered baguette shoulders",
+  "ask": 34000,
+  "resale": 46000,
+  "image": "/img/l002.svg",
+  "image_url": null,
+  "credit": null
+ },
+ {
+  "id": "l003",
+  "role": "lot",
+  "lot_no": 4,
+  "name": "Colombian Emerald Three-Stone Ring",
+  "form": "Ring",
+  "era": "Contemporary",
+  "style": "statement",
+  "stones": [
+   "Emerald",
+   "Diamond"
+  ],
+  "metals": [
+   "Gold"
+  ],
+  "description": "3.4 ct emerald-cut Colombian emerald flanked by trapezoid diamonds in 18k gold",
+  "ask": 19000,
+  "resale": 26000,
+  "image": "/img/l003.svg",
+  "image_url": null,
+  "credit": null
+ },
+ {
+  "id": "l004",
+  "role": "lot",
+  "lot_no": 5,
+  "name": "10 ct Diamond Tennis Bracelet",
+  "form": "Bracelet",
+  "era": "Contemporary",
+  "style": "line",
+  "stones": [
+   "Diamond"
+  ],
+  "metals": [
+   "Gold"
+  ],
+  "description": "Round brilliant diamonds in four-prong 18k white gold line with box clasp",
+  "ask": 14500,
+  "resale": 19800,
+  "image": "/img/l004.svg",
+  "image_url": null,
+  "credit": null
+ },
+ {
+  "id": "l005",
+  "role": "lot",
+  "lot_no": 6,
+  "name": "22 ct Diamond Riviere Necklace",
+  "form": "Necklace",
+  "era": "Contemporary",
+  "style": "line",
+  "stones": [
+   "Diamond"
+  ],
+  "metals": [
+   "Platinum"
+  ],
+  "description": "Graduated round brilliant riviere in platinum, sixteen inches",
+  "ask": 52000,
+  "resale": 68000,
+  "image": "/img/l005.svg",
+  "image_url": null,
+  "credit": null
+ },
+ {
+  "id": "l006",
+  "role": "lot",
+  "lot_no": 7,
+  "name": "Burmese Ruby and Diamond Suite",
+  "form": "Necklace",
+  "era": "Contemporary",
+  "style": "statement",
+  "stones": [
+   "Ruby",
+   "Diamond"
+  ],
+  "metals": [
+   "Platinum"
+  ],
+  "description": "8 ct unheated Burmese ruby center necklace with matching ear clips",
+  "ask": 62000,
+  "resale": 86000,
+  "image": "/img/l006.svg",
+  "image_url": null,
+  "credit": null
+ },
+ {
+  "id": "l007",
+  "role": "lot",
+  "lot_no": 8,
+  "name": "14k Miami Cuban Link, 180 g",
+  "form": "Chain",
+  "era": "Contemporary",
+  "style": "street",
+  "stones": [],
+  "metals": [
+   "Gold"
+  ],
+  "description": "Heavy solid 14k yellow gold Miami Cuban link chain, twenty-four inches",
+  "ask": 11500,
+  "resale": 14600,
+  "image": "/img/l007.svg",
+  "image_url": null,
+  "credit": null
+ },
+ {
+  "id": "l008",
+  "role": "lot",
+  "lot_no": 9,
+  "name": "Victorian Shell Cameo Brooch",
+  "form": "Brooch",
+  "era": "Victorian",
+  "style": "estate",
+  "stones": [
+   "Cameo"
+  ],
+  "metals": [
+   "Gold"
+  ],
+  "description": "Hand-carved shell cameo in a twisted-wire 14k gold frame, about 1870",
+  "ask": 1800,
+  "resale": 3200,
+  "image": "/img/l008.svg",
+  "image_url": null,
+  "credit": null
+ },
+ {
+  "id": "l009",
+  "role": "lot",
+  "lot_no": 10,
+  "name": "Edwardian Diamond Garland Brooch",
+  "form": "Brooch",
+  "era": "Edwardian",
+  "style": "important",
+  "stones": [
+   "Diamond"
+  ],
+  "metals": [
+   "Platinum"
+  ],
+  "description": "Platinum-topped garland with old mine cut diamonds and a pearl drop, about 1908",
+  "ask": 12500,
+  "resale": 18500,
+  "image": "/img/l009.svg",
+  "image_url": null,
+  "credit": null
+ },
+ {
+  "id": "l010",
+  "role": "lot",
+  "lot_no": 11,
+  "name": "Edwardian Convertible Diamond Tiara",
+  "form": "Tiara",
+  "era": "Edwardian",
+  "style": "important",
+  "stones": [
+   "Diamond",
+   "Pearl"
+  ],
+  "metals": [
+   "Platinum"
+  ],
+  "description": "Scroll and pearl tiara that converts to a necklace, original fitted case",
+  "ask": 38000,
+  "resale": 54000,
+  "image": "/img/l010.svg",
+  "image_url": null,
+  "credit": null
+ },
+ {
+  "id": "l011",
+  "role": "lot",
+  "lot_no": 12,
+  "name": "South Sea Pearl Strand, 13 mm",
+  "form": "Necklace",
+  "era": "Contemporary",
+  "style": "minimal",
+  "stones": [
+   "Pearl"
+  ],
+  "metals": [
+   "Gold"
+  ],
+  "description": "Matched white South Sea pearls on a plain 18k gold clasp",
+  "ask": 7200,
+  "resale": 10400,
+  "image": "/img/l011.svg",
+  "image_url": null,
+  "credit": null
+ },
+ {
+  "id": "l012",
+  "role": "lot",
+  "lot_no": 13,
+  "name": "6 ct Diamond Chandelier Earrings",
+  "form": "Earrings",
+  "era": "Contemporary",
+  "style": "statement",
+  "stones": [
+   "Diamond"
+  ],
+  "metals": [
+   "Gold"
+  ],
+  "description": "Articulated pear and marquise diamond chandeliers in 18k white gold",
+  "ask": 13800,
+  "resale": 19000,
+  "image": "/img/l012.svg",
+  "image_url": null,
+  "credit": null
+ },
+ {
+  "id": "l013",
+  "role": "lot",
+  "lot_no": 14,
+  "name": "18k Gold Huggie Hoops",
+  "form": "Earrings",
+  "era": "Contemporary",
+  "style": "minimal",
+  "stones": [],
+  "metals": [
+   "Gold"
+  ],
+  "description": "Plain polished domed 18k yellow gold hoops for everyday wear",
+  "ask": 1600,
+  "resale": 2600,
+  "image": "/img/l013.svg",
+  "image_url": null,
+  "credit": null
+ },
+ {
+  "id": "l014",
+  "role": "lot",
+  "lot_no": 15,
+  "name": "GIA 2.01 ct Round Brilliant, Loose",
+  "form": "Loose stone",
+  "era": "Contemporary",
+  "style": "investment",
+  "stones": [
+   "Diamond"
+  ],
+  "metals": [],
+  "description": "Unset round brilliant diamond, G color, VS1 clarity, excellent cut, sealed",
+  "ask": 17500,
+  "resale": 21500,
+  "image": "/img/l014.svg",
+  "image_url": null,
+  "credit": null
+ },
+ {
+  "id": "l015",
+  "role": "lot",
+  "lot_no": 16,
+  "name": "6 ct Neon Tourmaline, Loose",
+  "form": "Loose stone",
+  "era": "Contemporary",
+  "style": "unusual",
+  "stones": [
+   "Tourmaline"
+  ],
+  "metals": [],
+  "description": "Unset neon blue-green cuprian tourmaline, oval cut, rare saturation",
+  "ask": 16000,
+  "resale": 24500,
+  "image": "/img/l015.svg",
+  "image_url": null,
+  "credit": null
+ },
+ {
+  "id": "l016",
+  "role": "lot",
+  "lot_no": 17,
+  "name": "Boulder Opal and Diamond Ring",
+  "form": "Ring",
+  "era": "Contemporary",
+  "style": "unusual",
+  "stones": [
+   "Opal",
+   "Diamond"
+  ],
+  "metals": [
+   "Gold"
+  ],
+  "description": "Freeform Queensland boulder opal in a diamond halo, 18k gold",
+  "ask": 5400,
+  "resale": 8900,
+  "image": "/img/l016.svg",
+  "image_url": null,
+  "credit": null
+ },
+ {
+  "id": "l017",
+  "role": "lot",
+  "lot_no": 18,
+  "name": "Vintage 18k Gold Dress Watch",
+  "form": "Watch",
+  "era": "Mid-Century",
+  "style": "mens",
+  "stones": [],
+  "metals": [
+   "Gold"
+  ],
+  "description": "1960s slim manual-wind dress watch with an integrated gold mesh bracelet",
+  "ask": 6200,
+  "resale": 8600,
+  "image": "/img/l017.svg",
+  "image_url": null,
+  "credit": null
+ },
+ {
+  "id": "l018",
+  "role": "lot",
+  "lot_no": 19,
+  "name": "Hand-Engraved Gold Signet Ring",
+  "form": "Ring",
+  "era": "Contemporary",
+  "style": "mens",
+  "stones": [],
+  "metals": [
+   "Gold"
+  ],
+  "description": "Heavy 18k gold oval signet with a hand-cut intaglio face",
+  "ask": 2400,
+  "resale": 3900,
+  "image": "/img/l018.svg",
+  "image_url": null,
+  "credit": null
+ },
+ {
+  "id": "l019",
+  "role": "lot",
+  "lot_no": 20,
+  "name": "Retro Aquamarine Cocktail Ring, 1940s",
+  "form": "Ring",
+  "era": "Retro",
+  "style": "statement",
+  "stones": [
+   "Aquamarine"
+  ],
+  "metals": [
+   "Gold"
+  ],
+  "description": "12 ct emerald-cut aquamarine in a sculptural rose gold scroll mount",
+  "ask": 3900,
+  "resale": 6200,
+  "image": "/img/l019.svg",
+  "image_url": null,
+  "credit": null
+ },
+ {
+  "id": "h000",
+  "role": "holding",
+  "lot_no": null,
+  "name": "Emerald-Cut Diamond Eternity Band",
+  "form": "Ring",
+  "era": "Contemporary",
+  "style": "bridal",
+  "stones": [
+   "Diamond"
+  ],
+  "metals": [
+   "Platinum"
+  ],
+  "description": "Full eternity band of emerald-cut diamonds in platinum",
+  "ask": 7800,
+  "resale": 10400,
+  "image": "/img/h000.svg",
+  "image_url": null,
+  "credit": null
+ },
+ {
+  "id": "h001",
+  "role": "holding",
+  "lot_no": null,
+  "name": "Retro Gold Tank Bracelet, 1940s",
+  "form": "Bracelet",
+  "era": "Retro",
+  "style": "estate",
+  "stones": [],
+  "metals": [
+   "Gold"
+  ],
+  "description": "Heavy rose gold tank tread bracelet, about 1945",
+  "ask": 9200,
+  "resale": 12000,
+  "image": "/img/h001.svg",
+  "image_url": null,
+  "credit": null
+ },
+ {
+  "id": "h002",
+  "role": "holding",
+  "lot_no": null,
+  "name": "Antique Mine-Cut Diamond Studs",
+  "form": "Earrings",
+  "era": "Victorian",
+  "style": "estate",
+  "stones": [
+   "Diamond"
+  ],
+  "metals": [
+   "Gold"
+  ],
+  "description": "Old mine cut diamonds, about two carats total, in later gold mounts",
+  "ask": 6400,
+  "resale": 8800,
+  "image": "/img/h002.svg",
+  "image_url": null,
+  "credit": null
+ },
+ {
+  "id": "h003",
+  "role": "holding",
+  "lot_no": null,
+  "name": "Amethyst and Seed Pearl Pendant",
+  "form": "Pendant",
+  "era": "Victorian",
+  "style": "estate",
+  "stones": [
+   "Amethyst",
+   "Pearl"
+  ],
+  "metals": [
+   "Gold"
+  ],
+  "description": "Oval amethyst with a seed pearl surround on a gold bail",
+  "ask": 1900,
+  "resale": 2900,
+  "image": "/img/h003.svg",
+  "image_url": null,
+  "credit": null
+ },
+ {
+  "id": "h004",
+  "role": "holding",
+  "lot_no": null,
+  "name": "Sterling Turquoise Statement Cuff",
+  "form": "Bracelet",
+  "era": "Mid-Century",
+  "style": "unusual",
+  "stones": [
+   "Turquoise"
+  ],
+  "metals": [
+   "Silver"
+  ],
+  "description": "Wide stamped sterling cuff with a large natural turquoise cabochon",
+  "ask": 2200,
+  "resale": 3400,
+  "image": "/img/h004.svg",
+  "image_url": null,
+  "credit": null
+ },
+ {
+  "id": "h005",
+  "role": "holding",
+  "lot_no": null,
+  "name": "14k Rope Chain, 24 in",
+  "form": "Chain",
+  "era": "Contemporary",
+  "style": "street",
+  "stones": [],
+  "metals": [
+   "Gold"
+  ],
+  "description": "Solid 14k yellow gold rope chain, five millimeters wide",
+  "ask": 3100,
+  "resale": 4000,
+  "image": "/img/h005.svg",
+  "image_url": null,
+  "credit": null
+ },
+ {
+  "id": "h000",
+  "role": "history",
+  "lot_no": null,
+  "name": "1.5 ct Round Solitaire",
+  "form": "Ring",
+  "era": "Contemporary",
+  "style": "bridal",
+  "stones": [
+   "Diamond"
+  ],
+  "metals": [
+   "Platinum"
+  ],
+  "description": "Round brilliant on a slim platinum band",
+  "ask": 11000,
+  "resale": 14300.0,
+  "image": "/img/h000.svg",
+  "image_url": null,
+  "credit": null
+ },
+ {
+  "id": "h001",
+  "role": "history",
+  "lot_no": null,
+  "name": "Cushion Diamond Halo Ring",
+  "form": "Ring",
+  "era": "Contemporary",
+  "style": "bridal",
+  "stones": [
+   "Diamond"
+  ],
+  "metals": [
+   "Platinum"
+  ],
+  "description": "Cushion center in a micro-pave halo",
+  "ask": 8500,
+  "resale": 11000.0,
+  "image": "/img/h001.svg",
+  "image_url": null,
+  "credit": null
+ },
+ {
+  "id": "h002",
+  "role": "history",
+  "lot_no": null,
+  "name": "2 ct Oval Diamond Ring",
+  "form": "Ring",
+  "era": "Contemporary",
+  "style": "bridal",
+  "stones": [
+   "Diamond"
+  ],
+  "metals": [
+   "Gold"
+  ],
+  "description": "Oval diamond on an 18k gold band",
+  "ask": 15000,
+  "resale": 19500.0,
+  "image": "/img/h002.svg",
+  "image_url": null,
+  "credit": null
+ },
+ {
+  "id": "h003",
+  "role": "history",
+  "lot_no": null,
+  "name": "Three-Stone Diamond Ring",
+  "form": "Ring",
+  "era": "Contemporary",
+  "style": "bridal",
+  "stones": [
+   "Diamond"
+  ],
+  "metals": [
+   "Platinum"
+  ],
+  "description": "Round center with pear side stones",
+  "ask": 7200,
+  "resale": 9400.0,
+  "image": "/img/h003.svg",
+  "image_url": null,
+  "credit": null
+ },
+ {
+  "id": "h004",
+  "role": "history",
+  "lot_no": null,
+  "name": "14k Franco Chain",
+  "form": "Chain",
+  "era": "Contemporary",
+  "style": "street",
+  "stones": [],
+  "metals": [
+   "Gold"
+  ],
+  "description": "Solid yellow gold Franco link",
+  "ask": 6200,
+  "resale": 8100.0,
+  "image": "/img/h004.svg",
+  "image_url": null,
+  "credit": null
+ },
+ {
+  "id": "h005",
+  "role": "history",
+  "lot_no": null,
+  "name": "18k Rope Chain",
+  "form": "Chain",
+  "era": "Contemporary",
+  "style": "street",
+  "stones": [],
+  "metals": [
+   "Gold"
+  ],
+  "description": "Heavy solid rope chain",
+  "ask": 7400,
+  "resale": 9600.0,
+  "image": "/img/h005.svg",
+  "image_url": null,
+  "credit": null
+ },
+ {
+  "id": "h006",
+  "role": "history",
+  "lot_no": null,
+  "name": "Gold Curb Link Chain",
+  "form": "Chain",
+  "era": "Contemporary",
+  "style": "street",
+  "stones": [],
+  "metals": [
+   "Gold"
+  ],
+  "description": "Wide flat curb chain, 14k",
+  "ask": 9000,
+  "resale": 11700.0,
+  "image": "/img/h006.svg",
+  "image_url": null,
+  "credit": null
+ },
+ {
+  "id": "h007",
+  "role": "history",
+  "lot_no": null,
+  "name": "Gold Medallion Pendant",
+  "form": "Pendant",
+  "era": "Contemporary",
+  "style": "street",
+  "stones": [],
+  "metals": [
+   "Gold"
+  ],
+  "description": "Large round medallion in 14k gold",
+  "ask": 2600,
+  "resale": 3400.0,
+  "image": "/img/h007.svg",
+  "image_url": null,
+  "credit": null
+ },
+ {
+  "id": "h008",
+  "role": "history",
+  "lot_no": null,
+  "name": "5 ct Diamond Line Bracelet",
+  "form": "Bracelet",
+  "era": "Contemporary",
+  "style": "line",
+  "stones": [
+   "Diamond"
+  ],
+  "metals": [
+   "Gold"
+  ],
+  "description": "Four-prong white gold tennis bracelet",
+  "ask": 6800,
+  "resale": 8800.0,
+  "image": "/img/h008.svg",
+  "image_url": null,
+  "credit": null
+ },
+ {
+  "id": "h009",
+  "role": "history",
+  "lot_no": null,
+  "name": "12 ct Diamond Line Necklace",
+  "form": "Necklace",
+  "era": "Contemporary",
+  "style": "line",
+  "stones": [
+   "Diamond"
+  ],
+  "metals": [
+   "Gold"
+  ],
+  "description": "Tennis necklace in 18k white gold",
+  "ask": 16000,
+  "resale": 20800.0,
+  "image": "/img/h009.svg",
+  "image_url": null,
+  "credit": null
+ },
+ {
+  "id": "h010",
+  "role": "history",
+  "lot_no": null,
+  "name": "Bezel Diamond Station Necklace",
+  "form": "Necklace",
+  "era": "Contemporary",
+  "style": "line",
+  "stones": [
+   "Diamond"
+  ],
+  "metals": [
+   "Gold"
+  ],
+  "description": "Bezel-set diamonds spaced on a fine chain",
+  "ask": 4200,
+  "resale": 5500.0,
+  "image": "/img/h010.svg",
+  "image_url": null,
+  "credit": null
+ },
+ {
+  "id": "h011",
+  "role": "history",
+  "lot_no": null,
+  "name": "Emerald Halo Ring",
+  "form": "Ring",
+  "era": "Contemporary",
+  "style": "statement",
+  "stones": [
+   "Emerald",
+   "Diamond"
+  ],
+  "metals": [
+   "Gold"
+  ],
+  "description": "Colombian emerald with a diamond halo",
+  "ask": 8200,
+  "resale": 10700.0,
+  "image": "/img/h011.svg",
+  "image_url": null,
+  "credit": null
+ },
+ {
+  "id": "h012",
+  "role": "history",
+  "lot_no": null,
+  "name": "Emerald Drop Pendant",
+  "form": "Pendant",
+  "era": "Contemporary",
+  "style": "classic",
+  "stones": [
+   "Emerald"
+  ],
+  "metals": [
+   "Gold"
+  ],
+  "description": "Pear emerald on a gold bail",
+  "ask": 5400,
+  "resale": 7000.0,
+  "image": "/img/h012.svg",
+  "image_url": null,
+  "credit": null
+ },
+ {
+  "id": "h013",
+  "role": "history",
+  "lot_no": null,
+  "name": "Zambian Emerald Cushion Ring",
+  "form": "Ring",
+  "era": "Contemporary",
+  "style": "statement",
+  "stones": [
+   "Emerald"
+  ],
+  "metals": [
+   "Platinum"
+  ],
+  "description": "Deep bluish-green Zambian emerald",
+  "ask": 11800,
+  "resale": 15300.0,
+  "image": "/img/h013.svg",
+  "image_url": null,
+  "credit": null
+ },
+ {
+  "id": "h014",
+  "role": "history",
+  "lot_no": null,
+  "name": "Cornflower Sapphire Halo Ring",
+  "form": "Ring",
+  "era": "Contemporary",
+  "style": "statement",
+  "stones": [
+   "Sapphire",
+   "Diamond"
+  ],
+  "metals": [
+   "Platinum"
+  ],
+  "description": "Oval blue sapphire with a diamond halo",
+  "ask": 9600,
+  "resale": 12500.0,
+  "image": "/img/h014.svg",
+  "image_url": null,
+  "credit": null
+ },
+ {
+  "id": "h015",
+  "role": "history",
+  "lot_no": null,
+  "name": "Sapphire and Diamond Line Bracelet",
+  "form": "Bracelet",
+  "era": "Contemporary",
+  "style": "line",
+  "stones": [
+   "Sapphire",
+   "Diamond"
+  ],
+  "metals": [
+   "Gold"
+  ],
+  "description": "Alternating blue sapphires and diamonds",
+  "ask": 7800,
+  "resale": 10100.0,
+  "image": "/img/h015.svg",
+  "image_url": null,
+  "credit": null
+ },
+ {
+  "id": "h016",
+  "role": "history",
+  "lot_no": null,
+  "name": "3 ct Ceylon Sapphire, Loose",
+  "form": "Loose stone",
+  "era": "Contemporary",
+  "style": "investment",
+  "stones": [
+   "Sapphire"
+  ],
+  "metals": [],
+  "description": "Unset oval Ceylon blue sapphire",
+  "ask": 6400,
+  "resale": 8300.0,
+  "image": "/img/h016.svg",
+  "image_url": null,
+  "credit": null
+ },
+ {
+  "id": "h017",
+  "role": "history",
+  "lot_no": null,
+  "name": "Art Deco Sapphire Bar Brooch",
+  "form": "Brooch",
+  "era": "Art Deco",
+  "style": "estate",
+  "stones": [
+   "Sapphire",
+   "Diamond"
+  ],
+  "metals": [
+   "Platinum"
+  ],
+  "description": "Calibre sapphires and diamonds, about 1928",
+  "ask": 4800,
+  "resale": 6200.0,
+  "image": "/img/h017.svg",
+  "image_url": null,
+  "credit": null
+ },
+ {
+  "id": "h018",
+  "role": "history",
+  "lot_no": null,
+  "name": "Art Deco Diamond Line Bracelet",
+  "form": "Bracelet",
+  "era": "Art Deco",
+  "style": "estate",
+  "stones": [
+   "Diamond"
+  ],
+  "metals": [
+   "Platinum"
+  ],
+  "description": "Geometric platinum links, about 1930",
+  "ask": 15500,
+  "resale": 20200.0,
+  "image": "/img/h018.svg",
+  "image_url": null,
+  "credit": null
+ },
+ {
+  "id": "h019",
+  "role": "history",
+  "lot_no": null,
+  "name": "Art Deco Dinner Ring",
+  "form": "Ring",
+  "era": "Art Deco",
+  "style": "estate",
+  "stones": [
+   "Diamond"
+  ],
+  "metals": [
+   "Platinum"
+  ],
+  "description": "Pierced platinum plaque ring",
+  "ask": 7600,
+  "resale": 9900.0,
+  "image": "/img/h019.svg",
+  "image_url": null,
+  "credit": null
+ },
+ {
+  "id": "h020",
+  "role": "history",
+  "lot_no": null,
+  "name": "Victorian Seed Pearl Locket",
+  "form": "Pendant",
+  "era": "Victorian",
+  "style": "estate",
+  "stones": [
+   "Pearl"
+  ],
+  "metals": [
+   "Gold"
+  ],
+  "description": "Engraved gold locket with seed pearls",
+  "ask": 1200,
+  "resale": 1600.0,
+  "image": "/img/h020.svg",
+  "image_url": null,
+  "credit": null
+ },
+ {
+  "id": "h021",
+  "role": "history",
+  "lot_no": null,
+  "name": "Hardstone Cameo Pendant",
+  "form": "Pendant",
+  "era": "Victorian",
+  "style": "estate",
+  "stones": [
+   "Cameo"
+  ],
+  "metals": [
+   "Gold"
+  ],
+  "description": "Carved hardstone cameo in gold",
+  "ask": 900,
+  "resale": 1200.0,
+  "image": "/img/h021.svg",
+  "image_url": null,
+  "credit": null
+ },
+ {
+  "id": "h022",
+  "role": "history",
+  "lot_no": null,
+  "name": "Victorian Mourning Brooch",
+  "form": "Brooch",
+  "era": "Victorian",
+  "style": "estate",
+  "stones": [
+   "Pearl"
+  ],
+  "metals": [
+   "Gold"
+  ],
+  "description": "Black enamel and seed pearl brooch",
+  "ask": 1100,
+  "resale": 1400.0,
+  "image": "/img/h022.svg",
+  "image_url": null,
+  "credit": null
+ },
+ {
+  "id": "h023",
+  "role": "history",
+  "lot_no": null,
+  "name": "Edwardian Diamond Lavalier",
+  "form": "Necklace",
+  "era": "Edwardian",
+  "style": "estate",
+  "stones": [
+   "Diamond",
+   "Pearl"
+  ],
+  "metals": [
+   "Platinum"
+  ],
+  "description": "Platinum and pearl drop lavalier",
+  "ask": 3800,
+  "resale": 4900.0,
+  "image": "/img/h023.svg",
+  "image_url": null,
+  "credit": null
+ },
+ {
+  "id": "h024",
+  "role": "history",
+  "lot_no": null,
+  "name": "Edwardian Diamond Ring",
+  "form": "Ring",
+  "era": "Edwardian",
+  "style": "estate",
+  "stones": [
+   "Diamond"
+  ],
+  "metals": [
+   "Platinum"
+  ],
+  "description": "Old European cut in a milgrain mount",
+  "ask": 5200,
+  "resale": 6800.0,
+  "image": "/img/h024.svg",
+  "image_url": null,
+  "credit": null
+ },
+ {
+  "id": "h025",
+  "role": "history",
+  "lot_no": null,
+  "name": "Akoya Pearl Strand",
+  "form": "Necklace",
+  "era": "Contemporary",
+  "style": "minimal",
+  "stones": [
+   "Pearl"
+  ],
+  "metals": [
+   "Gold"
+  ],
+  "description": "Classic matched seven millimeter akoya",
+  "ask": 2400,
+  "resale": 3100.0,
+  "image": "/img/h025.svg",
+  "image_url": null,
+  "credit": null
+ },
+ {
+  "id": "h026",
+  "role": "history",
+  "lot_no": null,
+  "name": "Pearl Drop Earrings",
+  "form": "Earrings",
+  "era": "Contemporary",
+  "style": "minimal",
+  "stones": [
+   "Pearl"
+  ],
+  "metals": [
+   "Gold"
+  ],
+  "description": "Single pearl on a plain gold post",
+  "ask": 1300,
+  "resale": 1700.0,
+  "image": "/img/h026.svg",
+  "image_url": null,
+  "credit": null
+ },
+ {
+  "id": "h027",
+  "role": "history",
+  "lot_no": null,
+  "name": "Fine Gold Hoop Earrings",
+  "form": "Earrings",
+  "era": "Contemporary",
+  "style": "minimal",
+  "stones": [],
+  "metals": [
+   "Gold"
+  ],
+  "description": "Slim polished 18k gold hoops",
+  "ask": 1500,
+  "resale": 2000.0,
+  "image": "/img/h027.svg",
+  "image_url": null,
+  "credit": null
+ },
+ {
+  "id": "h028",
+  "role": "history",
+  "lot_no": null,
+  "name": "Ruby Cocktail Ring",
+  "form": "Ring",
+  "era": "Contemporary",
+  "style": "statement",
+  "stones": [
+   "Ruby",
+   "Diamond"
+  ],
+  "metals": [
+   "Gold"
+  ],
+  "description": "Oval ruby with a bold diamond surround",
+  "ask": 8800,
+  "resale": 11400.0,
+  "image": "/img/h028.svg",
+  "image_url": null,
+  "credit": null
+ },
+ {
+  "id": "h029",
+  "role": "history",
+  "lot_no": null,
+  "name": "Fancy Yellow Diamond Cocktail Ring",
+  "form": "Ring",
+  "era": "Contemporary",
+  "style": "statement",
+  "stones": [
+   "Diamond"
+  ],
+  "metals": [
+   "Gold"
+  ],
+  "description": "Radiant cut fancy yellow center stone",
+  "ask": 17000,
+  "resale": 22100.0,
+  "image": "/img/h029.svg",
+  "image_url": null,
+  "credit": null
+ },
+ {
+  "id": "h030",
+  "role": "history",
+  "lot_no": null,
+  "name": "1.0 ct Round Diamond, Loose",
+  "form": "Loose stone",
+  "era": "Contemporary",
+  "style": "investment",
+  "stones": [
+   "Diamond"
+  ],
+  "metals": [],
+  "description": "Unset certified round brilliant",
+  "ask": 5200,
+  "resale": 6800.0,
+  "image": "/img/h030.svg",
+  "image_url": null,
+  "credit": null
+ },
+ {
+  "id": "h031",
+  "role": "history",
+  "lot_no": null,
+  "name": "2 ct Burmese Ruby, Loose",
+  "form": "Loose stone",
+  "era": "Contemporary",
+  "style": "investment",
+  "stones": [
+   "Ruby"
+  ],
+  "metals": [],
+  "description": "Unset unheated cushion ruby",
+  "ask": 9400,
+  "resale": 12200.0,
+  "image": "/img/h031.svg",
+  "image_url": null,
+  "credit": null
+ },
+ {
+  "id": "h032",
+  "role": "history",
+  "lot_no": null,
+  "name": "3 ct Emerald-Cut Diamond, Loose",
+  "form": "Loose stone",
+  "era": "Contemporary",
+  "style": "investment",
+  "stones": [
+   "Diamond"
+  ],
+  "metals": [],
+  "description": "Unset certified step-cut diamond",
+  "ask": 24000,
+  "resale": 31200.0,
+  "image": "/img/h032.svg",
+  "image_url": null,
+  "credit": null
+ },
+ {
+  "id": "h033",
+  "role": "history",
+  "lot_no": null,
+  "name": "Two-Tone Vintage Wristwatch",
+  "form": "Watch",
+  "era": "Mid-Century",
+  "style": "mens",
+  "stones": [],
+  "metals": [
+   "Gold",
+   "Silver"
+  ],
+  "description": "1970s steel and gold automatic",
+  "ask": 4500,
+  "resale": 5800.0,
+  "image": "/img/h033.svg",
+  "image_url": null,
+  "credit": null
+ },
+ {
+  "id": "h034",
+  "role": "history",
+  "lot_no": null,
+  "name": "18k Gold Chronograph",
+  "form": "Watch",
+  "era": "Mid-Century",
+  "style": "mens",
+  "stones": [],
+  "metals": [
+   "Gold"
+  ],
+  "description": "Vintage gold cased chronograph on leather",
+  "ask": 7800,
+  "resale": 10100.0,
+  "image": "/img/h034.svg",
+  "image_url": null,
+  "credit": null
+ },
+ {
+  "id": "h035",
+  "role": "history",
+  "lot_no": null,
+  "name": "Men's Diamond Pinky Ring",
+  "form": "Ring",
+  "era": "Contemporary",
+  "style": "mens",
+  "stones": [
+   "Diamond"
+  ],
+  "metals": [
+   "Gold"
+  ],
+  "description": "Heavy gold ring with a pave face",
+  "ask": 4200,
+  "resale": 5500.0,
+  "image": "/img/h035.svg",
+  "image_url": null,
+  "credit": null
+ },
+ {
+  "id": "h036",
+  "role": "history",
+  "lot_no": null,
+  "name": "Crystal Opal Pendant",
+  "form": "Pendant",
+  "era": "Contemporary",
+  "style": "unusual",
+  "stones": [
+   "Opal"
+  ],
+  "metals": [
+   "Gold"
+  ],
+  "description": "Bright crystal opal in a gold bezel",
+  "ask": 2800,
+  "resale": 3600.0,
+  "image": "/img/h036.svg",
+  "image_url": null,
+  "credit": null
+ },
+ {
+  "id": "h037",
+  "role": "history",
+  "lot_no": null,
+  "name": "Natural Turquoise Ring",
+  "form": "Ring",
+  "era": "Mid-Century",
+  "style": "unusual",
+  "stones": [
+   "Turquoise"
+  ],
+  "metals": [
+   "Silver"
+  ],
+  "description": "Large natural turquoise in hammered silver",
+  "ask": 1400,
+  "resale": 1800.0,
+  "image": "/img/h037.svg",
+  "image_url": null,
+  "credit": null
+ },
+ {
+  "id": "h038",
+  "role": "history",
+  "lot_no": null,
+  "name": "Aquamarine Pendant",
+  "form": "Pendant",
+  "era": "Contemporary",
+  "style": "unusual",
+  "stones": [
+   "Aquamarine"
+  ],
+  "metals": [
+   "Gold"
+  ],
+  "description": "Emerald-cut aquamarine on a fine chain",
+  "ask": 3600,
+  "resale": 4700.0,
+  "image": "/img/h038.svg",
+  "image_url": null,
+  "credit": null
+ },
+ {
+  "id": "h039",
+  "role": "history",
+  "lot_no": null,
+  "name": "Diamond Bandeau Tiara",
+  "form": "Tiara",
+  "era": "Edwardian",
+  "style": "important",
+  "stones": [
+   "Diamond"
+  ],
+  "metals": [
+   "Platinum"
+  ],
+  "description": "Low platinum bandeau, about 1912",
+  "ask": 19000,
+  "resale": 24700.0,
+  "image": "/img/h039.svg",
+  "image_url": null,
+  "credit": null
+ },
+ {
+  "id": "h040",
+  "role": "history",
+  "lot_no": null,
+  "name": "Important Belle Epoque Bow Brooch",
+  "form": "Brooch",
+  "era": "Edwardian",
+  "style": "important",
+  "stones": [
+   "Diamond"
+  ],
+  "metals": [
+   "Platinum"
+  ],
+  "description": "Large ribbon bow in old cut diamonds",
+  "ask": 9200,
+  "resale": 12000.0,
+  "image": "/img/h040.svg",
+  "image_url": null,
+  "credit": null
+ },
+ {
+  "id": "h041",
+  "role": "history",
+  "lot_no": null,
+  "name": "Georgian Paste Brooch",
+  "form": "Brooch",
+  "era": "Victorian",
+  "style": "important",
+  "stones": [
+   "Gemstones"
+  ],
+  "metals": [
+   "Silver"
+  ],
+  "description": "Foil-backed silver spray brooch",
+  "ask": 3400,
+  "resale": 4400.0,
+  "image": "/img/h041.svg",
+  "image_url": null,
+  "credit": null
+ }
+]

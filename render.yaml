@@ -1,0 +1,11 @@
+services:
+  - type: web
+    name: the-book
+    runtime: docker
+    plan: free
+    healthCheckPath: /api/health
+    envVars:
+      - key: UNBOXAI_API_KEY
+        sync: false
+      - key: UNBOXAI_CATALOG_ID
+        sync: false
