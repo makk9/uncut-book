@@ -31,10 +31,10 @@ rng = random.Random(11)
 # Each phase: (taste weights, sessions, what they ask about). Later phases are more recent.
 PERSONAS = [
     ("rachel", "Rachel Stein", "Great Neck, NY", "Buys bridal for three generations of family friends. Round and oval diamonds, nothing loud.",
-     [({"form:Ring": 2, "style:bridal": 5, "stone:Diamond": 4, "metal:Platinum": 2}, 9, ["diamond engagement ring", "oval diamond ring", "platinum solitaire"])]),
+     [({"form:Ring": 2, "style:bridal": 5, "stone:Diamond": 4, "metal:Platinum": 2, "stone:Sapphire": -6, "stone:Ruby": -6, "stone:Emerald": -6}, 9, ["diamond engagement ring", "oval diamond ring", "platinum solitaire"])]),
     ("marcus", "Marcus Bell", "Queens, NY", "Started with heavy gold chains. The last year of browsing has moved to diamond line pieces.",
-     [({"form:Chain": 6, "metal:Gold": 4, "style:street": 5, "form:Pendant": 2}, 6, ["gold chain", "cuban link", "gold pendant"]),
-      ({"form:Bracelet": 5, "stone:Diamond": 5, "style:line": 5, "form:Necklace": 2}, 5, ["tennis bracelet", "diamond line necklace"])]),
+     [({"form:Chain": 7, "style:street": 7, "metal:Gold": 3, "form:Necklace": 2, "era:Contemporary": 2, "style:estate": -5, "style:unusual": -5}, 6, ["gold chain", "cuban link", "gold pendant"]),
+      ({"form:Bracelet": 6, "stone:Diamond": 5, "style:line": 7, "form:Necklace": 3, "era:Contemporary": 2, "style:estate": -5, "style:unusual": -5}, 5, ["tennis bracelet", "diamond line necklace"])]),
     ("ines", "Ines Duarte", "Miami, FL", "Colored stones only. Bought emerald for years, and recent calls have all been about sapphire.",
      [({"stone:Emerald": 7, "style:statement": 2, "form:Ring": 2}, 6, ["emerald ring", "colombian emerald"]),
       ({"stone:Sapphire": 7, "style:statement": 2, "form:Ring": 2, "form:Loose stone": 2}, 4, ["sapphire ring", "blue sapphire"])]),
@@ -47,19 +47,19 @@ PERSONAS = [
     ("naomi", "Naomi Katz", "Brooklyn, NY", "Careful buyer on a modest budget. Victorian brooches, cameos and lockets.",
      [({"era:Victorian": 8, "form:Brooch": 5, "form:Pendant": 2, "style:estate": 3, "stone:Cameo": 5}, 8, ["victorian brooch", "cameo", "antique locket"])]),
     ("dev", "Dev Rao", "Hoboken, NJ", "Treats stones as a store of value. Loose goods, rarely anything set.",
-     [({"form:Loose stone": 9, "stone:Diamond": 3, "stone:Sapphire": 2, "stone:Ruby": 2, "style:investment": 4}, 8, ["loose diamond", "loose sapphire", "unset ruby"])]),
+     [({"form:Loose stone": 12, "style:investment": 6, "stone:Diamond": 2, "form:Necklace": -4, "form:Ring": -4}, 8, ["loose diamond", "loose sapphire", "unset ruby"])]),
     ("claudia", "Claudia Moretti", "Tribeca, NY", "Quiet modern taste. Pearls and clean gold she can wear every day.",
      [({"style:minimal": 7, "stone:Pearl": 4, "metal:Gold": 3, "form:Earrings": 3}, 8, ["pearl earrings", "gold hoops", "pearl strand"])]),
     ("andre", "Andre Whitfield", "Atlanta, GA", "Men's pieces. Watches and chains, and increasingly signet rings.",
-     [({"form:Watch": 7, "form:Chain": 4, "metal:Gold": 3}, 6, ["gold watch", "gold chain"]),
-      ({"style:mens": 6, "form:Ring": 4, "metal:Gold": 3, "form:Watch": 3}, 3, ["signet ring", "mens gold ring"])]),
-    ("sofia", "Sofia Alvarez", "Scottsdale, AZ", "Follows unusual stones. Opal, turquoise and anything she has not seen before.",
-     [({"stone:Opal": 7, "stone:Turquoise": 6, "stone:Aquamarine": 3, "stone:Amethyst": 3, "style:unusual": 5}, 8, ["opal ring", "turquoise jewelry", "unusual gemstone"])]),
+     [({"form:Watch": 9, "style:mens": 6, "form:Chain": 4, "style:bridal": -6, "stone:Pearl": -4}, 6, ["gold watch", "gold chain"]),
+      ({"style:mens": 9, "form:Ring": 3, "metal:Gold": 3, "form:Watch": 3, "style:bridal": -6}, 3, ["signet ring", "mens gold ring"])]),
+    ("sofia", "Sofia Alvarez", "Scottsdale, AZ", "Follows unusual stones. Turquoise, jade, lapis and anything she has not seen before.",
+     [({"style:unusual": 7, "stone:Turquoise": 6, "stone:Jade": 6, "stone:Lapis": 6, "stone:Agate": 5, "stone:Aquamarine": 3, "stone:Citrine": 3}, 8, ["turquoise jewelry", "jade earrings", "unusual gemstone"])]),
     ("daniel", "Daniel Cho", "Fort Lee, NJ", "Bought loose diamonds for years. Has lately been asking about period settings to put them in.",
      [({"form:Loose stone": 7, "stone:Diamond": 6, "style:investment": 3}, 6, ["loose diamond", "certified diamond"]),
       ({"era:Art Deco": 6, "era:Edwardian": 4, "style:estate": 4, "stone:Diamond": 3}, 4, ["art deco setting", "edwardian ring"])]),
     ("lena", "Lena Novak", "Chicago, IL", "Earrings, nearly exclusively. Diamonds for evening, gold for day.",
-     [({"form:Earrings": 9, "stone:Diamond": 3, "metal:Gold": 2}, 8, ["diamond earrings", "chandelier earrings", "gold earrings"])]),
+     [({"form:Earrings": 14, "stone:Diamond": 2, "metal:Gold": 1}, 8, ["diamond earrings", "chandelier earrings", "gold earrings"])]),
     ("margot", "Margot Ellery", "Boston, MA", "Museum-minded. Tiaras, important brooches and pieces with a story, at her own pace.",
      [({"form:Tiara": 8, "form:Brooch": 5, "era:Edwardian": 3, "era:Victorian": 3, "style:important": 6}, 8, ["tiara", "important antique brooch"])]),
 ]
@@ -71,15 +71,20 @@ def tags(p: dict) -> set[str]:
 
 
 def affinity(weights: dict, p: dict) -> float:
-    return 0.05 + sum(weights.get(t, 0) for t in tags(p))
+    return max(0.05, sum(weights.get(t, 0) for t in tags(p)))
+
+
+OFF_TASTE_VIEWS = 0.1  # people browse outside their taste now and then, kept small and explicit
 
 
 def weighted_sample(pool: list[dict], weights: dict, k: int) -> list[dict]:
     pool = list(pool)
     out = []
     for _ in range(min(k, len(pool))):
-        w = [affinity(weights, p) ** 2 for p in pool]
-        x = rng.choices(pool, weights=w)[0]
+        if rng.random() < OFF_TASTE_VIEWS:
+            x = rng.choice(pool)
+        else:
+            x = rng.choices(pool, weights=[affinity(weights, p) ** 3 for p in pool])[0]
         pool.remove(x)
         out.append(x)
     return out
@@ -144,23 +149,34 @@ def main() -> None:
 
     history_pool = [p for p in pieces if p["role"] == "history"]
     available = {p["id"]: p for p in history_pool}
+    P_BY_ID = {p["id"]: p for p in history_pool}
     collectors = []
     for pid, name, city, blurb, phases in PERSONAS:
         events, spent = [], []
+        rng.seed(f"book-{pid}")  # each collector's history stays stable when another's taste is edited
         for weights, sessions, queries in phases:
             for _ in range(sessions):
                 if rng.random() < 0.6:
                     events.append({"type": "search", "q": rng.choice(queries)})
                 viewed = weighted_sample(history_pool, weights, rng.randint(2, 4))
                 events += [{"type": "view", "id": v["id"]} for v in viewed]
-                if rng.random() < 0.4:
+                if rng.random() < 0.55:
                     # one of a kind: a piece bought by someone is gone
-                    open_ = [v for v in viewed if v["id"] in available]
+                    # people buy what fits their taste: an off-taste look is browsing, not a purchase
+                    best = max(affinity(weights, p) for p in available.values())
+                    open_ = [v for v in viewed if v["id"] in available and affinity(weights, v) >= best * 0.4]
                     if open_:
                         buy = max(open_, key=lambda v: affinity(weights, v))
                         del available[buy["id"]]
                         events.append({"type": "order", "id": buy["id"]})
                         spent.append(buy["resale"])
+        if not spent:
+            # everyone in a dealer's book has bought at least once: their most on-taste look becomes a purchase
+            looked = [e for e in events if e["type"] == "view" and e["id"] in available]
+            pick = max(looked, key=lambda e: affinity(phases[0][0], P_BY_ID[e["id"]]))
+            events.insert(events.index(pick) + 1, {"type": "order", "id": pick["id"]})
+            del available[pick["id"]]
+            spent.append(P_BY_ID[pick["id"]]["resale"])
         last_three = sum(spent[-3:])
         cap = max(max(spent, default=0) * 1.5, last_three)
         cap = float(round(cap, -3))

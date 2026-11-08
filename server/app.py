@@ -39,8 +39,13 @@ class Signal(BaseModel):
     id: str | None = Field(default=None, max_length=64)
 
 
+class Commit(BaseModel):
+    lot: str = Field(max_length=64)
+    buyer: str | None = Field(default=None, max_length=64)
+
+
 class Request(BaseModel):
-    budget: float = Field(default=80_000, ge=1_000, le=1_000_000)
+    budget: float = Field(default=80_000, ge=0, le=1_000_000)  # capital still available, not a target
     fit_decay: float = Field(default=4.0, ge=0.5, le=20)
     holding_penalty: float = Field(default=0.15, ge=0, le=1)
     max_rank: int = Field(default=8, ge=1, le=24)
@@ -52,6 +57,9 @@ class Request(BaseModel):
     relative: float = Field(default=1.0, ge=0, le=3)
     signals: dict[str, list[Signal]] = Field(default_factory=dict)
     passes: list[tuple[str, str]] = Field(default_factory=list)
+    radar: list[str] | None = None  # lots visible to the dealer; None means all of them
+    desk: list[str] | None = None   # lots sent to the optimizer; None means everything on the radar
+    committed: list[Commit] = Field(default_factory=list)  # bought: out of the pool, charged to their buyer
 
 
 def purchases(c: dict) -> dict:
@@ -146,28 +154,45 @@ async def build(req: Request):
     if "missing" in sources:
         raise HTTPException(503, "BehaviorGPT is unreachable and this signal has no stored ranking.")
 
+    known = set(LOT_IDS)
+    named = (req.radar or []) + (req.desk or []) + [x.lot for x in req.committed]
+    if any(l not in known for l in named) or any(x.buyer and x.buyer not in BY_ID for x in req.committed):
+        raise HTTPException(422, "unknown lot or collector")
+    # ranks are taken among the lots the dealer can see, so "#3 of 20" stays true as offers come and go
+    bought = {x.lot for x in req.committed}
+    pool = [l for l in (LOT_IDS if req.radar is None else req.radar) if l not in bought]
+    desk = [l for l in (pool if req.desk is None else req.desk) if l in pool]
+
     lens, tags = {}, {}
     for c in COLLECTORS:
         cid = c["id"]
-        full = within(raw[cid]["full"], LOT_IDS)
-        orders = within(raw[cid]["orders"], LOT_IDS)
+        full = within(raw[cid]["full"], pool)
+        orders = within(raw[cid]["orders"], pool)
         lens[cid] = {"full": full, "orders": orders}
-        tags[cid] = within(tag_rank(c["events"], LOT_IDS), LOT_IDS)
-    position = {cid: {l: req.recency * v["full"][l] + (1 - req.recency) * v["orders"][l] for l in LOT_IDS}
+        tags[cid] = within(tag_rank(c["events"], pool), pool)
+    position = {cid: {l: req.recency * v["full"][l] + (1 - req.recency) * v["orders"][l] for l in pool}
                 for cid, v in lens.items()}
-    for cid, order in relative_ranks(position, req.relative, LOT_IDS).items():
+    for cid, order in relative_ranks(position, req.relative, pool).items():
         lens[cid]["blend"] = order
 
-    ranks = np.array([[lens[c["id"]]["blend"][l] for c in COLLECTORS] for l in LOT_IDS], float)
-    tag_ranks = np.array([[tags[c["id"]][l] for c in COLLECTORS] for l in LOT_IDS], float)
-    lots = [{"id": l["id"], "ask": l["ask"], "resale": l["resale"]} for l in LOTS]
-    buyers = [{"id": c["id"], "capacity": c["capacity"]} for c in COLLECTORS]
+    shape = (len(pool), len(COLLECTORS))
+    ranks = np.array([[lens[c["id"]]["blend"][l] for c in COLLECTORS] for l in pool], float).reshape(shape)
+    tag_ranks = np.array([[tags[c["id"]][l] for c in COLLECTORS] for l in pool], float).reshape(shape)
+    take = [pool.index(l) for l in desk]
+    lots = [{"id": l, "ask": PIECES[l]["ask"], "resale": PIECES[l]["resale"]} for l in desk]
+    # a committed piece uses up part of its buyer's capacity and one of their slots
+    buyers = []
+    for c in COLLECTORS:
+        mine = [x.lot for x in req.committed if x.buyer == c["id"]]
+        buyers.append({"id": c["id"], "capacity": max(0.0, c["capacity"] - sum(PIECES[l]["resale"] for l in mine)),
+                       "slots": max(0, req.slots - len(mine))})
     blocked = {tuple(x) for x in req.passes}
-    problem = opt.Problem(lots, buyers, ranks, blocked)
+    tag_ranks = tag_ranks[take]
+    problem = opt.Problem(lots, buyers, ranks[take], blocked)
     q = opt.Params(budget=req.budget, fit_decay=req.fit_decay, holding_penalty=req.holding_penalty,
                    max_rank=req.max_rank, slots=req.slots, resilience=req.resilience,
                    capacity_tolerance=req.capacity_tolerance, stretch_cost=req.stretch_cost)
-    return raw, sources, rank_ms, lens, tags, ranks, tag_ranks, lots, buyers, blocked, problem, q
+    return raw, sources, rank_ms, lens, tags, ranks, tag_ranks, lots, buyers, blocked, pool, problem, q
 
 
 FRONTIER_CACHE: dict[bytes, list] = {}
@@ -176,7 +201,8 @@ FRONTIER_CACHE: dict[bytes, list] = {}
 def cached_frontier(problem, q, blocked) -> list[dict]:
     """The curve does not depend on the budget being looked at, so a slider drag reuses it."""
     key = (problem.ranks.tobytes() + repr((q.fit_decay, q.holding_penalty, q.max_rank, q.slots, q.capacity_tolerance, q.stretch_cost,
-                                           sorted(blocked))).encode())
+                                           sorted(blocked), [l["id"] for l in problem.lots],
+                                           [(c["capacity"], c.get("slots")) for c in problem.collectors])).encode())
     if key not in FRONTIER_CACHE:
         if len(FRONTIER_CACHE) > 256:
             FRONTIER_CACHE.clear()
@@ -194,10 +220,16 @@ async def whatif(req: WhatIf):
     lot = PIECES.get(req.lot)
     if not lot or lot["role"] != "lot":
         raise HTTPException(404, "unknown lot")
+    if any(x.lot == req.lot for x in req.committed):
+        return {"feasible": False, "reason": "This lot is already bought."}
+    if req.desk is not None and req.lot not in req.desk:
+        req.desk = [*req.desk, req.lot]  # asking about a lot not on the desk compares it against what is
     *_, problem, q = await build(req)
+    if not any(l["id"] == req.lot for l in problem.lots):
+        return {"feasible": False, "reason": "This lot isn't on the radar yet."}
     base = opt.solve(problem, q)
     if lot["ask"] > q.budget:
-        return {"feasible": False, "reason": "This lot's ask is above the budget."}
+        return {"feasible": False, "reason": "This lot's ask is above the capital still available."}
     problem.forced = {req.lot}
     alt = opt.solve(problem, q)
     before, after = {x["lot"] for x in base["picks"]}, {x["lot"] for x in alt["picks"]}
@@ -215,7 +247,7 @@ async def whatif(req: WhatIf):
 
 @app.post("/api/portfolio")
 async def portfolio(req: Request):
-    raw, sources, rank_ms, lens, tags, ranks, tag_ranks, lots, buyers, blocked, problem, q = await build(req)
+    raw, sources, rank_ms, lens, tags, ranks, tag_ranks, lots, buyers, blocked, pool, problem, q = await build(req)
 
     t1 = time.perf_counter()
     base = opt.solve(problem, q)
@@ -229,7 +261,7 @@ async def portfolio(req: Request):
     def strategy(key, name, note, idx):
         r = opt.evaluate(problem, q, idx)
         s = opt.stress(problem, q, idx)
-        return {"key": key, "name": name, "note": note, "lots": [LOT_IDS[i] for i in idx],
+        return {"key": key, "name": name, "note": note, "lots": [lots[i]["id"] for i in idx],
                 "spent": r["spent"], "gross_margin": r["gross_margin"], "value": r["value"],
                 "unplaced_capital": r["unplaced_capital"], "pieces": len(r["picks"]),
                 "worst_loss": s[0]["value_lost"] if s else 0}
@@ -244,7 +276,8 @@ async def portfolio(req: Request):
 
     fit = opt.fit_from_rank(ranks, req.fit_decay)
     demand = {}
-    for i, l in enumerate(LOT_IDS):
+    for i, l in enumerate(pool):
+        resale = PIECES[l]["resale"]
         rows = sorted(({
             "collector": c["id"],
             "rank": int(ranks[i, j]),
@@ -252,10 +285,10 @@ async def portfolio(req: Request):
             "rank_orders": lens[c["id"]]["orders"][l],
             "rank_tags": tags[c["id"]][l],
             "fit": round(float(fit[i, j]), 3),
-            "affordable": LOTS[i]["resale"] <= opt.limit(c, q),
-            "vs_largest": round(LOTS[i]["resale"] / purchases(c)["high"], 2) if purchases(c)["high"] else None,
-            "over_by": round(max(0.0, LOTS[i]["resale"] - opt.limit(c, q))),
-            "stretch": round(max(0.0, LOTS[i]["resale"] - c["capacity"])) if LOTS[i]["resale"] <= opt.limit(c, q) else 0,
+            "affordable": resale <= opt.limit(buyers[j], q) and buyers[j]["slots"] > 0,
+            "vs_largest": round(resale / purchases(c)["high"], 2) if purchases(c)["high"] else None,
+            "over_by": round(max(0.0, resale - opt.limit(buyers[j], q))),
+            "stretch": round(max(0.0, resale - buyers[j]["capacity"])) if resale <= opt.limit(buyers[j], q) else 0,
             "passed": (l, c["id"]) in blocked,
         } for j, c in enumerate(COLLECTORS)), key=lambda x: x["rank"])
         demand[l] = rows
@@ -275,8 +308,8 @@ async def portfolio(req: Request):
     drift = {}
     for c in COLLECTORS:
         cid = c["id"]
-        moves = sorted(LOT_IDS, key=lambda l: lens[cid]["full"][l] - lens[cid]["orders"][l])
-        gap = float(np.mean([abs(lens[cid]["full"][l] - lens[cid]["orders"][l]) for l in LOT_IDS]))
+        moves = sorted(pool, key=lambda l: lens[cid]["full"][l] - lens[cid]["orders"][l])
+        gap = float(np.mean([abs(lens[cid]["full"][l] - lens[cid]["orders"][l]) for l in pool])) if pool else 0.0
         drift[cid] = {"gap": round(gap, 1), "rising": moves[:3], "fading": moves[-3:][::-1]}
 
     return {

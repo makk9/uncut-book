@@ -138,5 +138,41 @@ for tol in (0.0, 0.10, 0.25, 0.50):
         check(not stretched, "with no tolerance nothing relies on it")
 print(f"    trophy still has no buyer at 25%: {not any(True for d in solve(budget=80_000, capacity_tolerance=0.25)['demand'][max((l for l in PIECES.values() if l['role'] == 'lot'), key=lambda l: l['ask'])['id']] if d['affordable'])}")
 
+print("\n[9] radar, desk and committed buys")
+LOT_IDS = [p["id"] for p in PIECES.values() if p["role"] == "lot"]
+base20 = LOT_IDS[:20]
+r = solve(budget=80_000, radar=base20)
+check(set(r["demand"]) == set(base20), "only lots on the radar get ranked")
+check(all(d["rank"] <= 20 for rows in r["demand"].values() for d in rows), "ranks are among the 20 visible lots")
+check({x["lot"] for x in r["portfolio"]["picks"]} <= set(base20), "the solver only buys from the radar")
+short = base20[:6]
+r2 = solve(budget=80_000, radar=base20, desk=short)
+check({x["lot"] for x in r2["portfolio"]["picks"]} <= set(short), "the solver only buys from the desk")
+check(set(r2["demand"]) == set(base20), "lots off the desk still show their collector demand")
+r0 = solve(budget=80_000, radar=base20, desk=[])
+check(r0["portfolio"]["picks"] == [] and r0["portfolio"]["value"] == 0, "an empty desk proposes nothing")
+r0 = solve(budget=0, radar=base20)
+check(r0["portfolio"]["picks"] == [], "no capital left proposes nothing")
+big = solve(budget=1_000_000)
+check(big["portfolio"]["spent"] < 300_000, f"not forced to spend: ${big['portfolio']['spent']:,.0f} of $1,000,000")
+check(all(x["value"] > -1 for x in big["portfolio"]["picks"]), "every proposed lot earns its place")
+
+first = r["portfolio"]["picks"][0]
+buyer = first["buyer"]
+left = 80_000 - first["ask"]
+done = [{"lot": first["lot"], "buyer": buyer}]
+r3 = solve(budget=left, radar=base20, committed=done)
+check(first["lot"] not in r3["demand"], "a bought lot leaves the pool")
+check(all(x["lot"] != first["lot"] for x in r3["portfolio"]["picks"]), "a bought lot is not proposed again")
+check(r3["portfolio"]["spent"] <= left, "the next proposal fits the remaining capital")
+print(f"    bought {PIECES[first['lot']]['name'][:34]} for {COLLECTORS[buyer]['name']}: {len(r3['portfolio']['picks'])} pieces proposed with ${left:,.0f} left")
+placed = [x for x in r3["portfolio"]["picks"] if x["buyer"] == buyer]
+check(len(placed) <= 1, "that buyer has one slot left")
+check(sum(x["resale"] for x in placed) + first["resale"] <= COLLECTORS[buyer]["capacity"] * 1.25 + 1e-6, "their committed and proposed pieces stay within their limit")
+others = [x for x in r3["demand"][next(iter(r3["demand"]))] if x["collector"] == buyer]
+two = [{"lot": l, "buyer": buyer} for l in LOT_IDS[:2]]
+r4 = solve(budget=80_000, committed=two)
+check(all(x["buyer"] != buyer for x in r4["portfolio"]["picks"]), "a buyer with two committed pieces is not offered more")
+
 print("\nFAILURES:", failures)
 sys.exit(1 if failures else 0)

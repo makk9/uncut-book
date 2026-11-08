@@ -49,6 +49,11 @@ def can_exceed(amounts: list[float], capacity: float, slots: int) -> bool:
     return sum(sorted(amounts, reverse=True)[:slots]) > capacity
 
 
+def slots_of(c: dict, q: Params) -> int:
+    """Pieces this collector can still take. Committed buys use up slots."""
+    return c.get("slots", q.slots)
+
+
 def fit_from_rank(ranks: np.ndarray, decay: float) -> np.ndarray:
     return np.exp(-(ranks - 1.0) / max(decay, 0.01))
 
@@ -106,13 +111,13 @@ def solve(p: Problem, q: Params, gap: float = 0.002, time_limit: float = 4.0) ->
         idx = [k for k, (_, b) in enumerate(pairs) if b == j]
         if idx:
             add([(n + k, resale[pairs[k][0]]) for k in idx], -np.inf, limit(c, q))
-            if can_exceed([resale[pairs[k][0]] for k in idx], c["capacity"], q.slots):
+            if can_exceed([resale[pairs[k][0]] for k in idx], c["capacity"], slots_of(c, q)):
                 add([(n + k, resale[pairs[k][0]]) for k in idx] + [(over_at + j, -1.0)], -np.inf, c["capacity"])
                 for k in idx:  # one lot's own overflow is known exactly, which keeps the solve fast
                     extra = resale[pairs[k][0]] - c["capacity"]
                     if extra > 0:
                         add([(n + k, extra), (over_at + j, -1.0)], -np.inf, 0)
-            add([(n + k, 1.0) for k in idx], -np.inf, q.slots)
+            add([(n + k, 1.0) for k in idx], -np.inf, slots_of(c, q))
 
     c_obj = np.zeros(nvars)
     w_nom = 1 - q.resilience if use_scen else 1.0
@@ -139,10 +144,10 @@ def solve(p: Problem, q: Params, gap: float = 0.002, time_limit: float = 4.0) ->
                 idx = [k for k, (_, b) in enumerate(pairs) if b == j]
                 if idx:
                     add([(at(k), resale[pairs[k][0]]) for k in idx], -np.inf, limit(c, q))
-                    if can_exceed([resale[pairs[k][0]] for k in idx], c["capacity"], q.slots):
+                    if can_exceed([resale[pairs[k][0]] for k in idx], c["capacity"], slots_of(c, q)):
                         add([(at(k), resale[pairs[k][0]]) for k in idx] + [(over_s_at + s * m + j, -1.0)],
                             -np.inf, c["capacity"])
-                    add([(at(k), 1.0) for k in idx], -np.inf, q.slots)
+                    add([(at(k), 1.0) for k in idx], -np.inf, slots_of(c, q))
             add([(zi, 1.0)] + [(at(k), -v[a, b]) for k, (a, b) in enumerate(pairs) if b != s]
                 + [(i, q.holding_penalty * ask[i]) for i in range(n)]
                 + [(over_s_at + s * m + j, q.stretch_cost) for j in range(m)], -np.inf, 0)
@@ -186,14 +191,14 @@ def place(p: Problem, q: Params, chosen: list[int], drop: int | None = None) -> 
         if idx:
             rows += [r] * len(idx); cols += idx; vals += [resale[pairs[k][0]] for k in idx]
             hi.append(limit(c, q)); r += 1
-            if can_exceed([resale[pairs[k][0]] for k in idx], c["capacity"], q.slots):
+            if can_exceed([resale[pairs[k][0]] for k in idx], c["capacity"], slots_of(c, q)):
                 rows += [r] * (len(idx) + 1); cols += idx + [n + j]
                 vals += [resale[pairs[k][0]] for k in idx] + [-1.0]; hi.append(c["capacity"]); r += 1
                 for k in idx:
                     extra = resale[pairs[k][0]] - c["capacity"]
                     if extra > 0:
                         rows += [r, r]; cols += [k, n + j]; vals += [extra, -1.0]; hi.append(0.0); r += 1
-            rows += [r] * len(idx); cols += idx; vals += [1.0] * len(idx); hi.append(q.slots); r += 1
+            rows += [r] * len(idx); cols += idx; vals += [1.0] * len(idx); hi.append(slots_of(c, q)); r += 1
     # value here is relative to leaving a lot unplaced, so a bad buyer is never forced
     ask = [l["ask"] for l in p.lots]
     obj = [-(v[i, j] + q.holding_penalty * ask[i]) for i, j in pairs] + [q.stretch_cost] * m
@@ -289,6 +294,8 @@ def trophy_strategy(p: Problem, q: Params) -> list[int]:
 
 def margin_strategy(p: Problem, q: Params) -> list[int]:
     """Largest total paper margin under budget, ignoring who would buy."""
+    if not p.lots:
+        return []
     margin = np.array([l["resale"] - l["ask"] for l in p.lots], float)
     ask = np.array([l["ask"] for l in p.lots], float)
     res = milp(-margin, constraints=LinearConstraint(csr_matrix(ask[None, :]), -np.inf, q.budget),

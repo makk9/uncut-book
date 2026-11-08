@@ -39,6 +39,9 @@ const MODES = [
 const DEFAULTS: Settings = { fit_decay: 4, holding_penalty: 0.15, max_rank: 8, slots: 2, recency: 0.6, capacity_tolerance: 0.25, stretch_cost: 0.5, relative: 1 };
 const fill = (v: number, min: number, max: number) => ({ "--p": `${((v - min) / (max - min)) * 100}%` }) as CSSProperties;
 type Toast = { head: string; ms: number; added: string[]; removed: string[] };
+type Bought = { lot: string; buyer: string | null; ask: number; resale: number };
+const OPENING_LOTS = 20; // the rest of the batch stays back as simulated new offers
+const OFFERS_PER_REVEAL = 2;
 
 export default function App() {
   const [book, setBook] = useState<Book | null>(null);
@@ -57,6 +60,9 @@ export default function App() {
   const [credits, setCredits] = useState(false);
   const [toast, setToast] = useState<Toast | null>(null);
   const [flash, setFlash] = useState<Set<string>>(new Set());
+  const [offDesk, setOffDesk] = useState<Set<string>>(new Set());
+  const [revealed, setRevealed] = useState(0);
+  const [bought, setBought] = useState<Bought[]>([]);
   const prevPicks = useRef<Set<string> | null>(null);
   const pendingToast = useRef<string | null>(null);
   const seq = useRef(0);
@@ -65,11 +71,25 @@ export default function App() {
     fetch("/api/book").then((r) => r.json()).then(setBook).catch(() => setErr("Could not load the book."));
   }, []);
 
-  const body = useMemo(() => ({
-    budget, ...settings, resilience: MODES.find((m) => m.key === mode)!.res, signals, passes,
-  }), [budget, settings, mode, signals, passes]);
+  const opening = useMemo(() => (book?.lots ?? []).slice(0, OPENING_LOTS), [book]);
+  const offers = useMemo(() => (book?.lots ?? []).slice(OPENING_LOTS), [book]);
+  const newOffers = useMemo(() => offers.slice(0, revealed), [offers, revealed]);
+  const radarLots = useMemo(() => [...newOffers, ...opening], [newOffers, opening]);
+  const committedAsk = bought.reduce((a, x) => a + x.ask, 0);
+  const available = Math.max(0, budget - committedAsk);
+
+  const body = useMemo(() => {
+    const isBought = new Set(bought.map((x) => x.lot));
+    return {
+      budget: available, ...settings, resilience: MODES.find((m) => m.key === mode)!.res, signals, passes,
+      radar: radarLots.map((l) => l.id),
+      desk: radarLots.map((l) => l.id).filter((id) => !offDesk.has(id) && !isBought.has(id)),
+      committed: bought.map((x) => ({ lot: x.lot, buyer: x.buyer })),
+    };
+  }, [available, settings, mode, signals, passes, radarLots, offDesk, bought]);
 
   useEffect(() => {
+    if (!book) return;
     const id = ++seq.current;
     const t = setTimeout(async () => {
       setBusy(true);
@@ -87,7 +107,7 @@ export default function App() {
       }
     }, 90);
     return () => clearTimeout(t);
-  }, [body]);
+  }, [body, book]);
 
   const lotBy = useMemo(() => Object.fromEntries((book?.lots ?? []).concat(book?.holdings ?? []).map((l) => [l.id, l])), [book]);
   const colBy = useMemo(() => Object.fromEntries((book?.collectors ?? []).map((c) => [c.id, c])), [book]);
@@ -100,7 +120,8 @@ export default function App() {
     prevPicks.current = now;
     if (!prev) return;
     const added = [...now].filter((x) => !prev.has(x));
-    const removed = [...prev].filter((x) => !now.has(x));
+    const justBought = new Set(bought.map((x) => x.lot));
+    const removed = [...prev].filter((x) => !now.has(x) && !justBought.has(x));
     setFlash(new Set(added));
     if (pendingToast.current) {
       setToast({ head: pendingToast.current, ms: res.meta.rank_ms, added: added.map((x) => lotBy[x]?.name), removed: removed.map((x) => lotBy[x]?.name) });
@@ -109,7 +130,37 @@ export default function App() {
     }
     const t = setTimeout(() => setFlash(new Set()), 1600);
     return () => clearTimeout(t);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [res, lotBy]);
+
+  const buy = useCallback((x: Pick_) => {
+    pendingToast.current = `Bought ${lotBy[x.lot]?.name} for ${usd(x.ask)}. ${usd(Math.max(0, available - x.ask))} still available.`;
+    setBought((cur) => [...cur, { lot: x.lot, buyer: x.buyer, ask: x.ask, resale: x.resale }]);
+    setLotOpen(null);
+  }, [lotBy, available]);
+
+  const undoBuy = useCallback((lot: string) => {
+    pendingToast.current = `Undid the purchase of ${lotBy[lot]?.name}.`;
+    setBought((cur) => cur.filter((x) => x.lot !== lot));
+  }, [lotBy]);
+
+  const toggleDesk = useCallback((id: string) => {
+    const leaving = !offDesk.has(id);
+    pendingToast.current = `${lotBy[id]?.name} ${leaving ? "taken off" : "sent to"} the desk.`;
+    setOffDesk((cur) => {
+      const next = new Set(cur);
+      if (next.has(id)) next.delete(id); else next.add(id);
+      return next;
+    });
+  }, [offDesk, lotBy]);
+
+  const revealOffers = useCallback(() => {
+    const next = offers.slice(revealed, revealed + OFFERS_PER_REVEAL);
+    if (!next.length) return;
+    pendingToast.current = `${next.length} new ${next.length > 1 ? "offers" : "offer"} on the radar: ${next.map((l) => l.name).join(", ")}. Not on the desk until you send them.`;
+    setOffDesk((cur) => new Set([...cur, ...next.map((l) => l.id)]));
+    setRevealed((n) => n + next.length);
+  }, [offers, revealed]);
 
   const addSignal = useCallback((cid: string, s: Signal, label: string) => {
     pendingToast.current = `${colBy[cid]?.name}: ${label}.`;
@@ -133,8 +184,11 @@ export default function App() {
 
   const p = res?.portfolio;
   const book_ = res?.compare.find((c) => c.key === "book");
-  const trophyAsk = Math.max(...book.lots.map((l) => l.ask));
-  const signalCount = Object.values(signals).reduce((a, b) => a + b.length, 0);
+  const trophyAsk = Math.max(...radarLots.map((l) => l.ask));
+  const boughtIds = new Set(bought.map((x) => x.lot));
+  const poolSize = radarLots.length - bought.length;
+  const editCount = Object.values(signals).reduce((a, b) => a + b.length, 0) + passes.length + bought.length + revealed
+    + [...offDesk].filter((id) => !newOffers.some((l) => l.id === id)).length;
   const placedTo = (cid: string) => (p?.picks ?? []).filter((x) => x.buyer === cid);
   const stretchOf = (lot: string, cid: string) => res?.demand[lot]?.find((r) => r.collector === cid)?.stretch ?? 0;
   const timesLargest = (lot: string, cid: string) => res?.demand[lot]?.find((r) => r.collector === cid)?.vs_largest ?? 0;
@@ -160,8 +214,9 @@ export default function App() {
 
       <div className="band">
         <div className="band-budget">
-          <label className="lbl" htmlFor="budget">Acquisition budget</label>
+          <label className="lbl" htmlFor="budget">Capital to work with</label>
           <div className="budget">{usd(budget)}</div>
+          <div className="budget-sub">{bought.length ? `${usd(committedAsk)} committed, ${usd(available)} available` : "Available, not a target to spend"}</div>
           <input id="budget" className="range" type="range" min={10000} max={200000} step={1000} value={budget} style={fill(budget, 10000, 200000)}
             onChange={(e) => setBudget(+e.target.value)} />
         </div>
@@ -176,11 +231,11 @@ export default function App() {
                     : <>None of the proposed buys would go to <b>{colBy[focus]?.name}</b>.</>;
                 })()
                 : p.picks.length === 0 ? "Nothing clears the bar at this budget."
-                : <><b>Proposed buys, nothing bought yet:</b> {usd(p.spent)} on {p.picks.length} of {book.lots.length} lots, {usd(p.unspent)} left unspent.</>}
+                : <><b>{bought.length ? "Proposed next:" : "Proposed buys, nothing bought yet:"}</b> {usd(p.spent)} on {p.picks.length} of {poolSize} lots, {usd(p.unspent)} stays available.</>}
             </div>
             <span className="alloc-key">Bar: share of budget</span>
           </div>
-          <Allocation picks={p?.picks ?? []} budget={budget} spent={p?.spent ?? 0} lotBy={lotBy} colBy={colBy} focus={focus} flash={flash}
+          <Allocation picks={p?.picks ?? []} budget={available || 1} spent={p?.spent ?? 0} lotBy={lotBy} colBy={colBy} focus={focus} flash={flash}
             open={(id) => { setCollectorOpen(null); setCredits(false); setLotOpen(id); }} />
         </div>
         <div className="band-ledger">
@@ -219,30 +274,46 @@ export default function App() {
         <div className="col col-radar">
           <div className="head">
             <h2>Deal Radar</h2>
-            <span className="aside">{book.lots.length} incoming lots</span>
+            <span className="aside">{poolSize} incoming {poolSize === 1 ? "lot" : "lots"}{offDesk.size > 0 ? `, ${radarLots.filter((l) => !offDesk.has(l.id) && !boughtIds.has(l.id)).length} on the desk` : ""}</span>
+            {revealed < offers.length && <button className="link" title="Reveals offers already in the catalog, so their rankings are real but their arrival is staged" onClick={revealOffers}>Simulate new offers ({offers.length - revealed} left)</button>}
             <span className="aside push">
               {focus ? `Lit by ${colBy[focus]?.name}'s ranking, brightest first` : "Lit lots are in the proposed buys"}
             </span>
           </div>
           <div className="scroll">
             <div className="lots">
-              {book.lots.map((l) => {
+              {radarLots.map((l) => {
                 const pick = picks[l.id];
+                const isNew = newOffers.some((x) => x.id === l.id);
+                const isBought = boughtIds.has(l.id);
+                const onDesk = !offDesk.has(l.id) && !isBought;
+                const owner = bought.find((x) => x.lot === l.id)?.buyer;
+                const best = res?.demand[l.id]?.find((x) => x.rank <= settings.max_rank && x.affordable && !x.passed);
                 const d = focus ? res?.demand[l.id]?.find((x) => x.collector === focus) : null;
                 const lit = d ? ({ "--b": 0.14 + 0.86 * d.fit, "--s": 0.35 + 0.65 * d.fit }) as CSSProperties : undefined;
                 return (
-                  <button key={l.id} className={`lot ${pick ? "in" : ""} ${flash.has(l.id) ? "flash" : ""}`} style={lit} title={l.name} onClick={() => setLotOpen(l.id)}>
+                  <div key={l.id} className="lot-cell">
+                  <button className={`lot ${pick ? "in" : ""} ${isBought ? "bought" : ""} ${flash.has(l.id) ? "flash" : ""}`} style={lit} title={l.name} onClick={() => setLotOpen(l.id)}>
                     <div className="thumb">
                       <img src={l.image} alt="" loading="lazy" />
-                      {d ? <span className={`plate rank ${d.rank <= 3 ? "top" : d.rank <= settings.max_rank ? "near" : ""}`}>#{d.rank}</span>
+                      {isBought ? <span className="plate top">Bought</span>
+                        : d ? <span className={`plate rank ${d.rank <= 3 ? "top" : d.rank <= settings.max_rank ? "near" : ""}`}>#{d.rank}</span>
+                        : isNew ? <span className="plate trophy">New offer</span>
                         : l.ask === trophyAsk ? <span className="plate trophy">Trophy</span> : null}
                     </div>
                     <div className="ticket">
                       <div className="t-name"><span className="t-no">{l.lot_no}</span>{l.name}</div>
                       <div className="t-px"><span>{usd(l.ask)}</span><span className="est">est. {usd(l.resale)}</span></div>
-                      <div className="t-to">{pick ? (pick.buyer ? <>For <b>{colBy[pick.buyer]?.name}</b>, #{pick.rank}</> : <span className="am">No buyer placed</span>) : "Pass"}</div>
+                      <div className="t-to">
+                        {isBought ? (owner ? <>Bought for <b>{colBy[owner]?.name}</b></> : "Bought")
+                          : pick ? (pick.buyer ? <>For <b>{colBy[pick.buyer]?.name}</b>, #{pick.rank}</> : <span className="am">No buyer placed</span>)
+                          : best ? <>{onDesk ? "Pass. " : ""}Best match {colBy[best.collector]?.name}, #{best.rank}</>
+                          : "No collector in range"}
+                      </div>
                     </div>
                   </button>
+                  {!isBought && <button className={`send ${onDesk ? "on" : ""}`} aria-pressed={onDesk} onClick={() => toggleDesk(l.id)}>{onDesk ? "On desk" : "Send to desk"}</button>}
+                  </div>
                 );
               })}
             </div>
@@ -250,7 +321,7 @@ export default function App() {
               <div className="lower">
                 <div>
                   <div className="head flat"><h3>What the next dollar buys</h3></div>
-                  <Frontier data={res.frontier} budget={budget} />
+                  <Frontier data={res.frontier} budget={available} />
                 </div>
                 <div>
                   <div className="head flat"><h3>Same budget, other ways to choose</h3></div>
@@ -302,20 +373,39 @@ export default function App() {
             <div className="segctl" role="group" aria-label="Objective">
               {MODES.map((m) => <button key={m.key} className={mode === m.key ? "on" : ""} aria-pressed={mode === m.key} onClick={() => setMode(m.key)}>{m.label}</button>)}
             </div>
-            {signalCount + passes.length > 0 && <button className="link" onClick={() => { setSignals({}); setPasses([]); }}>Reset {signalCount + passes.length} {signalCount + passes.length > 1 ? "edits" : "edit"}</button>}
+            {editCount > 0 && <button className="link" onClick={() => { setSignals({}); setPasses([]); setBought([]); setOffDesk(new Set()); setRevealed(0); }}>Reset {editCount} {editCount > 1 ? "edits" : "edit"}</button>}
           </div>
           {showSettings && <Assumptions s={settings} set={setSettings} />}
           <div className="scroll">
-            {p?.picks.length === 0 && <div className="pad muted">Nothing clears the bar at this budget. Raise it or relax the assumptions.</div>}
+            {bought.length > 0 && (
+              <>
+                <div className="head flat"><h3>Committed</h3><span className="aside push">{usd(committedAsk)} spent</span></div>
+                {bought.map((x) => (
+                  <div key={x.lot} className="bought-row">
+                    <img src={lotBy[x.lot]?.image} alt="" />
+                    <div style={{ minWidth: 0 }}>
+                      <div className="n" title={lotBy[x.lot]?.name}>{lotBy[x.lot]?.name}</div>
+                      <div className="b">{x.buyer ? <>For <span className="who">{colBy[x.buyer]?.name}</span></> : "No buyer placed"}, {usd(x.ask)}</div>
+                    </div>
+                    <button className="link" onClick={() => undoBuy(x.lot)}>Undo</button>
+                  </div>
+                ))}
+                <div className="head flat"><h3>Proposed next</h3><span className="aside push">{usd(available)} available</span></div>
+              </>
+            )}
+            {p?.picks.length === 0 && <div className="pad muted">{available === 0 ? "No capital left to propose anything." : "Nothing here clears the bar. That's a fine answer: the capital stays available."}</div>}
             {p?.picks.map((x) => (
-              <button key={x.lot} className="pick" onClick={() => setLotOpen(x.lot)}>
+              <div key={x.lot} className="pick-row">
+              <button className="pick" onClick={() => setLotOpen(x.lot)}>
                 <img src={lotBy[x.lot]?.image} alt="" />
                 <div style={{ minWidth: 0 }}>
                   <div className="n" title={lotBy[x.lot]?.name}>{lotBy[x.lot]?.name}</div>
-                  <div className="b">{x.buyer ? <>Call <span className="who">{colBy[x.buyer]?.name}</span>, ranks it #{x.rank} of {book.lots.length}{stretchOf(x.lot, x.buyer) > 0 && <span className="am">, {usd(stretchOf(x.lot, x.buyer))} over capacity</span>}{timesLargest(x.lot, x.buyer) > 1 && <span>, {timesLargest(x.lot, x.buyer).toFixed(1)}× their largest purchase</span>}</> : <span className="am">No buyer placed</span>}</div>
+                  <div className="b">{x.buyer ? <>Call <span className="who">{colBy[x.buyer]?.name}</span>, ranks it #{x.rank} of {poolSize}{stretchOf(x.lot, x.buyer) > 0 && <span className="am">, {usd(stretchOf(x.lot, x.buyer))} over capacity</span>}{timesLargest(x.lot, x.buyer) > 1 && <span>, {timesLargest(x.lot, x.buyer).toFixed(1)}× their largest purchase</span>}</> : <span className="am">No buyer placed</span>}</div>
                 </div>
                 <div className="r">{usd(x.ask)}<div>est. {usd(x.resale)}</div></div>
               </button>
+              <button className="buy" title={`Commit to buying this for ${usd(x.ask)}`} onClick={() => buy(x)}>Buy</button>
+              </div>
             ))}
             {p && p.picks.length > 0 && (
               <div className="total">
@@ -349,7 +439,7 @@ export default function App() {
       </footer>
 
       {lotOpen && lotBy[lotOpen] && res && (
-        <LotDrawer lot={lotBy[lotOpen]} res={res} colBy={colBy} body={body} total={book.lots.length} passes={passes} togglePass={togglePass} lotBy={lotBy}
+        <LotDrawer lot={lotBy[lotOpen]} res={res} colBy={colBy} body={body} total={poolSize} passes={passes} togglePass={togglePass} lotBy={lotBy}
           maxRank={settings.max_rank} onClose={() => setLotOpen(null)} logView={(cid) => addSignal(cid, { type: "view", id: lotOpen }, `looked at ${lotBy[lotOpen].name}`)} />
       )}
       {collectorOpen && colBy[collectorOpen] && res && (

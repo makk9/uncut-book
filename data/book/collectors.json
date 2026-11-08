@@ -6,52 +6,12 @@
   "blurb": "Buys bridal for three generations of family friends. Round and oval diamonds, nothing loud.",
   "events": [
    {
-    "type": "search",
-    "q": "platinum solitaire"
-   },
-   {
     "type": "view",
-    "id": "his058"
-   },
-   {
-    "type": "view",
-    "id": "his075"
-   },
-   {
-    "type": "view",
-    "id": "his003"
-   },
-   {
-    "type": "search",
-    "q": "platinum solitaire"
-   },
-   {
-    "type": "view",
-    "id": "his001"
-   },
-   {
-    "type": "view",
-    "id": "his029"
-   },
-   {
-    "type": "order",
-    "id": "his001"
-   },
-   {
-    "type": "view",
-    "id": "his068"
+    "id": "his066"
    },
    {
     "type": "view",
     "id": "his067"
-   },
-   {
-    "type": "view",
-    "id": "his037"
-   },
-   {
-    "type": "view",
-    "id": "his046"
    },
    {
     "type": "view",
@@ -59,34 +19,10 @@
    },
    {
     "type": "view",
-    "id": "his067"
-   },
-   {
-    "type": "view",
-    "id": "his001"
-   },
-   {
-    "type": "view",
-    "id": "his005"
-   },
-   {
-    "type": "order",
-    "id": "his067"
-   },
-   {
-    "type": "search",
-    "q": "oval diamond ring"
-   },
-   {
-    "type": "view",
     "id": "his052"
    },
    {
-    "type": "view",
-    "id": "his074"
-   },
-   {
-    "type": "view",
+    "type": "order",
     "id": "his066"
    },
    {
@@ -95,19 +31,71 @@
    },
    {
     "type": "view",
-    "id": "his065"
+    "id": "his067"
    },
    {
     "type": "view",
-    "id": "his006"
+    "id": "his062"
+   },
+   {
+    "type": "search",
+    "q": "oval diamond ring"
+   },
+   {
+    "type": "view",
+    "id": "his073"
+   },
+   {
+    "type": "view",
+    "id": "his067"
+   },
+   {
+    "type": "view",
+    "id": "his000"
+   },
+   {
+    "type": "order",
+    "id": "his067"
+   },
+   {
+    "type": "search",
+    "q": "diamond engagement ring"
+   },
+   {
+    "type": "view",
+    "id": "his095"
+   },
+   {
+    "type": "view",
+    "id": "his052"
+   },
+   {
+    "type": "view",
+    "id": "his067"
+   },
+   {
+    "type": "view",
+    "id": "his068"
+   },
+   {
+    "type": "view",
+    "id": "his066"
+   },
+   {
+    "type": "view",
+    "id": "his004"
+   },
+   {
+    "type": "search",
+    "q": "oval diamond ring"
+   },
+   {
+    "type": "view",
+    "id": "his038"
    },
    {
     "type": "view",
     "id": "his069"
-   },
-   {
-    "type": "view",
-    "id": "his013"
    },
    {
     "type": "order",
@@ -119,19 +107,15 @@
    },
    {
     "type": "view",
-    "id": "his071"
+    "id": "his000"
    },
    {
     "type": "view",
-    "id": "his039"
+    "id": "his067"
    },
    {
     "type": "view",
-    "id": "his075"
-   },
-   {
-    "type": "view",
-    "id": "his037"
+    "id": "his066"
    },
    {
     "type": "view",
@@ -139,17 +123,33 @@
    },
    {
     "type": "view",
-    "id": "his086"
+    "id": "his090"
    },
    {
     "type": "order",
     "id": "his004"
+   },
+   {
+    "type": "search",
+    "q": "platinum solitaire"
+   },
+   {
+    "type": "view",
+    "id": "his068"
+   },
+   {
+    "type": "view",
+    "id": "his095"
+   },
+   {
+    "type": "order",
+    "id": "his068"
    }
   ],
-  "capacity": 39000.0,
+  "capacity": 50000.0,
   "capacity_note": "Capacity is computed, not stated: the larger of 1.5× their largest past purchase and their last three purchases combined. Purchases are invented.",
-  "lifetime_spend": 53600.0,
-  "orders": 4
+  "lifetime_spend": 64900.0,
+  "orders": 5
  },
  {
   "id": "marcus",
@@ -158,48 +158,20 @@
   "blurb": "Started with heavy gold chains. The last year of browsing has moved to diamond line pieces.",
   "events": [
    {
-    "type": "search",
-    "q": "gold pendant"
-   },
-   {
-    "type": "view",
-    "id": "his044"
-   },
-   {
-    "type": "view",
-    "id": "his074"
-   },
-   {
-    "type": "view",
-    "id": "his025"
-   },
-   {
-    "type": "search",
-    "q": "cuban link"
-   },
-   {
-    "type": "view",
-    "id": "his002"
-   },
-   {
-    "type": "view",
-    "id": "his044"
-   },
-   {
-    "type": "view",
-    "id": "his090"
-   },
-   {
-    "type": "order",
-    "id": "his044"
-   },
-   {
-    "type": "view",
-    "id": "his006"
-   },
-   {
     "type": "view",
     "id": "his086"
+   },
+   {
+    "type": "view",
+    "id": "his073"
+   },
+   {
+    "type": "view",
+    "id": "his009"
+   },
+   {
+    "type": "view",
+    "id": "his088"
    },
    {
     "type": "order",
@@ -207,47 +179,23 @@
    },
    {
     "type": "search",
-    "q": "cuban link"
-   },
-   {
-    "type": "view",
-    "id": "his025"
-   },
-   {
-    "type": "view",
-    "id": "his086"
-   },
-   {
-    "type": "view",
-    "id": "his012"
+    "q": "gold chain"
    },
    {
     "type": "view",
     "id": "his072"
    },
    {
-    "type": "order",
-    "id": "his025"
-   },
-   {
-    "type": "search",
-    "q": "gold chain"
+    "type": "view",
+    "id": "his086"
    },
    {
     "type": "view",
-    "id": "his029"
+    "id": "his036"
    },
    {
     "type": "view",
-    "id": "his095"
-   },
-   {
-    "type": "search",
-    "q": "gold chain"
-   },
-   {
-    "type": "view",
-    "id": "his025"
+    "id": "his054"
    },
    {
     "type": "view",
@@ -255,19 +203,103 @@
    },
    {
     "type": "search",
+    "q": "gold chain"
+   },
+   {
+    "type": "view",
+    "id": "his086"
+   },
+   {
+    "type": "view",
+    "id": "his079"
+   },
+   {
+    "type": "order",
+    "id": "his079"
+   },
+   {
+    "type": "view",
+    "id": "his052"
+   },
+   {
+    "type": "view",
+    "id": "his086"
+   },
+   {
+    "type": "search",
+    "q": "cuban link"
+   },
+   {
+    "type": "view",
+    "id": "his086"
+   },
+   {
+    "type": "view",
+    "id": "his045"
+   },
+   {
+    "type": "search",
     "q": "tennis bracelet"
    },
    {
     "type": "view",
-    "id": "his026"
+    "id": "his077"
    },
    {
     "type": "view",
-    "id": "his038"
+    "id": "his086"
+   },
+   {
+    "type": "search",
+    "q": "tennis bracelet"
+   },
+   {
+    "type": "view",
+    "id": "his074"
+   },
+   {
+    "type": "view",
+    "id": "his093"
+   },
+   {
+    "type": "view",
+    "id": "his004"
+   },
+   {
+    "type": "order",
+    "id": "his074"
+   },
+   {
+    "type": "view",
+    "id": "his074"
+   },
+   {
+    "type": "view",
+    "id": "his002"
+   },
+   {
+    "type": "order",
+    "id": "his002"
    },
    {
     "type": "search",
     "q": "diamond line necklace"
+   },
+   {
+    "type": "view",
+    "id": "his006"
+   },
+   {
+    "type": "view",
+    "id": "his052"
+   },
+   {
+    "type": "view",
+    "id": "his095"
+   },
+   {
+    "type": "view",
+    "id": "his003"
    },
    {
     "type": "view",
@@ -275,65 +307,17 @@
    },
    {
     "type": "view",
-    "id": "his015"
+    "id": "his095"
    },
    {
     "type": "view",
-    "id": "his074"
-   },
-   {
-    "type": "order",
-    "id": "his074"
-   },
-   {
-    "type": "view",
-    "id": "his074"
-   },
-   {
-    "type": "view",
-    "id": "his020"
-   },
-   {
-    "type": "view",
-    "id": "his071"
-   },
-   {
-    "type": "search",
-    "q": "diamond line necklace"
-   },
-   {
-    "type": "view",
-    "id": "his074"
-   },
-   {
-    "type": "view",
-    "id": "his043"
-   },
-   {
-    "type": "order",
-    "id": "his043"
-   },
-   {
-    "type": "view",
-    "id": "his021"
-   },
-   {
-    "type": "view",
-    "id": "his081"
-   },
-   {
-    "type": "view",
-    "id": "his094"
-   },
-   {
-    "type": "view",
-    "id": "his037"
+    "id": "his068"
    }
   ],
   "capacity": 18000.0,
   "capacity_note": "Capacity is computed, not stated: the larger of 1.5× their largest past purchase and their last three purchases combined. Purchases are invented.",
-  "lifetime_spend": 32400.0,
-  "orders": 5
+  "lifetime_spend": 26600.0,
+  "orders": 4
  },
  {
   "id": "ines",
@@ -347,115 +331,15 @@
    },
    {
     "type": "view",
-    "id": "his007"
-   },
-   {
-    "type": "view",
-    "id": "his008"
-   },
-   {
-    "type": "view",
-    "id": "his037"
-   },
-   {
-    "type": "order",
-    "id": "his006"
-   },
-   {
-    "type": "view",
-    "id": "his008"
-   },
-   {
-    "type": "view",
-    "id": "his075"
-   },
-   {
-    "type": "view",
-    "id": "his037"
-   },
-   {
-    "type": "order",
-    "id": "his037"
-   },
-   {
-    "type": "search",
-    "q": "emerald ring"
-   },
-   {
-    "type": "view",
-    "id": "his007"
-   },
-   {
-    "type": "view",
-    "id": "his037"
-   },
-   {
-    "type": "view",
-    "id": "his007"
-   },
-   {
-    "type": "view",
     "id": "his092"
    },
    {
     "type": "view",
-    "id": "his039"
-   },
-   {
-    "type": "order",
     "id": "his007"
    },
    {
     "type": "search",
-    "q": "emerald ring"
-   },
-   {
-    "type": "view",
-    "id": "his006"
-   },
-   {
-    "type": "view",
-    "id": "his009"
-   },
-   {
-    "type": "view",
-    "id": "his009"
-   },
-   {
-    "type": "view",
-    "id": "his083"
-   },
-   {
-    "type": "view",
-    "id": "his037"
-   },
-   {
-    "type": "view",
-    "id": "his082"
-   },
-   {
-    "type": "view",
-    "id": "his042"
-   },
-   {
-    "type": "view",
-    "id": "his080"
-   },
-   {
-    "type": "search",
-    "q": "blue sapphire"
-   },
-   {
-    "type": "view",
-    "id": "his001"
-   },
-   {
-    "type": "view",
-    "id": "his067"
-   },
-   {
-    "type": "view",
-    "id": "his003"
+    "q": "colombian emerald"
    },
    {
     "type": "view",
@@ -463,11 +347,67 @@
    },
    {
     "type": "view",
+    "id": "his006"
+   },
+   {
+    "type": "view",
+    "id": "his014"
+   },
+   {
+    "type": "view",
+    "id": "his006"
+   },
+   {
+    "type": "view",
     "id": "his037"
    },
    {
+    "type": "view",
+    "id": "his007"
+   },
+   {
+    "type": "view",
+    "id": "his010"
+   },
+   {
+    "type": "view",
+    "id": "his006"
+   },
+   {
+    "type": "view",
+    "id": "his017"
+   },
+   {
     "type": "order",
-    "id": "his003"
+    "id": "his006"
+   },
+   {
+    "type": "view",
+    "id": "his041"
+   },
+   {
+    "type": "view",
+    "id": "his010"
+   },
+   {
+    "type": "view",
+    "id": "his060"
+   },
+   {
+    "type": "view",
+    "id": "his004"
+   },
+   {
+    "type": "view",
+    "id": "his041"
+   },
+   {
+    "type": "view",
+    "id": "his082"
+   },
+   {
+    "type": "order",
+    "id": "his082"
    },
    {
     "type": "search",
@@ -475,7 +415,7 @@
    },
    {
     "type": "view",
-    "id": "his012"
+    "id": "his013"
    },
    {
     "type": "view",
@@ -483,12 +423,56 @@
    },
    {
     "type": "view",
+    "id": "his002"
+   },
+   {
+    "type": "view",
+    "id": "his019"
+   },
+   {
+    "type": "search",
+    "q": "blue sapphire"
+   },
+   {
+    "type": "view",
+    "id": "his004"
+   },
+   {
+    "type": "view",
     "id": "his080"
+   },
+   {
+    "type": "view",
+    "id": "his072"
+   },
+   {
+    "type": "order",
+    "id": "his080"
+   },
+   {
+    "type": "view",
+    "id": "his001"
+   },
+   {
+    "type": "view",
+    "id": "his071"
+   },
+   {
+    "type": "view",
+    "id": "his072"
+   },
+   {
+    "type": "view",
+    "id": "his004"
+   },
+   {
+    "type": "order",
+    "id": "his001"
    }
   ],
-  "capacity": 19000.0,
+  "capacity": 53000.0,
   "capacity_note": "Capacity is computed, not stated: the larger of 1.5× their largest past purchase and their last three purchases combined. Purchases are invented.",
-  "lifetime_spend": 30000.0,
+  "lifetime_spend": 63300.0,
   "orders": 4
  },
  {
@@ -503,15 +487,11 @@
    },
    {
     "type": "view",
-    "id": "his022"
+    "id": "his018"
    },
    {
     "type": "view",
-    "id": "his029"
-   },
-   {
-    "type": "view",
-    "id": "his017"
+    "id": "his089"
    },
    {
     "type": "view",
@@ -519,7 +499,7 @@
    },
    {
     "type": "view",
-    "id": "his016"
+    "id": "his029"
    },
    {
     "type": "order",
@@ -535,11 +515,15 @@
    },
    {
     "type": "view",
-    "id": "his029"
+    "id": "his018"
    },
    {
     "type": "view",
-    "id": "his018"
+    "id": "his029"
+   },
+   {
+    "type": "order",
+    "id": "his089"
    },
    {
     "type": "search",
@@ -547,79 +531,23 @@
    },
    {
     "type": "view",
-    "id": "his006"
+    "id": "his018"
    },
    {
     "type": "view",
     "id": "his025"
    },
    {
-    "type": "view",
-    "id": "his018"
-   },
-   {
-    "type": "view",
-    "id": "his015"
-   },
-   {
-    "type": "search",
-    "q": "platinum filigree"
-   },
-   {
-    "type": "view",
-    "id": "his089"
-   },
-   {
-    "type": "view",
-    "id": "his015"
-   },
-   {
-    "type": "view",
-    "id": "his001"
-   },
-   {
-    "type": "view",
-    "id": "his018"
-   },
-   {
-    "type": "search",
-    "q": "art deco ring"
-   },
-   {
-    "type": "view",
-    "id": "his029"
-   },
-   {
-    "type": "view",
-    "id": "his018"
-   },
-   {
-    "type": "view",
-    "id": "his089"
-   },
-   {
     "type": "order",
     "id": "his018"
    },
    {
-    "type": "view",
-    "id": "his029"
-   },
-   {
-    "type": "view",
-    "id": "his071"
-   },
-   {
     "type": "search",
     "q": "art deco ring"
    },
    {
     "type": "view",
-    "id": "his015"
-   },
-   {
-    "type": "view",
-    "id": "his089"
+    "id": "his016"
    },
    {
     "type": "view",
@@ -627,7 +555,67 @@
    },
    {
     "type": "order",
+    "id": "his016"
+   },
+   {
+    "type": "search",
+    "q": "art deco brooch"
+   },
+   {
+    "type": "view",
+    "id": "his015"
+   },
+   {
+    "type": "view",
+    "id": "his016"
+   },
+   {
+    "type": "view",
+    "id": "his018"
+   },
+   {
+    "type": "view",
+    "id": "his029"
+   },
+   {
+    "type": "search",
+    "q": "art deco brooch"
+   },
+   {
+    "type": "view",
+    "id": "his029"
+   },
+   {
+    "type": "view",
+    "id": "his030"
+   },
+   {
+    "type": "order",
+    "id": "his029"
+   },
+   {
+    "type": "view",
+    "id": "his015"
+   },
+   {
+    "type": "view",
     "id": "his089"
+   },
+   {
+    "type": "view",
+    "id": "his016"
+   },
+   {
+    "type": "view",
+    "id": "his018"
+   },
+   {
+    "type": "view",
+    "id": "his077"
+   },
+   {
+    "type": "view",
+    "id": "his018"
    },
    {
     "type": "search",
@@ -639,21 +627,17 @@
    },
    {
     "type": "view",
-    "id": "his092"
+    "id": "his017"
    },
    {
-    "type": "view",
-    "id": "his084"
-   },
-   {
-    "type": "view",
-    "id": "his016"
+    "type": "order",
+    "id": "his017"
    }
   ],
-  "capacity": 31000.0,
+  "capacity": 28000.0,
   "capacity_note": "Capacity is computed, not stated: the larger of 1.5× their largest past purchase and their last three purchases combined. Purchases are invented.",
-  "lifetime_spend": 31200.0,
-  "orders": 3
+  "lifetime_spend": 47300.0,
+  "orders": 6
  },
  {
   "id": "priya",
@@ -663,107 +647,7 @@
   "events": [
    {
     "type": "view",
-    "id": "his035"
-   },
-   {
-    "type": "view",
-    "id": "his050"
-   },
-   {
-    "type": "view",
-    "id": "his074"
-   },
-   {
-    "type": "view",
-    "id": "his039"
-   },
-   {
-    "type": "view",
-    "id": "his010"
-   },
-   {
-    "type": "view",
-    "id": "his004"
-   },
-   {
-    "type": "view",
-    "id": "his089"
-   },
-   {
-    "type": "order",
-    "id": "his039"
-   },
-   {
-    "type": "view",
-    "id": "his033"
-   },
-   {
-    "type": "view",
-    "id": "his072"
-   },
-   {
-    "type": "view",
-    "id": "his051"
-   },
-   {
-    "type": "view",
-    "id": "his073"
-   },
-   {
-    "type": "search",
-    "q": "pearl set"
-   },
-   {
-    "type": "view",
-    "id": "his083"
-   },
-   {
-    "type": "view",
-    "id": "his082"
-   },
-   {
-    "type": "search",
-    "q": "gold necklace"
-   },
-   {
-    "type": "view",
-    "id": "his051"
-   },
-   {
-    "type": "view",
-    "id": "his072"
-   },
-   {
-    "type": "view",
-    "id": "his033"
-   },
-   {
-    "type": "view",
-    "id": "his010"
-   },
-   {
-    "type": "order",
-    "id": "his051"
-   },
-   {
-    "type": "view",
-    "id": "his022"
-   },
-   {
-    "type": "view",
-    "id": "his002"
-   },
-   {
-    "type": "view",
-    "id": "his041"
-   },
-   {
-    "type": "search",
-    "q": "pearl set"
-   },
-   {
-    "type": "view",
-    "id": "his051"
+    "id": "his044"
    },
    {
     "type": "view",
@@ -771,6 +655,106 @@
    },
    {
     "type": "view",
+    "id": "his028"
+   },
+   {
+    "type": "order",
+    "id": "his093"
+   },
+   {
+    "type": "view",
+    "id": "his031"
+   },
+   {
+    "type": "view",
+    "id": "his070"
+   },
+   {
+    "type": "search",
+    "q": "pearl set"
+   },
+   {
+    "type": "view",
+    "id": "his039"
+   },
+   {
+    "type": "view",
+    "id": "his059"
+   },
+   {
+    "type": "view",
+    "id": "his058"
+   },
+   {
+    "type": "view",
+    "id": "his071"
+   },
+   {
+    "type": "search",
+    "q": "pearl set"
+   },
+   {
+    "type": "view",
+    "id": "his012"
+   },
+   {
+    "type": "view",
+    "id": "his083"
+   },
+   {
+    "type": "view",
+    "id": "his031"
+   },
+   {
+    "type": "order",
+    "id": "his083"
+   },
+   {
+    "type": "view",
+    "id": "his075"
+   },
+   {
+    "type": "view",
+    "id": "his083"
+   },
+   {
+    "type": "view",
+    "id": "his095"
+   },
+   {
+    "type": "view",
+    "id": "his096"
+   },
+   {
+    "type": "view",
+    "id": "his051"
+   },
+   {
+    "type": "view",
+    "id": "his083"
+   },
+   {
+    "type": "view",
+    "id": "his028"
+   },
+   {
+    "type": "order",
+    "id": "his051"
+   },
+   {
+    "type": "view",
+    "id": "his029"
+   },
+   {
+    "type": "view",
+    "id": "his058"
+   },
+   {
+    "type": "view",
+    "id": "his040"
+   },
+   {
+    "type": "order",
     "id": "his040"
    },
    {
@@ -779,17 +763,21 @@
    },
    {
     "type": "view",
-    "id": "his012"
+    "id": "his040"
    },
    {
     "type": "view",
-    "id": "his093"
+    "id": "his085"
+   },
+   {
+    "type": "order",
+    "id": "his085"
    }
   ],
-  "capacity": 55000.0,
+  "capacity": 35000.0,
   "capacity_note": "Capacity is computed, not stated: the larger of 1.5× their largest past purchase and their last three purchases combined. Purchases are invented.",
-  "lifetime_spend": 39100.0,
-  "orders": 2
+  "lifetime_spend": 69200.0,
+  "orders": 5
  },
  {
   "id": "theo",
@@ -798,8 +786,68 @@
   "blurb": "Wants the room to notice. Cocktail rings and big center stones, gets bored quickly.",
   "events": [
    {
+    "type": "view",
+    "id": "his043"
+   },
+   {
+    "type": "view",
+    "id": "his060"
+   },
+   {
+    "type": "view",
+    "id": "his037"
+   },
+   {
+    "type": "order",
+    "id": "his037"
+   },
+   {
+    "type": "search",
+    "q": "cocktail ring"
+   },
+   {
+    "type": "view",
+    "id": "his090"
+   },
+   {
+    "type": "view",
+    "id": "his006"
+   },
+   {
+    "type": "view",
+    "id": "his037"
+   },
+   {
+    "type": "order",
+    "id": "his090"
+   },
+   {
+    "type": "search",
+    "q": "cocktail ring"
+   },
+   {
+    "type": "view",
+    "id": "his008"
+   },
+   {
+    "type": "view",
+    "id": "his037"
+   },
+   {
+    "type": "view",
+    "id": "his090"
+   },
+   {
     "type": "search",
     "q": "large statement ring"
+   },
+   {
+    "type": "view",
+    "id": "his005"
+   },
+   {
+    "type": "view",
+    "id": "his007"
    },
    {
     "type": "view",
@@ -807,35 +855,11 @@
    },
    {
     "type": "view",
-    "id": "his092"
-   },
-   {
-    "type": "order",
-    "id": "his092"
-   },
-   {
-    "type": "search",
-    "q": "large statement ring"
+    "id": "his007"
    },
    {
     "type": "view",
-    "id": "his024"
-   },
-   {
-    "type": "view",
-    "id": "his095"
-   },
-   {
-    "type": "view",
-    "id": "his006"
-   },
-   {
-    "type": "view",
-    "id": "his006"
-   },
-   {
-    "type": "view",
-    "id": "his013"
+    "id": "his042"
    },
    {
     "type": "view",
@@ -843,97 +867,53 @@
    },
    {
     "type": "view",
-    "id": "his004"
-   },
-   {
-    "type": "order",
-    "id": "his013"
-   },
-   {
-    "type": "view",
-    "id": "his010"
-   },
-   {
-    "type": "view",
-    "id": "his067"
-   },
-   {
-    "type": "view",
-    "id": "his001"
+    "id": "his000"
    },
    {
     "type": "search",
-    "q": "large statement ring"
+    "q": "cocktail ring"
+   },
+   {
+    "type": "view",
+    "id": "his080"
+   },
+   {
+    "type": "view",
+    "id": "his007"
+   },
+   {
+    "type": "order",
+    "id": "his007"
+   },
+   {
+    "type": "view",
+    "id": "his080"
+   },
+   {
+    "type": "view",
+    "id": "his043"
+   },
+   {
+    "type": "order",
+    "id": "his043"
+   },
+   {
+    "type": "view",
+    "id": "his093"
+   },
+   {
+    "type": "view",
+    "id": "his055"
    },
    {
     "type": "view",
     "id": "his037"
-   },
-   {
-    "type": "view",
-    "id": "his007"
-   },
-   {
-    "type": "view",
-    "id": "his092"
-   },
-   {
-    "type": "view",
-    "id": "his008"
-   },
-   {
-    "type": "search",
-    "q": "cocktail ring"
-   },
-   {
-    "type": "view",
-    "id": "his041"
-   },
-   {
-    "type": "view",
-    "id": "his066"
-   },
-   {
-    "type": "search",
-    "q": "large statement ring"
-   },
-   {
-    "type": "view",
-    "id": "his041"
-   },
-   {
-    "type": "view",
-    "id": "his066"
-   },
-   {
-    "type": "view",
-    "id": "his072"
-   },
-   {
-    "type": "search",
-    "q": "cocktail ring"
-   },
-   {
-    "type": "view",
-    "id": "his041"
-   },
-   {
-    "type": "view",
-    "id": "his092"
-   },
-   {
-    "type": "view",
-    "id": "his007"
-   },
-   {
-    "type": "view",
-    "id": "his061"
    }
   ],
-  "capacity": 18000.0,
+  "capacity": 25000.0,
   "capacity_note": "Capacity is computed, not stated: the larger of 1.5× their largest past purchase and their last three purchases combined. Purchases are invented.",
-  "lifetime_spend": 17700.0,
-  "orders": 2
+  "lifetime_spend": 29400.0,
+  "orders": 4
  },
  {
   "id": "naomi",
@@ -942,132 +922,20 @@
   "blurb": "Careful buyer on a modest budget. Victorian brooches, cameos and lockets.",
   "events": [
    {
-    "type": "view",
-    "id": "his021"
-   },
-   {
-    "type": "view",
-    "id": "his063"
-   },
-   {
-    "type": "view",
-    "id": "his084"
-   },
-   {
-    "type": "view",
-    "id": "his026"
-   },
-   {
     "type": "search",
-    "q": "antique locket"
-   },
-   {
-    "type": "view",
-    "id": "his026"
-   },
-   {
-    "type": "view",
-    "id": "his028"
-   },
-   {
-    "type": "order",
-    "id": "his028"
-   },
-   {
-    "type": "view",
-    "id": "his064"
+    "q": "cameo"
    },
    {
     "type": "view",
     "id": "his027"
-   },
-   {
-    "type": "view",
-    "id": "his087"
-   },
-   {
-    "type": "view",
-    "id": "his020"
-   },
-   {
-    "type": "order",
-    "id": "his027"
-   },
-   {
-    "type": "search",
-    "q": "antique locket"
-   },
-   {
-    "type": "view",
-    "id": "his024"
-   },
-   {
-    "type": "view",
-    "id": "his084"
-   },
-   {
-    "type": "view",
-    "id": "his063"
-   },
-   {
-    "type": "order",
-    "id": "his024"
-   },
-   {
-    "type": "search",
-    "q": "victorian brooch"
-   },
-   {
-    "type": "view",
-    "id": "his025"
    },
    {
     "type": "view",
     "id": "his062"
    },
    {
-    "type": "view",
-    "id": "his064"
-   },
-   {
-    "type": "search",
-    "q": "victorian brooch"
-   },
-   {
-    "type": "view",
-    "id": "his028"
-   },
-   {
-    "type": "view",
-    "id": "his084"
-   },
-   {
-    "type": "view",
-    "id": "his020"
-   },
-   {
-    "type": "search",
-    "q": "victorian brooch"
-   },
-   {
-    "type": "view",
-    "id": "his022"
-   },
-   {
-    "type": "view",
-    "id": "his032"
-   },
-   {
     "type": "order",
-    "id": "his022"
-   },
-   {
-    "type": "search",
-    "q": "antique locket"
-   },
-   {
-    "type": "view",
-    "id": "his020"
+    "id": "his027"
    },
    {
     "type": "view",
@@ -1075,13 +943,117 @@
    },
    {
     "type": "view",
-    "id": "his021"
+    "id": "his025"
+   },
+   {
+    "type": "view",
+    "id": "his022"
+   },
+   {
+    "type": "search",
+    "q": "cameo"
+   },
+   {
+    "type": "view",
+    "id": "his062"
+   },
+   {
+    "type": "view",
+    "id": "his024"
+   },
+   {
+    "type": "order",
+    "id": "his062"
+   },
+   {
+    "type": "view",
+    "id": "his027"
+   },
+   {
+    "type": "view",
+    "id": "his064"
+   },
+   {
+    "type": "order",
+    "id": "his064"
+   },
+   {
+    "type": "view",
+    "id": "his023"
+   },
+   {
+    "type": "view",
+    "id": "his024"
+   },
+   {
+    "type": "view",
+    "id": "his022"
+   },
+   {
+    "type": "view",
+    "id": "his026"
+   },
+   {
+    "type": "order",
+    "id": "his023"
+   },
+   {
+    "type": "search",
+    "q": "antique locket"
+   },
+   {
+    "type": "view",
+    "id": "his084"
+   },
+   {
+    "type": "view",
+    "id": "his023"
+   },
+   {
+    "type": "search",
+    "q": "antique locket"
+   },
+   {
+    "type": "view",
+    "id": "his024"
+   },
+   {
+    "type": "view",
+    "id": "his026"
+   },
+   {
+    "type": "view",
+    "id": "his025"
+   },
+   {
+    "type": "order",
+    "id": "his024"
+   },
+   {
+    "type": "search",
+    "q": "cameo"
+   },
+   {
+    "type": "view",
+    "id": "his025"
+   },
+   {
+    "type": "view",
+    "id": "his007"
+   },
+   {
+    "type": "view",
+    "id": "his027"
+   },
+   {
+    "type": "order",
+    "id": "his025"
    }
   ],
-  "capacity": 12000.0,
+  "capacity": 5000.0,
   "capacity_note": "Capacity is computed, not stated: the larger of 1.5× their largest past purchase and their last three purchases combined. Purchases are invented.",
-  "lifetime_spend": 17300.0,
-  "orders": 4
+  "lifetime_spend": 9900.0,
+  "orders": 6
  },
  {
   "id": "dev",
@@ -1091,11 +1063,7 @@
   "events": [
    {
     "type": "search",
-    "q": "loose diamond"
-   },
-   {
-    "type": "view",
-    "id": "his048"
+    "q": "loose sapphire"
    },
    {
     "type": "view",
@@ -1104,38 +1072,6 @@
    {
     "type": "view",
     "id": "his046"
-   },
-   {
-    "type": "view",
-    "id": "his049"
-   },
-   {
-    "type": "search",
-    "q": "loose diamond"
-   },
-   {
-    "type": "view",
-    "id": "his048"
-   },
-   {
-    "type": "view",
-    "id": "his045"
-   },
-   {
-    "type": "view",
-    "id": "his046"
-   },
-   {
-    "type": "view",
-    "id": "his049"
-   },
-   {
-    "type": "search",
-    "q": "unset ruby"
-   },
-   {
-    "type": "view",
-    "id": "his080"
    },
    {
     "type": "view",
@@ -1143,6 +1079,26 @@
    },
    {
     "type": "view",
+    "id": "his048"
+   },
+   {
+    "type": "view",
+    "id": "his049"
+   },
+   {
+    "type": "view",
+    "id": "his047"
+   },
+   {
+    "type": "view",
+    "id": "his098"
+   },
+   {
+    "type": "order",
+    "id": "his047"
+   },
+   {
+    "type": "view",
     "id": "his046"
    },
    {
@@ -1150,15 +1106,7 @@
     "id": "his045"
    },
    {
-    "type": "search",
-    "q": "loose diamond"
-   },
-   {
-    "type": "view",
-    "id": "his039"
-   },
-   {
-    "type": "view",
+    "type": "order",
     "id": "his046"
    },
    {
@@ -1167,64 +1115,76 @@
    },
    {
     "type": "view",
-    "id": "his083"
+    "id": "his098"
    },
    {
     "type": "view",
-    "id": "his047"
-   },
-   {
-    "type": "view",
-    "id": "his081"
+    "id": "his045"
    },
    {
     "type": "order",
-    "id": "his047"
+    "id": "his098"
+   },
+   {
+    "type": "view",
+    "id": "his015"
+   },
+   {
+    "type": "view",
+    "id": "his098"
+   },
+   {
+    "type": "view",
+    "id": "his048"
    },
    {
     "type": "search",
-    "q": "unset ruby"
+    "q": "loose sapphire"
    },
    {
     "type": "view",
-    "id": "his037"
-   },
-   {
-    "type": "view",
-    "id": "his048"
-   },
-   {
-    "type": "order",
-    "id": "his048"
-   },
-   {
-    "type": "view",
-    "id": "his037"
-   },
-   {
-    "type": "view",
-    "id": "his048"
-   },
-   {
-    "type": "view",
-    "id": "his079"
-   },
-   {
-    "type": "view",
-    "id": "his080"
+    "id": "his046"
    },
    {
     "type": "view",
     "id": "his047"
    },
    {
-    "type": "order",
-    "id": "his080"
+    "type": "view",
+    "id": "his098"
+   },
+   {
+    "type": "view",
+    "id": "his045"
+   },
+   {
+    "type": "view",
+    "id": "his046"
+   },
+   {
+    "type": "view",
+    "id": "his048"
+   },
+   {
+    "type": "view",
+    "id": "his047"
+   },
+   {
+    "type": "view",
+    "id": "his046"
+   },
+   {
+    "type": "view",
+    "id": "his098"
+   },
+   {
+    "type": "view",
+    "id": "his048"
    }
   ],
-  "capacity": 53000.0,
+  "capacity": 56000.0,
   "capacity_note": "Capacity is computed, not stated: the larger of 1.5× their largest past purchase and their last three purchases combined. Purchases are invented.",
-  "lifetime_spend": 53300.0,
+  "lifetime_spend": 56200.0,
   "orders": 3
  },
  {
@@ -1234,36 +1194,16 @@
   "blurb": "Quiet modern taste. Pearls and clean gold she can wear every day.",
   "events": [
    {
-    "type": "view",
-    "id": "his054"
+    "type": "search",
+    "q": "gold hoops"
    },
    {
     "type": "view",
-    "id": "his070"
+    "id": "his050"
    },
    {
     "type": "view",
-    "id": "his025"
-   },
-   {
-    "type": "view",
-    "id": "his029"
-   },
-   {
-    "type": "order",
-    "id": "his054"
-   },
-   {
-    "type": "view",
-    "id": "his092"
-   },
-   {
-    "type": "view",
-    "id": "his022"
-   },
-   {
-    "type": "view",
-    "id": "his020"
+    "id": "his040"
    },
    {
     "type": "search",
@@ -1275,15 +1215,11 @@
    },
    {
     "type": "view",
-    "id": "his052"
-   },
-   {
-    "type": "view",
-    "id": "his050"
+    "id": "his054"
    },
    {
     "type": "order",
-    "id": "his050"
+    "id": "his054"
    },
    {
     "type": "search",
@@ -1291,71 +1227,19 @@
    },
    {
     "type": "view",
-    "id": "his010"
-   },
-   {
-    "type": "view",
-    "id": "his032"
-   },
-   {
-    "type": "view",
-    "id": "his051"
-   },
-   {
-    "type": "view",
-    "id": "his050"
-   },
-   {
-    "type": "order",
-    "id": "his010"
-   },
-   {
-    "type": "view",
-    "id": "his028"
-   },
-   {
-    "type": "view",
-    "id": "his054"
-   },
-   {
-    "type": "view",
-    "id": "his005"
-   },
-   {
-    "type": "view",
-    "id": "his091"
-   },
-   {
-    "type": "view",
-    "id": "his093"
-   },
-   {
-    "type": "view",
-    "id": "his054"
-   },
-   {
-    "type": "view",
     "id": "his029"
    },
    {
     "type": "view",
-    "id": "his070"
+    "id": "his031"
+   },
+   {
+    "type": "view",
+    "id": "his054"
    },
    {
     "type": "order",
-    "id": "his093"
-   },
-   {
-    "type": "view",
-    "id": "his091"
-   },
-   {
-    "type": "view",
-    "id": "his077"
-   },
-   {
-    "type": "view",
-    "id": "his078"
+    "id": "his031"
    },
    {
     "type": "search",
@@ -1363,25 +1247,77 @@
    },
    {
     "type": "view",
-    "id": "his077"
+    "id": "his028"
    },
    {
     "type": "view",
-    "id": "his079"
+    "id": "his037"
+   },
+   {
+    "type": "order",
+    "id": "his028"
+   },
+   {
+    "type": "search",
+    "q": "gold hoops"
    },
    {
     "type": "view",
-    "id": "his078"
+    "id": "his076"
+   },
+   {
+    "type": "view",
+    "id": "his052"
+   },
+   {
+    "type": "order",
+    "id": "his076"
    },
    {
     "type": "view",
     "id": "his050"
+   },
+   {
+    "type": "view",
+    "id": "his077"
+   },
+   {
+    "type": "view",
+    "id": "his093"
+   },
+   {
+    "type": "order",
+    "id": "his050"
+   },
+   {
+    "type": "view",
+    "id": "his054"
+   },
+   {
+    "type": "view",
+    "id": "his051"
+   },
+   {
+    "type": "view",
+    "id": "his075"
+   },
+   {
+    "type": "view",
+    "id": "his091"
+   },
+   {
+    "type": "view",
+    "id": "his075"
+   },
+   {
+    "type": "view",
+    "id": "his090"
    }
   ],
-  "capacity": 32000.0,
+  "capacity": 12000.0,
   "capacity_note": "Capacity is computed, not stated: the larger of 1.5× their largest past purchase and their last three purchases combined. Purchases are invented.",
-  "lifetime_spend": 33700.0,
-  "orders": 4
+  "lifetime_spend": 20400.0,
+  "orders": 5
  },
  {
   "id": "andre",
@@ -1390,16 +1326,12 @@
   "blurb": "Men's pieces. Watches and chains, and increasingly signet rings.",
   "events": [
    {
-    "type": "search",
-    "q": "gold chain"
+    "type": "view",
+    "id": "his059"
    },
    {
     "type": "view",
     "id": "his058"
-   },
-   {
-    "type": "view",
-    "id": "his002"
    },
    {
     "type": "view",
@@ -1407,63 +1339,11 @@
    },
    {
     "type": "view",
-    "id": "his040"
-   },
-   {
-    "type": "view",
-    "id": "his093"
-   },
-   {
-    "type": "order",
-    "id": "his040"
-   },
-   {
-    "type": "search",
-    "q": "gold chain"
-   },
-   {
-    "type": "view",
-    "id": "his028"
-   },
-   {
-    "type": "view",
-    "id": "his010"
-   },
-   {
-    "type": "view",
-    "id": "his058"
-   },
-   {
-    "type": "view",
-    "id": "his057"
-   },
-   {
-    "type": "order",
-    "id": "his058"
-   },
-   {
-    "type": "search",
-    "q": "gold chain"
-   },
-   {
-    "type": "view",
-    "id": "his003"
-   },
-   {
-    "type": "view",
     "id": "his059"
    },
    {
     "type": "view",
-    "id": "his076"
-   },
-   {
-    "type": "view",
-    "id": "his035"
-   },
-   {
-    "type": "search",
-    "q": "gold watch"
+    "id": "his055"
    },
    {
     "type": "view",
@@ -1471,19 +1351,19 @@
    },
    {
     "type": "view",
-    "id": "his013"
+    "id": "his059"
    },
    {
     "type": "view",
-    "id": "his037"
-   },
-   {
-    "type": "view",
-    "id": "his088"
+    "id": "his060"
    },
    {
     "type": "search",
-    "q": "gold watch"
+    "q": "gold chain"
+   },
+   {
+    "type": "view",
+    "id": "his009"
    },
    {
     "type": "view",
@@ -1491,39 +1371,11 @@
    },
    {
     "type": "view",
-    "id": "his059"
-   },
-   {
-    "type": "view",
-    "id": "his058"
-   },
-   {
-    "type": "view",
-    "id": "his074"
-   },
-   {
-    "type": "search",
-    "q": "signet ring"
-   },
-   {
-    "type": "view",
     "id": "his057"
    },
    {
     "type": "view",
-    "id": "his014"
-   },
-   {
-    "type": "view",
-    "id": "his059"
-   },
-   {
-    "type": "search",
-    "q": "mens gold ring"
-   },
-   {
-    "type": "view",
-    "id": "his033"
+    "id": "his056"
    },
    {
     "type": "view",
@@ -1531,7 +1383,31 @@
    },
    {
     "type": "view",
-    "id": "his038"
+    "id": "his055"
+   },
+   {
+    "type": "view",
+    "id": "his056"
+   },
+   {
+    "type": "order",
+    "id": "his055"
+   },
+   {
+    "type": "view",
+    "id": "his024"
+   },
+   {
+    "type": "view",
+    "id": "his096"
+   },
+   {
+    "type": "view",
+    "id": "his060"
+   },
+   {
+    "type": "order",
+    "id": "his096"
    },
    {
     "type": "search",
@@ -1543,31 +1419,55 @@
    },
    {
     "type": "view",
-    "id": "his061"
+    "id": "his014"
    },
    {
     "type": "view",
-    "id": "his072"
+    "id": "his057"
    },
    {
     "type": "view",
-    "id": "his002"
+    "id": "his059"
+   },
+   {
+    "type": "order",
+    "id": "his014"
+   },
+   {
+    "type": "view",
+    "id": "his060"
+   },
+   {
+    "type": "view",
+    "id": "his039"
+   },
+   {
+    "type": "view",
+    "id": "his095"
+   },
+   {
+    "type": "view",
+    "id": "his055"
+   },
+   {
+    "type": "order",
+    "id": "his060"
    }
   ],
-  "capacity": 28000.0,
+  "capacity": 20000.0,
   "capacity_note": "Capacity is computed, not stated: the larger of 1.5× their largest past purchase and their last three purchases combined. Purchases are invented.",
-  "lifetime_spend": 27800.0,
-  "orders": 2
+  "lifetime_spend": 21300.0,
+  "orders": 4
  },
  {
   "id": "sofia",
   "name": "Sofia Alvarez",
   "city": "Scottsdale, AZ",
-  "blurb": "Follows unusual stones. Opal, turquoise and anything she has not seen before.",
+  "blurb": "Follows unusual stones. Turquoise, jade, lapis and anything she has not seen before.",
   "events": [
    {
     "type": "search",
-    "q": "unusual gemstone"
+    "q": "jade earrings"
    },
    {
     "type": "view",
@@ -1578,24 +1478,16 @@
     "id": "his063"
    },
    {
-    "type": "order",
-    "id": "his063"
+    "type": "view",
+    "id": "his017"
    },
    {
-    "type": "search",
-    "q": "turquoise jewelry"
+    "type": "view",
+    "id": "his094"
    },
    {
     "type": "view",
     "id": "his063"
-   },
-   {
-    "type": "view",
-    "id": "his065"
-   },
-   {
-    "type": "order",
-    "id": "his065"
    },
    {
     "type": "view",
@@ -1603,11 +1495,19 @@
    },
    {
     "type": "view",
+    "id": "his094"
+   },
+   {
+    "type": "view",
+    "id": "his082"
+   },
+   {
+    "type": "order",
     "id": "his063"
    },
    {
-    "type": "search",
-    "q": "unusual gemstone"
+    "type": "view",
+    "id": "his062"
    },
    {
     "type": "view",
@@ -1615,51 +1515,67 @@
    },
    {
     "type": "view",
-    "id": "his063"
-   },
-   {
-    "type": "view",
-    "id": "his063"
-   },
-   {
-    "type": "view",
-    "id": "his019"
+    "id": "his094"
    },
    {
     "type": "search",
-    "q": "opal ring"
+    "q": "jade earrings"
    },
    {
     "type": "view",
-    "id": "his061"
+    "id": "his034"
+   },
+   {
+    "type": "view",
+    "id": "his033"
+   },
+   {
+    "type": "search",
+    "q": "jade earrings"
+   },
+   {
+    "type": "view",
+    "id": "his067"
    },
    {
     "type": "view",
     "id": "his026"
    },
    {
+    "type": "view",
+    "id": "his094"
+   },
+   {
     "type": "order",
+    "id": "his094"
+   },
+   {
+    "type": "view",
+    "id": "his062"
+   },
+   {
+    "type": "view",
+    "id": "his095"
+   },
+   {
+    "type": "view",
+    "id": "his017"
+   },
+   {
+    "type": "view",
     "id": "his061"
    },
    {
+    "type": "view",
+    "id": "his031"
+   },
+   {
+    "type": "view",
+    "id": "his082"
+   },
+   {
     "type": "search",
-    "q": "turquoise jewelry"
-   },
-   {
-    "type": "view",
-    "id": "his063"
-   },
-   {
-    "type": "view",
-    "id": "his064"
-   },
-   {
-    "type": "view",
-    "id": "his065"
-   },
-   {
-    "type": "order",
-    "id": "his064"
+    "q": "unusual gemstone"
    },
    {
     "type": "view",
@@ -1670,14 +1586,18 @@
     "id": "his063"
    },
    {
+    "type": "view",
+    "id": "his061"
+   },
+   {
     "type": "order",
-    "id": "his094"
+    "id": "his061"
    }
   ],
   "capacity": 16000.0,
   "capacity_note": "Capacity is computed, not stated: the larger of 1.5× their largest past purchase and their last three purchases combined. Purchases are invented.",
-  "lifetime_spend": 17600.0,
-  "orders": 5
+  "lifetime_spend": 14500.0,
+  "orders": 3
  },
  {
   "id": "daniel",
@@ -1691,115 +1611,7 @@
    },
    {
     "type": "view",
-    "id": "his067"
-   },
-   {
-    "type": "view",
-    "id": "his047"
-   },
-   {
-    "type": "view",
-    "id": "his046"
-   },
-   {
-    "type": "view",
-    "id": "his080"
-   },
-   {
-    "type": "search",
-    "q": "certified diamond"
-   },
-   {
-    "type": "view",
-    "id": "his043"
-   },
-   {
-    "type": "view",
-    "id": "his046"
-   },
-   {
-    "type": "view",
-    "id": "his002"
-   },
-   {
-    "type": "view",
-    "id": "his006"
-   },
-   {
-    "type": "view",
-    "id": "his046"
-   },
-   {
-    "type": "view",
-    "id": "his048"
-   },
-   {
-    "type": "search",
-    "q": "certified diamond"
-   },
-   {
-    "type": "view",
-    "id": "his081"
-   },
-   {
-    "type": "view",
-    "id": "his098"
-   },
-   {
-    "type": "order",
-    "id": "his098"
-   },
-   {
-    "type": "search",
-    "q": "certified diamond"
-   },
-   {
-    "type": "view",
-    "id": "his048"
-   },
-   {
-    "type": "view",
-    "id": "his044"
-   },
-   {
-    "type": "view",
-    "id": "his046"
-   },
-   {
-    "type": "view",
-    "id": "his086"
-   },
-   {
-    "type": "view",
-    "id": "his048"
-   },
-   {
-    "type": "view",
-    "id": "his029"
-   },
-   {
-    "type": "view",
-    "id": "his071"
-   },
-   {
-    "type": "order",
-    "id": "his029"
-   },
-   {
-    "type": "search",
-    "q": "art deco setting"
-   },
-   {
-    "type": "view",
-    "id": "his087"
-   },
-   {
-    "type": "view",
-    "id": "his032"
-   },
-   {
-    "type": "view",
-    "id": "his018"
+    "id": "his045"
    },
    {
     "type": "view",
@@ -1807,7 +1619,87 @@
    },
    {
     "type": "search",
-    "q": "edwardian ring"
+    "q": "loose diamond"
+   },
+   {
+    "type": "view",
+    "id": "his098"
+   },
+   {
+    "type": "view",
+    "id": "his049"
+   },
+   {
+    "type": "view",
+    "id": "his047"
+   },
+   {
+    "type": "view",
+    "id": "his098"
+   },
+   {
+    "type": "view",
+    "id": "his039"
+   },
+   {
+    "type": "view",
+    "id": "his047"
+   },
+   {
+    "type": "search",
+    "q": "loose diamond"
+   },
+   {
+    "type": "view",
+    "id": "his048"
+   },
+   {
+    "type": "order",
+    "id": "his048"
+   },
+   {
+    "type": "view",
+    "id": "his098"
+   },
+   {
+    "type": "view",
+    "id": "his046"
+   },
+   {
+    "type": "view",
+    "id": "his041"
+   },
+   {
+    "type": "search",
+    "q": "loose diamond"
+   },
+   {
+    "type": "view",
+    "id": "his000"
+   },
+   {
+    "type": "view",
+    "id": "his046"
+   },
+   {
+    "type": "view",
+    "id": "his027"
+   },
+   {
+    "type": "search",
+    "q": "loose diamond"
+   },
+   {
+    "type": "view",
+    "id": "his049"
+   },
+   {
+    "type": "view",
+    "id": "his098"
+   },
+   {
+    "type": "search",
+    "q": "art deco setting"
    },
    {
     "type": "view",
@@ -1815,15 +1707,15 @@
    },
    {
     "type": "view",
-    "id": "his089"
+    "id": "his019"
    },
    {
     "type": "view",
-    "id": "his016"
+    "id": "his093"
    },
    {
     "type": "view",
-    "id": "his017"
+    "id": "his038"
    },
    {
     "type": "search",
@@ -1831,21 +1723,61 @@
    },
    {
     "type": "view",
-    "id": "his084"
+    "id": "his062"
    },
    {
     "type": "view",
-    "id": "his001"
+    "id": "his029"
    },
    {
     "type": "view",
-    "id": "his019"
+    "id": "his089"
+   },
+   {
+    "type": "search",
+    "q": "edwardian ring"
+   },
+   {
+    "type": "view",
+    "id": "his076"
+   },
+   {
+    "type": "view",
+    "id": "his018"
+   },
+   {
+    "type": "view",
+    "id": "his030"
+   },
+   {
+    "type": "view",
+    "id": "his021"
+   },
+   {
+    "type": "search",
+    "q": "edwardian ring"
+   },
+   {
+    "type": "view",
+    "id": "his030"
+   },
+   {
+    "type": "view",
+    "id": "his051"
+   },
+   {
+    "type": "view",
+    "id": "his016"
+   },
+   {
+    "type": "view",
+    "id": "his015"
    }
   ],
-  "capacity": 43000.0,
+  "capacity": 15000.0,
   "capacity_note": "Capacity is computed, not stated: the larger of 1.5× their largest past purchase and their last three purchases combined. Purchases are invented.",
-  "lifetime_spend": 37400.0,
-  "orders": 2
+  "lifetime_spend": 10100.0,
+  "orders": 1
  },
  {
   "id": "lena",
@@ -1855,19 +1787,11 @@
   "events": [
    {
     "type": "view",
-    "id": "his052"
-   },
-   {
-    "type": "view",
-    "id": "his092"
+    "id": "his090"
    },
    {
     "type": "view",
     "id": "his091"
-   },
-   {
-    "type": "view",
-    "id": "his043"
    },
    {
     "type": "order",
@@ -1875,15 +1799,103 @@
    },
    {
     "type": "search",
+    "q": "chandelier earrings"
+   },
+   {
+    "type": "view",
+    "id": "his094"
+   },
+   {
+    "type": "view",
+    "id": "his090"
+   },
+   {
+    "type": "view",
+    "id": "his091"
+   },
+   {
+    "type": "view",
+    "id": "his090"
+   },
+   {
+    "type": "view",
+    "id": "his025"
+   },
+   {
+    "type": "view",
+    "id": "his094"
+   },
+   {
+    "type": "view",
+    "id": "his050"
+   },
+   {
+    "type": "search",
     "q": "gold earrings"
    },
    {
     "type": "view",
-    "id": "his070"
+    "id": "his092"
+   },
+   {
+    "type": "view",
+    "id": "his090"
+   },
+   {
+    "type": "order",
+    "id": "his092"
+   },
+   {
+    "type": "search",
+    "q": "diamond earrings"
    },
    {
     "type": "view",
     "id": "his023"
+   },
+   {
+    "type": "view",
+    "id": "his091"
+   },
+   {
+    "type": "view",
+    "id": "his090"
+   },
+   {
+    "type": "view",
+    "id": "his094"
+   },
+   {
+    "type": "view",
+    "id": "his092"
+   },
+   {
+    "type": "view",
+    "id": "his090"
+   },
+   {
+    "type": "view",
+    "id": "his023"
+   },
+   {
+    "type": "search",
+    "q": "diamond earrings"
+   },
+   {
+    "type": "view",
+    "id": "his090"
+   },
+   {
+    "type": "view",
+    "id": "his050"
+   },
+   {
+    "type": "search",
+    "q": "chandelier earrings"
+   },
+   {
+    "type": "view",
+    "id": "his090"
    },
    {
     "type": "view",
@@ -1895,133 +1907,13 @@
    },
    {
     "type": "view",
-    "id": "his074"
-   },
-   {
-    "type": "view",
-    "id": "his092"
-   },
-   {
-    "type": "view",
-    "id": "his046"
-   },
-   {
-    "type": "order",
-    "id": "his046"
-   },
-   {
-    "type": "search",
-    "q": "gold earrings"
-   },
-   {
-    "type": "view",
-    "id": "his047"
-   },
-   {
-    "type": "view",
-    "id": "his070"
-   },
-   {
-    "type": "view",
-    "id": "his071"
-   },
-   {
-    "type": "view",
-    "id": "his069"
-   },
-   {
-    "type": "order",
-    "id": "his070"
-   },
-   {
-    "type": "search",
-    "q": "diamond earrings"
-   },
-   {
-    "type": "view",
-    "id": "his090"
-   },
-   {
-    "type": "view",
     "id": "his093"
-   },
-   {
-    "type": "view",
-    "id": "his079"
-   },
-   {
-    "type": "view",
-    "id": "his092"
-   },
-   {
-    "type": "search",
-    "q": "chandelier earrings"
-   },
-   {
-    "type": "view",
-    "id": "his093"
-   },
-   {
-    "type": "view",
-    "id": "his038"
-   },
-   {
-    "type": "view",
-    "id": "his004"
-   },
-   {
-    "type": "order",
-    "id": "his038"
-   },
-   {
-    "type": "search",
-    "q": "diamond earrings"
-   },
-   {
-    "type": "view",
-    "id": "his093"
-   },
-   {
-    "type": "view",
-    "id": "his071"
-   },
-   {
-    "type": "view",
-    "id": "his090"
-   },
-   {
-    "type": "view",
-    "id": "his046"
-   },
-   {
-    "type": "search",
-    "q": "chandelier earrings"
-   },
-   {
-    "type": "view",
-    "id": "his023"
-   },
-   {
-    "type": "view",
-    "id": "his067"
-   },
-   {
-    "type": "view",
-    "id": "his002"
-   },
-   {
-    "type": "view",
-    "id": "his091"
-   },
-   {
-    "type": "order",
-    "id": "his023"
    }
   ],
-  "capacity": 23000.0,
+  "capacity": 14000.0,
   "capacity_note": "Capacity is computed, not stated: the larger of 1.5× their largest past purchase and their last three purchases combined. Purchases are invented.",
-  "lifetime_spend": 31400.0,
-  "orders": 5
+  "lifetime_spend": 10800.0,
+  "orders": 2
  },
  {
   "id": "margot",
@@ -2031,14 +1923,6 @@
   "events": [
    {
     "type": "view",
-    "id": "his028"
-   },
-   {
-    "type": "view",
-    "id": "his029"
-   },
-   {
-    "type": "view",
     "id": "his036"
    },
    {
@@ -2046,40 +1930,8 @@
     "id": "his031"
    },
    {
-    "type": "view",
-    "id": "his039"
-   },
-   {
-    "type": "view",
-    "id": "his032"
-   },
-   {
     "type": "order",
-    "id": "his031"
-   },
-   {
-    "type": "search",
-    "q": "tiara"
-   },
-   {
-    "type": "view",
-    "id": "his035"
-   },
-   {
-    "type": "view",
-    "id": "his009"
-   },
-   {
-    "type": "view",
-    "id": "his039"
-   },
-   {
-    "type": "view",
-    "id": "his088"
-   },
-   {
-    "type": "order",
-    "id": "his035"
+    "id": "his036"
    },
    {
     "type": "search",
@@ -2087,63 +1939,19 @@
    },
    {
     "type": "view",
-    "id": "his062"
+    "id": "his036"
    },
    {
     "type": "view",
     "id": "his088"
    },
    {
-    "type": "search",
-    "q": "tiara"
-   },
-   {
     "type": "view",
-    "id": "his032"
-   },
-   {
-    "type": "view",
-    "id": "his034"
-   },
-   {
-    "type": "order",
-    "id": "his032"
-   },
-   {
-    "type": "view",
-    "id": "his031"
-   },
-   {
-    "type": "view",
-    "id": "his019"
-   },
-   {
-    "type": "view",
-    "id": "his026"
+    "id": "his010"
    },
    {
     "type": "view",
     "id": "his035"
-   },
-   {
-    "type": "order",
-    "id": "his019"
-   },
-   {
-    "type": "view",
-    "id": "his035"
-   },
-   {
-    "type": "view",
-    "id": "his036"
-   },
-   {
-    "type": "order",
-    "id": "his036"
-   },
-   {
-    "type": "search",
-    "q": "tiara"
    },
    {
     "type": "view",
@@ -2152,11 +1960,107 @@
    {
     "type": "view",
     "id": "his009"
+   },
+   {
+    "type": "view",
+    "id": "his031"
+   },
+   {
+    "type": "search",
+    "q": "important antique brooch"
+   },
+   {
+    "type": "view",
+    "id": "his009"
+   },
+   {
+    "type": "view",
+    "id": "his035"
+   },
+   {
+    "type": "view",
+    "id": "his036"
+   },
+   {
+    "type": "order",
+    "id": "his035"
+   },
+   {
+    "type": "search",
+    "q": "tiara"
+   },
+   {
+    "type": "view",
+    "id": "his062"
+   },
+   {
+    "type": "view",
+    "id": "his036"
+   },
+   {
+    "type": "view",
+    "id": "his031"
+   },
+   {
+    "type": "search",
+    "q": "important antique brooch"
+   },
+   {
+    "type": "view",
+    "id": "his031"
+   },
+   {
+    "type": "view",
+    "id": "his036"
+   },
+   {
+    "type": "view",
+    "id": "his035"
+   },
+   {
+    "type": "search",
+    "q": "tiara"
+   },
+   {
+    "type": "view",
+    "id": "his009"
+   },
+   {
+    "type": "view",
+    "id": "his037"
+   },
+   {
+    "type": "view",
+    "id": "his036"
+   },
+   {
+    "type": "view",
+    "id": "his035"
+   },
+   {
+    "type": "view",
+    "id": "his009"
+   },
+   {
+    "type": "view",
+    "id": "his036"
+   },
+   {
+    "type": "view",
+    "id": "his028"
+   },
+   {
+    "type": "view",
+    "id": "his088"
+   },
+   {
+    "type": "order",
+    "id": "his009"
    }
   ],
-  "capacity": 27000.0,
+  "capacity": 36000.0,
   "capacity_note": "Capacity is computed, not stated: the larger of 1.5× their largest past purchase and their last three purchases combined. Purchases are invented.",
-  "lifetime_spend": 41400.0,
-  "orders": 5
+  "lifetime_spend": 35900.0,
+  "orders": 3
  }
 ]

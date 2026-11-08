@@ -287,3 +287,20 @@ footer { display: flex; gap: 16px; flex-wrap: wrap; align-items: center; padding
 @media (prefers-reduced-motion: reduce) {
   * { animation: none !important; transition: none !important; }
 }
+
+/* desk shortlist, committed buys, simulated offers */
+.budget-sub { font-size: 12px; color: var(--muted); margin-top: 1px; white-space: nowrap; }
+.lot-cell { position: relative; display: flex; min-width: 0; }
+.lot.bought { --b: .3; --s: .3; }
+.send { position: absolute; top: 0; left: 0; padding: 0 7px; font-size: 11.5px; line-height: 20px; font-weight: 500; background: rgba(24, 27, 28, .86); color: var(--amber); text-align: left; }
+.send.on { color: var(--muted); }
+.send:hover, .send:focus-visible { color: var(--ink); }
+.pick-row { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: stretch; border-bottom: 1px solid var(--rule); }
+.pick-row .pick { border-bottom: 0; padding-right: 8px; }
+.buy { padding: 0 12px; font-size: 12.5px; font-weight: 600; color: var(--amber); border-left: 1px solid var(--rule); text-align: center; }
+.buy:hover, .buy:focus-visible { background: var(--amber); color: #1f1a0e; }
+.bought-row { display: grid; grid-template-columns: 42px minmax(0, 1fr) auto; gap: 10px; padding: 6px 14px; border-bottom: 1px solid var(--rule); align-items: center; }
+.bought-row img { width: 42px; height: 42px; object-fit: cover; }
+.bought-row .n { font: 500 14.5px/1.25 var(--serif); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.bought-row .b { font-size: 12px; color: var(--muted); line-height: 1.35; }
+.bought-row .b .who { color: var(--ink); font-weight: 500; }
