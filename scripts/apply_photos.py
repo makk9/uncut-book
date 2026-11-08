@@ -43,7 +43,7 @@ HOLDINGS = [
     (66, "Antique Aquamarine Brooch and Earrings", "Brooch", "Edwardian", "estate", ["Aquamarine"], ["Gold"], 6400, 8800, "Matched set of round pale stones in openwork gold"),
     (59, "Antique Sapphire and Pearl Pendant", "Pendant", "Victorian", "estate", ["Sapphire", "Pearl"], ["Gold"], 4900, 7200, "Sapphire cluster pendant with a bow top and pearl drop"),
     (23, "Arts and Crafts Enamel Button, c. 1900", "Brooch", "Edwardian", "unusual", ["Enamel"], ["Silver"], 900, 1500, "Silver button with blue-green enamel and an orange cabochon"),
-    (134, "Pink Stone Teardrop Pendant", "Pendant", "Contemporary", "unusual", ["Gemstones"], ["Gold"], 2200, 3400, "Single faceted pink teardrop in a plain gold bezel"),
+    (134, "Garnet Teardrop Pendant in Gold", "Pendant", "Antique", "unusual", ["Garnet"], ["Gold"], 2200, 3400, "Polished garnet teardrop in an early gold setting"),
 ]
 
 
