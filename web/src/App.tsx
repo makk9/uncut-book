@@ -166,16 +166,19 @@ export default function App() {
             onChange={(e) => setBudget(+e.target.value)} />
         </div>
         <div className="band-alloc">
-          <div className="alloc-line" aria-live="polite">
-            {!p ? "Reading the book…"
-              : focus ? (() => {
-                const mine = placedTo(focus);
-                return mine.length
-                  ? <><b>{colBy[focus]?.name}</b> carries {mine.length} {mine.length > 1 ? "pieces" : "piece"}, <b>{usd(mine.reduce((a, x) => a + x.ask, 0))}</b> of the buys.</>
-                  : <>Nothing in the buys is placed with <b>{colBy[focus]?.name}</b>.</>;
-              })()
-              : p.picks.length === 0 ? "Nothing clears the bar at this budget."
-              : <><b>{usd(p.spent)}</b> deployed on <b>{p.picks.length}</b> of {book.lots.length} lots, {usd(p.unspent)} kept dry.</>}
+          <div className="alloc-head">
+            <div className="alloc-line" aria-live="polite">
+              {!p ? "Reading the book…"
+                : focus ? (() => {
+                  const mine = placedTo(focus);
+                  return mine.length
+                    ? <><b>{colBy[focus]?.name}</b> would take {mine.length} {mine.length > 1 ? "pieces" : "piece"}, <b>{usd(mine.reduce((a, x) => a + x.ask, 0))}</b> of the proposed buys.</>
+                    : <>None of the proposed buys would go to <b>{colBy[focus]?.name}</b>.</>;
+                })()
+                : p.picks.length === 0 ? "Nothing clears the bar at this budget."
+                : <><b>Proposed buys, nothing bought yet:</b> {usd(p.spent)} on {p.picks.length} of {book.lots.length} lots, {usd(p.unspent)} left unspent.</>}
+            </div>
+            <span className="alloc-key">Bar: share of budget</span>
           </div>
           <Allocation picks={p?.picks ?? []} budget={budget} spent={p?.spent ?? 0} lotBy={lotBy} colBy={colBy} focus={focus} flash={flash}
             open={(id) => { setCollectorOpen(null); setCredits(false); setLotOpen(id); }} />
@@ -381,22 +384,39 @@ function Allocation({ picks, budget, spent, lotBy, colBy, focus, flash, open }: 
 }) {
   const ordered = [...picks].sort((a, b) => (lotBy[a.lot]?.lot_no ?? 0) - (lotBy[b.lot]?.lot_no ?? 0));
   const dry = budget - spent;
+  const row = useRef<HTMLDivElement>(null);
+  const [hot, setHot] = useState<string | null>(null);
+  // a piece that just came in may sit past the edge of the row, so bring it into view
+  useEffect(() => {
+    const box = row.current;
+    const fresh = box?.querySelector<HTMLElement>(".tile.flash");
+    if (!box || !fresh) return;
+    const calm = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    box.scrollTo({ left: fresh.offsetLeft - 8, behavior: calm ? "auto" : "smooth" });
+  }, [flash]);
+  const dimmed = (x: Pick_) => (focus && x.buyer !== focus ? "dim" : "");
   return (
-    <div className="alloc" role="group" aria-label={`${usd(spent)} of ${usd(budget)} allocated across ${picks.length} lots`}>
-      {ordered.map((x) => {
-        const pct = (x.ask / budget) * 100;
-        const name = lotBy[x.lot]?.name;
-        const said = `${name}, ${usd(x.ask)}, ${x.buyer ? `for ${colBy[x.buyer]?.name}` : "no buyer placed"}`;
-        const cls = ["seg", focus && x.buyer !== focus ? "dim" : "", x.buyer ? "" : "unplaced", flash.has(x.lot) ? "flash" : ""].join(" ");
-        return (
-          <button key={x.lot} className={cls} style={{ flexBasis: `${pct}%` }} title={said} aria-label={said} onClick={() => open(x.lot)}>
-            <img src={lotBy[x.lot]?.image} alt="" />
-            <span className="seg-px">{usdK(x.ask)}</span>
-          </button>
-        );
-      })}
-      <div className="alloc-dry" title={`${usd(dry)} kept dry`}>{dry / budget >= 0.09 && `${usdK(dry)} dry`}</div>
-    </div>
+    <>
+      <div className="share" role="img" aria-label={`${usd(spent)} of ${usd(budget)} proposed across ${picks.length} lots, ${usd(dry)} left unspent`}>
+        {ordered.map((x) => (
+          <i key={x.lot} className={`${dimmed(x)} ${hot === x.lot ? "hot" : ""}`} style={{ flexBasis: `${(x.ask / budget) * 100}%` }}
+            title={`${lotBy[x.lot]?.name}: ${usd(x.ask)}, ${Math.round((x.ask / budget) * 100)}% of the budget`} />
+        ))}
+      </div>
+      <div className="tiles" ref={row} role="group" aria-label="Proposed buys"
+        onWheel={(e) => { if (Math.abs(e.deltaY) > Math.abs(e.deltaX)) e.currentTarget.scrollLeft += e.deltaY; }}>
+        {ordered.map((x) => {
+          const said = `${lotBy[x.lot]?.name}, ${usd(x.ask)}, ${x.buyer ? `for ${colBy[x.buyer]?.name}` : "no buyer placed"}`;
+          return (
+            <button key={x.lot} className={["tile", dimmed(x), x.buyer ? "" : "unplaced", flash.has(x.lot) ? "flash" : ""].join(" ")} title={said} aria-label={said}
+              onClick={() => open(x.lot)} onMouseEnter={() => setHot(x.lot)} onMouseLeave={() => setHot(null)} onFocus={() => setHot(x.lot)} onBlur={() => setHot(null)}>
+              <span className="tile-img"><img src={lotBy[x.lot]?.image} alt="" /></span>
+              <span className="tile-px">{usd(x.ask)}</span>
+            </button>
+          );
+        })}
+      </div>
+    </>
   );
 }
 
