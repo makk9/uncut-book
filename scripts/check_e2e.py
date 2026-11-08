@@ -87,15 +87,10 @@ for x in d["portfolio"]["picks"]:
     buyers_used[x["buyer"]] += 1
 print("  buyers used:", {COLLECTORS[c]["name"]: n for c, n in buyers_used.items()})
 
-print("\n  removing a collector's capacity from the problem should re-place, not just drop")
-top = d["stress"][0] if d["stress"] else None
-if top:
-    print(f"    worst buyer loss: {COLLECTORS[top['collector']]['name']}, value -${top['value_lost']:,.0f}, unplaced ${top['unplaced_capital']:,.0f}")
-
 print("\n[4] same budget, other ways to choose")
 for c in d["compare"]:
     print(f"    {c['name']:22} pieces {c['pieces']:2} spent ${c['spent']:>7,.0f} margin ${c['gross_margin']:>7,.0f} value ${c['value']:>8,.0f} "
-          f"unplaced ${c['unplaced_capital']:>7,.0f} one-buyer loss ${c['worst_loss']:>7,.0f}")
+          f"unplaced ${c['unplaced_capital']:>7,.0f}")
 book = next(c for c in d["compare"] if c["key"] == "book")
 check(all(book["value"] >= c["value"] - 1 for c in d["compare"]), "joint solve scores at least as high as the alternatives on its own metric")
 
@@ -113,30 +108,43 @@ a = {x["lot"] for x in d["portfolio"]["picks"]}
 b = {x["lot"] for x in s["portfolio"]["picks"]}
 print(f"  portfolio changes: +{[PIECES[x]['name'][:24] for x in b - a]} -{[PIECES[x]['name'][:24] for x in a - b]}")
 
-print("\n[6] what-if: force the trophy in")
-trophy = max((p for p in PIECES.values() if p["role"] == "lot"), key=lambda p: p["ask"])
-w = client.post("/api/whatif", json={"budget": 80_000, "lot": trophy["id"]}).json()
-print(f"  {trophy['name']} (${trophy['ask']:,}): already in={w.get('already_in')}, value {w.get('value_delta')}, margin {w.get('margin_delta')}, "
-      f"buyer {w.get('buyer')} #{w.get('rank')}, displaces {[PIECES[x]['name'][:24] for x in w.get('displaced', [])]}")
-if not w.get("already_in"):
-    check((w.get("value_delta") or 0) <= 1, "forcing a lot in never raises value above the optimum")
-
-print("\n[7] protection trades value for a smaller single-buyer loss, or says it changes nothing")
+print("\n[6] the dealer's plan drives the numbers, the solver only suggests")
 opening = [p["id"] for p in PIECES.values() if p["role"] == "lot"][:20]
-plan_of = lambda r: sorted((x["lot"], x["buyer"]) for x in r["portfolio"]["picks"])
-worst_of = lambda r: next(x for x in r["compare"] if x["key"] == "book")["worst_loss"]
-check(solve(budget=80_000, radar=opening)["protection"] is None, "protection off reports no comparison")
-for budget in (60_000, 80_000, 120_000):
-    off, on = solve(budget=budget, radar=opening), solve(budget=budget, radar=opening, resilience=0.9)
-    p = on["protection"]
-    print(f"    ${budget:,}: off value ${off['portfolio']['value']:,.0f}, worst ${worst_of(off):,.0f} | on value ${on['portfolio']['value']:,.0f}, worst ${worst_of(on):,.0f} | {p} | solve {on['meta']['solve_ms']}ms")
-    if p["changed"]:
-        check(worst_of(on) < worst_of(off), f"${budget:,}: a changed plan has a smaller worst loss")
-        check(abs(p["value_given_up"] - (off["portfolio"]["value"] - on["portfolio"]["value"])) <= 1, f"${budget:,}: value given up matches the two plans")
-    else:
-        check(plan_of(on) == plan_of(off), f"${budget:,}: 'changes nothing' means the plan is identical")
-check(not solve(budget=80_000, radar=opening, resilience=0.9)["protection"]["changed"], "the $80,000 opening plan is unchanged by protection")
-check(solve(budget=120_000, radar=opening, resilience=0.9)["protection"]["changed"], "at $120,000 protection changes the plan")
+empty = solve(budget=80_000, radar=opening)
+check(empty["plan"]["picks"] == [] and empty["plan"]["value"] == 0 and empty["plan"]["spent"] == 0, "the plan starts empty and scores zero")
+check(empty["next"] == empty["portfolio"], "with an empty plan, the next suggestion is the whole suggested plan")
+suggested = empty["portfolio"]
+use = solve(budget=80_000, radar=opening, plan=[x["lot"] for x in suggested["picks"]])
+check(abs(use["plan"]["value"] - suggested["value"]) <= suggested["value"] * 0.005, "taking the whole suggestion scores what the solver said it would")
+check(use["plan"]["spent"] == suggested["spent"] and use["plan"]["gross_margin"] == suggested["gross_margin"], "and costs the same")
+check(use["portfolio"] == suggested, "the suggested plan doesn't depend on what the dealer picks")
+some = [x["lot"] for x in suggested["picks"][:3]]
+r = solve(budget=80_000, radar=opening, plan=some)
+cost = sum(PIECES[l]["ask"] for l in some)
+check(r["plan"]["spent"] == cost and r["plan"]["gross_margin"] == sum(PIECES[l]["resale"] - PIECES[l]["ask"] for l in some), "plan totals add up from its own lots")
+check([x["lot"] for x in r["plan"]["picks"]] == some, "the plan holds exactly what the dealer chose")
+check(not set(some) & {x["lot"] for x in r["next"]["picks"]}, "the next suggestion leaves out what is already planned")
+check(r["next"]["spent"] <= 80_000 - cost, "the next suggestion fits the capital left")
+by = defaultdict(int)
+for x in r["plan"]["picks"] + r["next"]["picks"]:
+    by[x["buyer"]] += 1
+check(all(n <= 2 for b, n in by.items() if b), "plan and next together stay within each collector's slots")
+trophy = max((PIECES[l] for l in opening), key=lambda p: p["ask"])
+t = solve(budget=80_000, radar=opening, plan=[trophy["id"]])
+pick = t["plan"]["picks"][0]
+print(f"  {trophy['name']} (${trophy['ask']:,}) alone: buyer {pick['buyer']}, value ${t['plan']['value']:,.0f}, next {len(t['next']['picks'])} pieces, ${t['next']['spent']:,.0f}")
+check(pick["buyer"] is not None or t["plan"]["value"] < 0, "a piece nobody can take is allowed and costs its holding charge")
+over = solve(budget=20_000, radar=opening, plan=some + [trophy["id"]])
+check(over["plan"]["spent"] > 20_000 and over["plan"]["unspent"] < 0, "going over capital is allowed and reported")
+check(over["next"]["picks"] == [], "nothing more is suggested once over capital")
+row = next(c for c in r["compare"] if c["key"] == "plan")
+check(row["value"] == r["plan"]["value"] and row["pieces"] == 3, "the comparison table scores the plan the same way")
+blocked = suggested["picks"][0]
+b = solve(budget=80_000, radar=opening, plan=[blocked["lot"]], passes=[[blocked["lot"], blocked["buyer"]]])
+check(b["plan"]["picks"][0]["buyer"] != blocked["buyer"], "a logged pass moves that piece to another collector")
+check(client.post("/api/portfolio", json={"budget": 80_000, "plan": ["nope"]}).status_code == 422, "an unknown lot in a plan is refused")
+print("\n[7] removed metrics")
+check(all(k not in d for k in ("stress", "protection")) and all("worst_loss" not in c for c in d["compare"]), "no buyer-walks figures in the API")
 
 print("\n[8] capacity ceiling and stretch cost")
 for tol in (0.0, 0.10, 0.25, 0.50):
@@ -154,41 +162,67 @@ for tol in (0.0, 0.10, 0.25, 0.50):
         check(not stretched, "with no tolerance nothing relies on it")
 print(f"    trophy still has no buyer at 25%: {not any(True for d in solve(budget=80_000, capacity_tolerance=0.25)['demand'][max((l for l in PIECES.values() if l['role'] == 'lot'), key=lambda l: l['ask'])['id']] if d['affordable'])}")
 
-print("\n[9] radar, desk and committed buys")
+print("\n[9] radar")
 LOT_IDS = [p["id"] for p in PIECES.values() if p["role"] == "lot"]
 base20 = LOT_IDS[:20]
 r = solve(budget=80_000, radar=base20)
 check(set(r["demand"]) == set(base20), "only lots on the radar get ranked")
 check(all(d["rank"] <= 20 for rows in r["demand"].values() for d in rows), "ranks are among the 20 visible lots")
 check({x["lot"] for x in r["portfolio"]["picks"]} <= set(base20), "the solver only buys from the radar")
-short = base20[:6]
-r2 = solve(budget=80_000, radar=base20, desk=short)
-check({x["lot"] for x in r2["portfolio"]["picks"]} <= set(short), "the solver only buys from the desk")
-check(set(r2["demand"]) == set(base20), "lots off the desk still show their collector demand")
-r0 = solve(budget=80_000, radar=base20, desk=[])
-check(r0["portfolio"]["picks"] == [] and r0["portfolio"]["value"] == 0, "an empty desk proposes nothing")
 r0 = solve(budget=0, radar=base20)
-check(r0["portfolio"]["picks"] == [], "no capital left proposes nothing")
+check(r0["portfolio"]["picks"] == [], "no capital left suggests nothing")
 big = solve(budget=1_000_000)
 check(big["portfolio"]["spent"] < 300_000, f"not forced to spend: ${big['portfolio']['spent']:,.0f} of $1,000,000")
-check(all(x["value"] > -1 for x in big["portfolio"]["picks"]), "every proposed lot earns its place")
+check(all(x["value"] > -1 for x in big["portfolio"]["picks"]), "every suggested lot earns its place")
 
-first = r["portfolio"]["picks"][0]
-buyer = first["buyer"]
-left = 80_000 - first["ask"]
-done = [{"lot": first["lot"], "buyer": buyer}]
-r3 = solve(budget=left, radar=base20, committed=done)
-check(first["lot"] not in r3["demand"], "a bought lot leaves the pool")
-check(all(x["lot"] != first["lot"] for x in r3["portfolio"]["picks"]), "a bought lot is not proposed again")
-check(r3["portfolio"]["spent"] <= left, "the next proposal fits the remaining capital")
-print(f"    bought {PIECES[first['lot']]['name'][:34]} for {COLLECTORS[buyer]['name']}: {len(r3['portfolio']['picks'])} pieces proposed with ${left:,.0f} left")
-placed = [x for x in r3["portfolio"]["picks"] if x["buyer"] == buyer]
-check(len(placed) <= 1, "that buyer has one slot left")
-check(sum(x["resale"] for x in placed) + first["resale"] <= COLLECTORS[buyer]["capacity"] * 1.25 + 1e-6, "their committed and proposed pieces stay within their limit")
-others = [x for x in r3["demand"][next(iter(r3["demand"]))] if x["collector"] == buyer]
-two = [{"lot": l, "buyer": buyer} for l in LOT_IDS[:2]]
-r4 = solve(budget=80_000, committed=two)
-check(all(x["buyer"] != buyer for x in r4["portfolio"]["picks"]), "a buyer with two committed pieces is not offered more")
+print("\n[10] buyer ties")
+r = solve(budget=80_000, radar=base20)
+p = r["portfolio"]
+base_lots = sorted(x["lot"] for x in p["picks"])
+print(f"    {len(p.get('ties', {}))} tied of {len(p['picks'])} suggested lots: {p.get('ties', {})}")
+check("ties" in p and "ties" in r["plan"] and "ties" in r["next"], "ties are reported for the suggestion, the parcel and what's next")
+for lot, others in p["ties"].items():
+    pick = next(x for x in p["picks"] if x["lot"] == lot)
+    rows = {d["collector"]: d for d in r["demand"][lot]}
+    check(all(rows[c]["rank"] == pick["rank"] and rows[c]["affordable"] and not rows[c]["passed"] for c in others),
+          f"{PIECES[lot]['name'][:34]}: tied buyers share the rank and are eligible")
+    alt = solve(budget=80_000, radar=base20, passes=[[lot, pick["buyer"]]])["portfolio"]
+    moved = next((x for x in alt["picks"] if x["lot"] == lot), None)
+    check(sorted(x["lot"] for x in alt["picks"]) == base_lots and moved and moved["buyer"] in others and alt["value"] == p["value"],
+          f"{PIECES[lot]['name'][:34]}: passing {pick['buyer']} moves it to a tied buyer, same lots, same value")
+for x in p["picks"]:
+    same = [d["collector"] for d in r["demand"][x["lot"]] if d["rank"] == x["rank"] and d["collector"] != x["buyer"] and d["affordable"]]
+    for c in same:
+        if c in p["ties"].get(x["lot"], []):
+            continue
+        alt = solve(budget=80_000, radar=base20, passes=[[x["lot"], x["buyer"]]])["portfolio"]
+        check(alt["value"] < p["value"] or sorted(y["lot"] for y in alt["picks"]) != base_lots,
+              f"{PIECES[x['lot']]['name'][:34]}: same rank as {c} but not a tie, and the swap does cost something")
+
+print("\n[11] a tie goes to the buyer the dealer was shown, and nothing else moves")
+tied_lot = next(iter(p["ties"]), None)  # live rankings can shift slightly, so a tie isn't guaranteed
+if tied_lot is None:
+    print("    no tie in the default book right now, skipping the tied-buyer checks")
+else:
+    first = next(x["buyer"] for x in p["picks"] if x["lot"] == tied_lot)
+    other = p["ties"][tied_lot][0]
+    def buyer_in_parcel(**kw):
+        got = solve(budget=80_000, radar=base20, plan=[tied_lot], **kw)["plan"]
+        return next(x["buyer"] for x in got["picks"] if x["lot"] == tied_lot), got["value"]
+    a, value_a = buyer_in_parcel(prefer={tied_lot: first})
+    b, value_b = buyer_in_parcel(prefer={tied_lot: other})
+    check(a == first and b == other, f"either tied buyer can be kept ({first}, {other})")
+    check(value_a == value_b, "keeping either buyer scores the same")
+    c, _ = buyer_in_parcel(passes=[[tied_lot, first]], prefer={tied_lot: first})
+    check(c == other, "a buyer who passed is not kept")
+    d, _ = buyer_in_parcel(prefer={tied_lot: "nobody", "no-such-lot": first})
+    check(d in (first, other), "unknown names in the preference are ignored")
+# not a tie: a collector who ranks the lot lower, so asking for them changes nothing
+lot, worse = next((x["lot"], d["collector"]) for x in p["picks"] for d in r["demand"][x["lot"]] if d["rank"] > x["rank"] and d["affordable"])
+plain = solve(budget=80_000, radar=base20, plan=[lot])["plan"]
+asked = solve(budget=80_000, radar=base20, plan=[lot], prefer={lot: worse})["plan"]
+check(asked["picks"] == plain["picks"] and asked["value"] == plain["value"], f"asking for a lower-ranked buyer ({worse}) is ignored")
+check(solve(budget=80_000, radar=base20, prefer={lot: worse})["portfolio"]["picks"] == p["picks"], "the suggestion itself does not read the preference")
 
 print("\nFAILURES:", failures)
 sys.exit(1 if failures else 0)

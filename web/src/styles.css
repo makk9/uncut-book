@@ -89,6 +89,9 @@ h2, h3 { margin: 0; font-family: var(--serif); font-weight: 600; }
 .share i { display: block; flex: 0 0 auto; background: var(--amber); border-right: 2px solid var(--well); transition: flex-basis .42s cubic-bezier(.3, .7, .2, 1), opacity .16s; animation: share-in .42s cubic-bezier(.3, .7, .2, 1); }
 .share i.dim { opacity: .25; }
 .share i.hot { background: var(--ink); }
+.share { overflow: hidden; }
+.share i.incoming { background: var(--ink); border-right: 0; animation: none; transition: none; }
+.share i.incoming.over { background: var(--garnet); }
 @keyframes share-in { from { flex-basis: 0; } }
 @keyframes ring-out { to { opacity: 0; } }
 
@@ -108,6 +111,17 @@ h2, h3 { margin: 0; font-family: var(--serif); font-weight: 600; }
 .tile-px { display: block; font-size: 12px; line-height: 17px; font-weight: 500; color: var(--ink-2); white-space: nowrap; }
 .tile:hover .tile-px, .tile:focus-visible .tile-px { color: var(--ink); }
 .tile:focus-visible { outline-offset: -2px; }
+
+/* the parcel takes a lot dragged up from the radar */
+.band-alloc.droppable { box-shadow: inset 0 0 0 1px var(--amber); }
+.band-alloc.over { box-shadow: inset 0 0 0 2px var(--amber); }
+.tiles-empty { flex: 1; height: 93px; display: flex; align-items: center; justify-content: center; border: 1px dashed var(--muted); color: var(--ink-2); font-size: 13px; }
+.band-alloc.droppable .tiles-empty { border-color: var(--amber); color: var(--ink); }
+.for-touch { display: none; }
+@media (hover: none) {
+  .for-mouse { display: none; }
+  .for-touch { display: inline; }
+}
 
 /* figures on the desk */
 .band-ledger { background: var(--desk); --surface: var(--desk); --rule: var(--rule-desk); --muted: #9fb0a7; padding: 6px 14px; display: flex; flex-direction: column; justify-content: space-around; min-width: 0; border-bottom: 1px solid var(--rule-desk); }
@@ -146,15 +160,25 @@ h2, h3 { margin: 0; font-family: var(--serif); font-weight: 600; }
 .c-city .am { font-weight: 500; }
 .c-placed { display: flex; gap: 2px; justify-content: flex-end; margin-top: 1px; }
 .c-placed img { width: 18px; height: 18px; object-fit: cover; }
+.c-placed img.suggested { opacity: .5; filter: saturate(.5); }
 
 /* the case: a stone is lit when it is in the buys, or by rank when a collector is in focus */
 .lots { display: grid; grid-template-columns: repeat(auto-fill, minmax(156px, 1fr)); gap: 2px; }
-.lot { display: flex; flex-direction: column; position: relative; width: 100%; min-width: 0; --b: .44; --s: .5; }
+.lot { display: flex; flex-direction: column; position: relative; width: 100%; min-width: 0; cursor: pointer; --b: .44; --s: .5; }
+.lot:focus-visible { outline: 2px solid var(--amber); outline-offset: -2px; }
+.lot[draggable="true"] { cursor: grab; }
+.lot[draggable="true"]:active { cursor: grabbing; }
+.lot.dragging { opacity: .35; }
 .lot.in { --b: 1; --s: 1; }
 .thumb { position: relative; aspect-ratio: 4 / 3; background: #0f1112; overflow: hidden; }
 .thumb img { width: 100%; height: 100%; object-fit: cover; filter: brightness(var(--b)) saturate(var(--s)); transition: filter .2s; }
 .lot:hover .thumb img, .lot:focus-visible .thumb img { filter: none; }
 .lot.flash .thumb::after { content: ""; position: absolute; inset: 0; box-shadow: inset 0 0 0 2px var(--amber); animation: ring-out 1.5s ease-out forwards; }
+/* the solver's picks are framed in emerald; a piece you've taken carries an amber slice, like its share of the budget */
+.lot.sug .thumb::before { content: ""; position: absolute; inset: 0; z-index: 1; box-shadow: inset 0 0 0 2px var(--emerald); pointer-events: none; }
+.mark { position: absolute; left: 0; bottom: 0; z-index: 1; padding: 0 8px; font-size: 12px; line-height: 21px; }
+.mark.sug { background: var(--emerald); color: #0b2a21; font-weight: 600; }
+.mark.held { background: rgba(24, 27, 28, .86); color: var(--ink); font-weight: 500; padding-left: 11px; box-shadow: inset 3px 0 0 var(--amber); }
 .plate { position: absolute; top: 0; right: 0; padding: 0 6px; font-size: 12px; line-height: 19px; font-weight: 500; background: rgba(24, 27, 28, .86); color: var(--ink-2); }
 .plate.rank { font: 600 16px/24px var(--serif); padding: 0 7px; }
 .plate.top { color: var(--emerald); }
@@ -186,6 +210,7 @@ h2, h3 { margin: 0; font-family: var(--serif); font-weight: 600; }
 
 /* tables */
 table { width: 100%; border-collapse: collapse; font-stretch: 92%; }
+th.rank-lead, td.rank-lead { color: var(--ink); font-weight: 600; }
 th { font-weight: 500; font-size: 11.5px; color: var(--muted); text-align: right; padding: 5px 6px 4px; border-bottom: 1px solid var(--rule); white-space: nowrap; }
 td { padding: 5px 6px; border-bottom: 1px solid var(--rule); text-align: right; font-size: 12.5px; white-space: nowrap; }
 th:first-child, td:first-child { text-align: left; padding-left: 14px; }
@@ -210,10 +235,6 @@ tr.dim td { opacity: .45; }
 .total .r { text-align: right; }
 .total .r div { font-weight: 400; font-size: 12px; color: var(--muted); }
 
-.protect { display: inline-flex; align-items: center; gap: 7px; font-size: 12.5px; color: var(--ink-2); cursor: pointer; }
-.protect:hover { color: var(--ink); }
-.protect input { accent-color: var(--amber); margin: 0; }
-.protect-note { padding-top: 0; }
 .segctl { display: inline-flex; gap: 12px; }
 .segctl button { padding: 2px 0 1px; font-size: 12.5px; color: var(--muted); border-bottom: 2px solid transparent; }
 .segctl button:hover { color: var(--ink); }
@@ -246,6 +267,7 @@ tr.dim td { opacity: .45; }
 .input::placeholder { color: var(--muted); }
 .sug { padding: 2px 8px; border: 1px solid var(--rule); border-radius: 2px; font-size: 12px; color: var(--ink-2); }
 .sug:hover { border-color: var(--amber); color: var(--ink); }
+.tie { margin-top: 6px; color: var(--ink-2); }
 .event { display: grid; grid-template-columns: 54px 30px minmax(0, 1fr); gap: 8px; align-items: center; padding: 3px 0; font-size: 12.5px; }
 .event img { width: 30px; height: 30px; object-fit: cover; }
 
@@ -298,17 +320,9 @@ footer { display: flex; gap: 16px; flex-wrap: wrap; align-items: center; padding
 
 /* desk shortlist, committed buys, simulated offers */
 .budget-sub { font-size: 12px; color: var(--muted); margin-top: 1px; white-space: nowrap; }
-.lot-cell { position: relative; display: flex; min-width: 0; }
-.lot.bought { --b: .3; --s: .3; }
-.send { position: absolute; top: 0; left: 0; padding: 0 7px; font-size: 11.5px; line-height: 20px; font-weight: 500; background: rgba(24, 27, 28, .86); color: var(--amber); text-align: left; }
-.send.on { color: var(--muted); }
-.send:hover, .send:focus-visible { color: var(--ink); }
 .pick-row { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: stretch; border-bottom: 1px solid var(--rule); }
 .pick-row .pick { border-bottom: 0; padding-right: 8px; }
 .buy { padding: 0 12px; font-size: 12.5px; font-weight: 600; color: var(--amber); border-left: 1px solid var(--rule); text-align: center; }
 .buy:hover, .buy:focus-visible { background: var(--amber); color: #1f1a0e; }
-.bought-row { display: grid; grid-template-columns: 42px minmax(0, 1fr) auto; gap: 10px; padding: 6px 14px; border-bottom: 1px solid var(--rule); align-items: center; }
-.bought-row img { width: 42px; height: 42px; object-fit: cover; }
-.bought-row .n { font: 500 14.5px/1.25 var(--serif); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.bought-row .b { font-size: 12px; color: var(--muted); line-height: 1.35; }
-.bought-row .b .who { color: var(--ink); font-weight: 500; }
+.buy.quiet { color: var(--muted); font-weight: 500; }
+.buy.quiet:hover, .buy.quiet:focus-visible { background: var(--raised); color: var(--ink); }

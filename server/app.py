@@ -44,18 +44,12 @@ class Signal(BaseModel):
     id: str | None = Field(default=None, max_length=64)
 
 
-class Commit(BaseModel):
-    lot: str = Field(max_length=64)
-    buyer: str | None = Field(default=None, max_length=64)
-
-
 class Request(BaseModel):
     budget: float = Field(default=80_000, ge=0, le=1_000_000)  # capital still available, not a target
     fit_decay: float = Field(default=4.0, ge=0.5, le=20)
     holding_penalty: float = Field(default=0.15, ge=0, le=1)
     max_rank: int = Field(default=8, ge=1, le=24)
     slots: int = Field(default=2, ge=1, le=6)
-    resilience: float = Field(default=0.0, ge=0, le=1)
     capacity_tolerance: float = Field(default=0.25, ge=0, le=1)
     stretch_cost: float = Field(default=0.50, ge=0, le=5)
     recency: float = Field(default=0.6, ge=0, le=1)
@@ -63,8 +57,8 @@ class Request(BaseModel):
     signals: dict[str, list[Signal]] = Field(default_factory=dict)
     passes: list[tuple[str, str]] = Field(default_factory=list)
     radar: list[str] | None = None  # lots visible to the dealer; None means all of them
-    desk: list[str] | None = None   # lots sent to the optimizer; None means everything on the radar
-    committed: list[Commit] = Field(default_factory=list)  # bought: out of the pool, charged to their buyer
+    plan: list[str] = Field(default_factory=list)  # what the dealer intends to buy; the suggestion works around it
+    prefer: dict[str, str] = Field(default_factory=dict)  # lot -> buyer the dealer was shown; only ever breaks exact ties
 
 
 def purchases(c: dict) -> dict:
@@ -160,13 +154,11 @@ async def build(req: Request):
         raise HTTPException(503, "BehaviorGPT is unreachable and this signal has no stored ranking.")
 
     known = set(LOT_IDS)
-    named = (req.radar or []) + (req.desk or []) + [x.lot for x in req.committed]
-    if any(l not in known for l in named) or any(x.buyer and x.buyer not in BY_ID for x in req.committed):
-        raise HTTPException(422, "unknown lot or collector")
+    named = (req.radar or []) + req.plan
+    if any(l not in known for l in named):
+        raise HTTPException(422, "unknown lot")
     # ranks are taken among the lots the dealer can see, so "#3 of 20" stays true as offers come and go
-    bought = {x.lot for x in req.committed}
-    pool = [l for l in (LOT_IDS if req.radar is None else req.radar) if l not in bought]
-    desk = [l for l in (pool if req.desk is None else req.desk) if l in pool]
+    pool = LOT_IDS if req.radar is None else req.radar
 
     lens, tags = {}, {}
     for c in COLLECTORS:
@@ -183,40 +175,14 @@ async def build(req: Request):
     shape = (len(pool), len(COLLECTORS))
     ranks = np.array([[lens[c["id"]]["blend"][l] for c in COLLECTORS] for l in pool], float).reshape(shape)
     tag_ranks = np.array([[tags[c["id"]][l] for c in COLLECTORS] for l in pool], float).reshape(shape)
-    take = [pool.index(l) for l in desk]
-    lots = [{"id": l, "ask": PIECES[l]["ask"], "resale": PIECES[l]["resale"]} for l in desk]
-    # a committed piece uses up part of its buyer's capacity and one of their slots
-    buyers = []
-    for c in COLLECTORS:
-        mine = [x.lot for x in req.committed if x.buyer == c["id"]]
-        buyers.append({"id": c["id"], "capacity": max(0.0, c["capacity"] - sum(PIECES[l]["resale"] for l in mine)),
-                       "slots": max(0, req.slots - len(mine))})
+    lots = [{"id": l, "ask": PIECES[l]["ask"], "resale": PIECES[l]["resale"]} for l in pool]
+    buyers = [{"id": c["id"], "capacity": c["capacity"], "slots": req.slots} for c in COLLECTORS]
     blocked = {tuple(x) for x in req.passes}
-    tag_ranks = tag_ranks[take]
-    problem = opt.Problem(lots, buyers, ranks[take], blocked)
+    problem = opt.Problem(lots, buyers, ranks, blocked)
     q = opt.Params(budget=req.budget, fit_decay=req.fit_decay, holding_penalty=req.holding_penalty,
-                   max_rank=req.max_rank, slots=req.slots, resilience=req.resilience,
+                   max_rank=req.max_rank, slots=req.slots,
                    capacity_tolerance=req.capacity_tolerance, stretch_cost=req.stretch_cost)
     return raw, sources, rank_ms, lens, tags, ranks, tag_ranks, lots, buyers, blocked, pool, problem, q
-
-
-def plan(problem: opt.Problem, q: opt.Params) -> tuple[dict, dict | None]:
-    """The proposal. With protection on, the protected plan is kept only if it lowers the worst
-    walkout loss, so ties and rounding in the solver never look like protection."""
-    plain = opt.solve(problem, replace(q, resilience=0.0))
-    if q.resilience <= 0:
-        return plain, None
-    guarded = opt.solve(problem, q)
-
-    def worst(r: dict) -> float:
-        s = opt.stress(problem, q, opt.lots_for(problem, r))
-        return s[0]["value_lost"] if s else 0.0
-
-    before, after = worst(plain), worst(guarded)
-    if after >= before - 1:
-        return plain, {"changed": False, "worst_loss": before}
-    return guarded, {"changed": True, "worst_before": before, "worst_after": after,
-                     "value_given_up": plain["value"] - guarded["value"]}
 
 
 FRONTIER_CACHE: dict[bytes, list] = {}
@@ -234,39 +200,26 @@ def cached_frontier(problem, q, blocked) -> list[dict]:
     return FRONTIER_CACHE[key]
 
 
-class WhatIf(Request):
-    lot: str = Field(max_length=64)
-
-
-@app.post("/api/whatif")
-async def whatif(req: WhatIf):
-    """Force one lot in and re-solve: what does insisting on it cost, and what does it push out?"""
-    lot = PIECES.get(req.lot)
-    if not lot or lot["role"] != "lot":
-        raise HTTPException(404, "unknown lot")
-    if any(x.lot == req.lot for x in req.committed):
-        return {"feasible": False, "reason": "This lot is already bought."}
-    if req.desk is not None and req.lot not in req.desk:
-        req.desk = [*req.desk, req.lot]  # asking about a lot not on the desk compares it against what is
-    *_, problem, q = await build(req)
-    if not any(l["id"] == req.lot for l in problem.lots):
-        return {"feasible": False, "reason": "This lot isn't on the radar yet."}
-    base, _ = plan(problem, q)
-    if lot["ask"] > q.budget:
-        return {"feasible": False, "reason": "This lot's ask is above the capital still available."}
-    problem.forced = {req.lot}
-    alt = opt.solve(problem, q)
-    before, after = {x["lot"] for x in base["picks"]}, {x["lot"] for x in alt["picks"]}
-    pick = next(x for x in alt["picks"] if x["lot"] == req.lot)
-    return {
-        "feasible": True,
-        "already_in": req.lot in before,
-        "value_delta": alt["value"] - base["value"],
-        "margin_delta": alt["gross_margin"] - base["gross_margin"],
-        "displaced": sorted(before - after),
-        "added": sorted(after - before - {req.lot}),
-        "buyer": pick["buyer"], "rank": pick["rank"],
-    }
+def plan_and_next(problem: opt.Problem, q: opt.Params, plan: list[str], suggested: dict, prefer: dict[str, str]) -> tuple[dict, dict]:
+    """Score what the dealer plans to buy by the solver's own rules, then ask the solver what it
+    would add with the capital left. Planned pieces use up their buyer's capacity and slots."""
+    at = {l["id"]: i for i, l in enumerate(problem.lots)}
+    chosen = [at[l] for l in dict.fromkeys(plan) if l in at]
+    mine = opt.keep_buyers(problem, q, opt.evaluate(problem, q, chosen), prefer)
+    mine["ties"] = opt.buyer_ties(problem, q, mine)
+    if not chosen:
+        return mine, suggested
+    buyers = []
+    for c in problem.collectors:
+        held = [x for x in mine["picks"] if x["buyer"] == c["id"]]
+        buyers.append({"id": c["id"], "capacity": max(0.0, c["capacity"] - sum(x["resale"] for x in held)),
+                       "slots": max(0, c["slots"] - len(held))})
+    rest = [i for i in range(len(problem.lots)) if i not in set(chosen)]
+    remaining = opt.Problem([problem.lots[i] for i in rest], buyers, problem.ranks[np.array(rest, dtype=int)], problem.blocked)
+    q_left = replace(q, budget=max(0.0, q.budget - mine["spent"]))
+    nxt = opt.solve(remaining, q_left)
+    nxt["ties"] = opt.buyer_ties(remaining, q_left, nxt)
+    return mine, nxt
 
 
 @app.post("/api/portfolio")
@@ -274,9 +227,10 @@ async def portfolio(req: Request):
     raw, sources, rank_ms, lens, tags, ranks, tag_ranks, lots, buyers, blocked, pool, problem, q = await build(req)
 
     t1 = time.perf_counter()
-    base, protection = plan(problem, q)
+    base = opt.solve(problem, q)
+    base["ties"] = opt.buyer_ties(problem, q, base)
     chosen = opt.lots_for(problem, base)
-    stress = opt.stress(problem, q, chosen)
+    mine, nxt = plan_and_next(problem, q, req.plan, base, req.prefer)
     solve_ms = (time.perf_counter() - t1) * 1000
 
     # the same budget and scoring applied to other ways of choosing
@@ -284,13 +238,12 @@ async def portfolio(req: Request):
                               opt.solve(opt.Problem(lots, buyers, tag_ranks, blocked), q))
     def strategy(key, name, note, idx):
         r = opt.evaluate(problem, q, idx)
-        s = opt.stress(problem, q, idx)
         return {"key": key, "name": name, "note": note, "lots": [lots[i]["id"] for i in idx],
                 "spent": r["spent"], "gross_margin": r["gross_margin"], "value": r["value"],
-                "unplaced_capital": r["unplaced_capital"], "pieces": len(r["picks"]),
-                "worst_loss": s[0]["value_lost"] if s else 0}
+                "unplaced_capital": r["unplaced_capital"], "pieces": len(r["picks"])}
 
     compare = [
+        *([strategy("plan", "Your parcel", "What you intend to buy, scored by the same rules", opt.lots_for(problem, mine))] if mine["picks"] else []),
         strategy("book", "THE BOOK", "Lots and buyers solved together", chosen),
         strategy("trophy", "Biggest stone first", "Most expensive lot that fits, repeat", opt.trophy_strategy(problem, q)),
         strategy("margin", "Best paper margin", "Largest markup, ignoring who buys", opt.margin_strategy(problem, q)),
@@ -314,7 +267,7 @@ async def portfolio(req: Request):
             "over_by": round(max(0.0, resale - opt.limit(buyers[j], q))),
             "stretch": round(max(0.0, resale - buyers[j]["capacity"])) if resale <= opt.limit(buyers[j], q) else 0,
             "passed": (l, c["id"]) in blocked,
-        } for j, c in enumerate(COLLECTORS)), key=lambda x: x["rank"])
+        } for j, c in enumerate(COLLECTORS)), key=lambda x: (x["rank"], x["stretch"]))  # at equal rank, whoever fits best is named first
         demand[l] = rows
 
     # inventory: ranked only against the dealer's own stock, so #3 means third of what they hold for this collector
@@ -336,8 +289,8 @@ async def portfolio(req: Request):
 
     return {
         "portfolio": base,
-        "protection": protection,
-        "stress": stress,
+        "plan": mine,
+        "next": nxt,
         "compare": compare,
         "frontier": curve,
         "demand": demand,

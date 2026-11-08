@@ -10,7 +10,7 @@ An acquisition terminal for independent jewelry dealers. Given a budget, a book 
 
 1. Each collector's history goes to [BehaviorGPT](https://github.com/Unbox-AI/behaviorgpt), which ranks the batch. Two lenses are used: the full sequence, and purchases only.
 2. A MILP (SciPy HiGHS) chooses lots and assigns each to one collector together, under the budget, each collector's capacity and a limit on pieces per collector. A lot two collectors want can only go to one of them, and one collector cannot absorb everything.
-3. A stress test removes each buyer in turn and re-places the portfolio.
+3. The dealer decides. They build their own parcel from the incoming lots, and every summary number comes from that parcel. The solver's list is a suggestion beside it, scored by the same rules, and it updates to work around what they've chosen.
 
 ## Run it
 

@@ -36,15 +36,16 @@ Verified by running it (some of this differs from the README):
 - Two lenses per collector: full sequence and orders-only, blended by a recency weight. This guards against one stray view moving a $60k decision. The gap between lenses is the taste-drift signal.
 - Lot selection and buyer assignment are one MILP (SciPy HiGHS), so overlapping demand on a collector is handled directly by capacity and slot constraints.
 - Fit comes from rank with an explicit decay; value = fit x dealer's margin estimate, minus a holding penalty for missing fit. All knobs stay visible in the UI.
-- Resilience mode and the buyer-walks stress test measure single-collector dependence.
+- The "if one buyer walks" metric was removed from the UI and API at the user's request: it read as dollars lost but was a change in fit score. `stress` and `resilience` remain in `server/optimizer.py`, unused by the app.
 - Comparison strategies (trophy, paper margin, tag matching) are scored under the same rules as THE BOOK, and the UI labels that scoring as THE BOOK's assumptions.
+- The dealer's plan, shown as "parcel" in the UI, drives the app: `plan` in `/api/portfolio` is scored with `opt.evaluate`, and every summary number comes from it. It starts empty. `portfolio` is the solver's full suggestion and doesn't depend on the plan; `next` is what the solver would add with the capital left, around the plan's buyers. Going over capital and pieces with no buyer are allowed and shown. This replaced On desk, Buy and the force-it-in what-if.
 - Dealer inventory is every piece nobody bought: the 6 curated holdings plus unsold history pieces. `build_book.py` assigns those roles after drawing histories, so ids stay `his###` and catalog rows don't change. Inventory is ranked only against itself and doesn't affect the solver.
 - Demo moment: log a signal ("called about sapphires"), re-rank live, portfolio changes.
 - `rankings_snapshot.json` is the fallback if the API fails during the demo. The UI must show live vs snapshot.
 
 ## Paths
 
-- `server/optimizer.py`: MILP, stress test, frontier, comparison strategies
+- `server/optimizer.py`: MILP, frontier, comparison strategies
 - `server/rankings.py`: BehaviorGPT calls, lenses, cache, snapshot
 - `server/app.py`: API; also serves `data/images/` and `web/dist/`
 - `scripts/build_book.py`: builds the simulated book from `data/book/curated.json`; `scripts/embed_catalog.py` uploads it; `scripts/check_e2e.py` checks a running server

@@ -1,4 +1,7 @@
-import { useCallback, useEffect, useMemo, useRef, useState, type CSSProperties } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState, type CSSProperties, type DragEvent } from "react";
+
+const LOT_DRAG = "application/x-the-book-lot";
+const TILE_H = 76;
 
 type Credit = { title: string; author: string; license: string; license_url: string; source: string; landing_url: string };
 type Piece = {
@@ -15,13 +18,14 @@ type Book = { lots: Piece[]; holdings: Piece[]; collectors: Collector[]; live: b
 type Pick_ = { lot: string; ask: number; resale: number; buyer: string | null; rank: number | null; fit: number; value: number };
 type Demand = { collector: string; rank: number; rank_full: number; rank_orders: number; rank_tags: number; fit: number; affordable: boolean; over_by: number; stretch: number; vs_largest: number | null; passed: boolean };
 type Holding = { id: string; best: { collector: string; rank: number }[]; reach: number; viewed_by: string[]; status: "live" | "thin" | "stale" };
+type Plan = { picks: Pick_[]; spent: number; budget: number; unspent: number; gross_margin: number; value: number; stretch_cost: number; unplaced_capital: number; ties?: Record<string, string[]> };
 type Result = {
-  portfolio: { picks: Pick_[]; spent: number; budget: number; unspent: number; gross_margin: number; value: number; stretch_cost: number; unplaced_capital: number };
-  stress: { collector: string; value: number; value_lost: number; unplaced_capital: number; unplaced: string[] }[];
-  compare: { key: string; name: string; note: string; lots: string[]; spent: number; gross_margin: number; value: number; unplaced_capital: number; pieces: number; worst_loss: number }[];
+  portfolio: Plan;
+  plan: Plan;
+  next: Plan;
+  compare: { key: string; name: string; note: string; lots: string[]; spent: number; gross_margin: number; value: number; unplaced_capital: number; pieces: number }[];
   frontier: { budget: number; value: number; spent: number; pieces: number }[];
   demand: Record<string, Demand[]>;
-  protection: { changed: boolean; worst_loss?: number; worst_before?: number; worst_after?: number; value_given_up?: number } | null;
   holdings: Holding[];
   in_stock: Record<string, string[]>;
   drift: Record<string, { gap: number; rising: string[]; fading: string[] }>;
@@ -29,16 +33,13 @@ type Result = {
 };
 type Signal = { type: "search" | "view"; q?: string; id?: string };
 type Settings = { fit_decay: number; holding_penalty: number; max_rank: number; slots: number; recency: number; capacity_tolerance: number; stretch_cost: number; relative: number };
-type WhatIf = { feasible: boolean; reason?: string; already_in?: boolean; value_delta?: number; margin_delta?: number; displaced?: string[]; added?: string[]; buyer?: string | null; rank?: number | null };
 
-const usd = (n: number) => `$${Math.round(n).toLocaleString("en-US")}`;
-const usdK = (n: number) => (Math.abs(n) >= 1000 ? `$${(n / 1000).toFixed(n % 1000 === 0 ? 0 : 1)}k` : `$${Math.round(n)}`);
+const usd = (n: number) => `${n < 0 ? "−" : ""}$${Math.abs(Math.round(n)).toLocaleString("en-US")}`;
+const usdK = (n: number) => `${n < 0 ? "−" : ""}${Math.abs(n) >= 1000 ? `$${(Math.abs(n) / 1000).toFixed(n % 1000 === 0 ? 0 : 1)}k` : `$${Math.abs(Math.round(n))}`}`;
 const signed = (n: number) => `${n >= 0 ? "+" : "−"}${usd(Math.abs(n))}`;
-const PROTECT_WEIGHT = 0.9; // share of the objective on value left after the worst walkout, when protection is on
 const DEFAULTS: Settings = { fit_decay: 4, holding_penalty: 0.15, max_rank: 8, slots: 2, recency: 0.6, capacity_tolerance: 0.25, stretch_cost: 0.5, relative: 1 };
 const fill = (v: number, min: number, max: number) => ({ "--p": `${((v - min) / (max - min)) * 100}%` }) as CSSProperties;
-type Toast = { head: string; ms: number; added: string[]; removed: string[] };
-type Bought = { lot: string; buyer: string | null; ask: number; resale: number };
+type Toast = { head: string; ms: number | null; delta: string | null; moved: string[]; added: string[]; removed: string[] };
 const OPENING_LOTS = 20; // the rest of the batch stays back as simulated new offers
 const OFFERS_PER_REVEAL = 2;
 
@@ -48,7 +49,6 @@ export default function App() {
   const [err, setErr] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
   const [budget, setBudget] = useState(80000);
-  const [protect, setProtect] = useState(false);
   const [settings, setSettings] = useState<Settings>(DEFAULTS);
   const [showSettings, setShowSettings] = useState(false);
   const [signals, setSignals] = useState<Record<string, Signal[]>>({});
@@ -59,12 +59,16 @@ export default function App() {
   const [credits, setCredits] = useState(false);
   const [toast, setToast] = useState<Toast | null>(null);
   const [flash, setFlash] = useState<Set<string>>(new Set());
-  const [offDesk, setOffDesk] = useState<Set<string>>(new Set());
   const [revealed, setRevealed] = useState(0);
-  const [bought, setBought] = useState<Bought[]>([]);
-  const prevPicks = useRef<Set<string> | null>(null);
-  const pendingToast = useRef<string | null>(null);
+  const [plan, setPlan] = useState<string[]>([]);
+  const [dragLot, setDragLot] = useState<string | null>(null);
+  const [overParcel, setOverParcel] = useState(false);
+  const prevSuggested = useRef<Set<string> | null>(null);
+  const prevPlan = useRef<Plan | null>(null);
+  const pendingToast = useRef<{ head: string; planEdit: boolean } | null>(null);
+  const shownBuyers = useRef<Record<string, string>>({});
   const seq = useRef(0);
+  const toastTimer = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
 
   useEffect(() => {
     fetch("/api/book").then((r) => r.json()).then(setBook).catch(() => setErr("Could not load the book."));
@@ -74,18 +78,11 @@ export default function App() {
   const offers = useMemo(() => (book?.lots ?? []).slice(OPENING_LOTS), [book]);
   const newOffers = useMemo(() => offers.slice(0, revealed), [offers, revealed]);
   const radarLots = useMemo(() => [...newOffers, ...opening], [newOffers, opening]);
-  const committedAsk = bought.reduce((a, x) => a + x.ask, 0);
-  const available = Math.max(0, budget - committedAsk);
 
-  const body = useMemo(() => {
-    const isBought = new Set(bought.map((x) => x.lot));
-    return {
-      budget: available, ...settings, resilience: protect ? PROTECT_WEIGHT : 0, signals, passes,
-      radar: radarLots.map((l) => l.id),
-      desk: radarLots.map((l) => l.id).filter((id) => !offDesk.has(id) && !isBought.has(id)),
-      committed: bought.map((x) => ({ lot: x.lot, buyer: x.buyer })),
-    };
-  }, [available, settings, protect, signals, passes, radarLots, offDesk, bought]);
+  const body = useMemo(() => ({
+    budget, ...settings, signals, passes, plan,
+    radar: radarLots.map((l) => l.id),
+  }), [budget, settings, signals, passes, plan, radarLots]);
 
   useEffect(() => {
     if (!book) return;
@@ -93,10 +90,13 @@ export default function App() {
     const t = setTimeout(async () => {
       setBusy(true);
       try {
-        const r = await fetch("/api/portfolio", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify(body) });
+        // a tie goes to the buyer already on screen, so adding a lot doesn't change the name for no reason
+        const prefer = Object.fromEntries(body.plan.flatMap((l) => (shownBuyers.current[l] ? [[l, shownBuyers.current[l]]] : [])));
+        const r = await fetch("/api/portfolio", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ ...body, prefer }) });
         if (!r.ok) throw new Error((await r.json().catch(() => ({}))).detail || "The solver did not answer.");
         const data: Result = await r.json();
         if (id !== seq.current) return;
+        shownBuyers.current = buyersOnScreen(data, body.max_rank);
         setRes(data);
         setErr(null);
       } catch (e) {
@@ -110,59 +110,109 @@ export default function App() {
 
   const lotBy = useMemo(() => Object.fromEntries((book?.lots ?? []).concat(book?.holdings ?? []).map((l) => [l.id, l])), [book]);
   const colBy = useMemo(() => Object.fromEntries((book?.collectors ?? []).map((c) => [c.id, c])), [book]);
-  const picks = useMemo(() => Object.fromEntries((res?.portfolio.picks ?? []).map((p) => [p.lot, p])), [res]);
+  const planned = useMemo(() => Object.fromEntries((res?.plan.picks ?? []).map((p) => [p.lot, p])), [res]);
+  const nextUp = useMemo(() => Object.fromEntries((res?.next.picks ?? []).map((p) => [p.lot, p])), [res]);
 
   useEffect(() => {
     if (!res) return;
     const now = new Set(res.portfolio.picks.map((p) => p.lot));
-    const prev = prevPicks.current;
-    prevPicks.current = now;
-    if (!prev) return;
+    const prev = prevSuggested.current;
+    const before = prevPlan.current;
+    prevSuggested.current = now;
+    prevPlan.current = res.plan;
+    if (!prev || !before) return;
     const added = [...now].filter((x) => !prev.has(x));
-    const justBought = new Set(bought.map((x) => x.lot));
-    const removed = [...prev].filter((x) => !now.has(x) && !justBought.has(x));
-    setFlash(new Set(added));
+    const removed = [...prev].filter((x) => !now.has(x));
+    const joined = res.plan.picks.map((x) => x.lot).filter((x) => !before.picks.some((y) => y.lot === x));
+    setFlash(new Set([...added, ...joined]));
     if (pendingToast.current) {
-      setToast({ head: pendingToast.current, ms: res.meta.rank_ms, added: added.map((x) => lotBy[x]?.name), removed: removed.map((x) => lotBy[x]?.name) });
+      const { head, planEdit } = pendingToast.current;
+      const dm = res.plan.gross_margin - before.gross_margin;
+      const dv = res.plan.value - before.value;
+      const moved = res.plan.picks.flatMap((x) => {
+        const was = before.picks.find((y) => y.lot === x.lot);
+        return was && was.buyer !== x.buyer ? [`${lotBy[x.lot]?.name}: ${was.buyer ? colBy[was.buyer]?.name : "nobody"} to ${x.buyer ? colBy[x.buyer]?.name : "nobody"}`] : [];
+      });
+      setToast({
+        head, ms: planEdit ? null : res.meta.rank_ms, moved,
+        delta: dm || dv ? `Paper margin ${signed(dm)}, fit-weighted value ${signed(dv)}.` : null,
+        added: planEdit ? [] : added.map((x) => lotBy[x]?.name), removed: planEdit ? [] : removed.map((x) => lotBy[x]?.name),
+      });
       pendingToast.current = null;
-      setTimeout(() => setToast(null), 8000);
+      clearTimeout(toastTimer.current);
+      toastTimer.current = setTimeout(() => setToast(null), 8000);
     }
     const t = setTimeout(() => setFlash(new Set()), 1600);
     return () => clearTimeout(t);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [res, lotBy]);
+  }, [res, lotBy, colBy]);
 
-  const buy = useCallback((x: Pick_) => {
-    pendingToast.current = `Bought ${lotBy[x.lot]?.name} for ${usd(x.ask)}. ${usd(Math.max(0, available - x.ask))} still available.`;
-    setBought((cur) => [...cur, { lot: x.lot, buyer: x.buyer, ask: x.ask, resale: x.resale }]);
-    setLotOpen(null);
-  }, [lotBy, available]);
+  const togglePlan = useCallback((id: string) => {
+    const leaving = plan.includes(id);
+    pendingToast.current = { head: `${leaving ? "Removed" : "Added"} ${lotBy[id]?.name}.`, planEdit: true };
+    setPlan((cur) => (leaving ? cur.filter((x) => x !== id) : [...cur, id]));
+  }, [plan, lotBy]);
 
-  const undoBuy = useCallback((lot: string) => {
-    pendingToast.current = `Undid the purchase of ${lotBy[lot]?.name}.`;
-    setBought((cur) => cur.filter((x) => x.lot !== lot));
-  }, [lotBy]);
+  const startDrag = useCallback((e: DragEvent<HTMLElement>, id: string) => {
+    e.dataTransfer.setData(LOT_DRAG, id);
+    e.dataTransfer.effectAllowed = "copy";
+    // drag the photo at the size it will have in the parcel, not the whole card
+    const photo = e.currentTarget.querySelector("img");
+    if (photo?.naturalHeight) {
+      const dpr = window.devicePixelRatio || 1;
+      const w = Math.round(TILE_H * (photo.naturalWidth / photo.naturalHeight));
+      const ghost = document.createElement("canvas");
+      ghost.width = w * dpr;
+      ghost.height = TILE_H * dpr;
+      ghost.style.cssText = `position:fixed;top:-${TILE_H * 2}px;left:0;width:${w}px;height:${TILE_H}px`;
+      ghost.getContext("2d")?.drawImage(photo, 0, 0, ghost.width, ghost.height);
+      document.body.append(ghost);
+      e.dataTransfer.setDragImage(ghost, w / 2, TILE_H / 2);
+      setTimeout(() => ghost.remove());
+    }
+    // changing the page during dragstart can cancel the drag in Chrome
+    setTimeout(() => setDragLot(id));
+  }, []);
 
-  const toggleDesk = useCallback((id: string) => {
-    const leaving = !offDesk.has(id);
-    pendingToast.current = `${lotBy[id]?.name} ${leaving ? "taken off" : "sent to"} the desk.`;
-    setOffDesk((cur) => {
-      const next = new Set(cur);
-      if (next.has(id)) next.delete(id); else next.add(id);
-      return next;
-    });
-  }, [offDesk, lotBy]);
+  const endDrag = useCallback(() => {
+    setDragLot(null);
+    setOverParcel(false);
+  }, []);
+
+  // accepted on enter as well as over, so a quick flick that lets go at once still drops
+  const acceptLot = useCallback((e: DragEvent<HTMLElement>) => {
+    if (!e.dataTransfer.types.includes(LOT_DRAG)) return;
+    e.preventDefault();
+    e.dataTransfer.dropEffect = "copy";
+    setOverParcel(true);
+  }, []);
+
+  const dropOnParcel = useCallback((e: DragEvent<HTMLElement>) => {
+    e.preventDefault();
+    const id = e.dataTransfer.getData(LOT_DRAG);
+    endDrag();
+    if (id && !plan.includes(id)) togglePlan(id);
+  }, [plan, togglePlan, endDrag]);
+
+  const addAll = useCallback((ids: string[]) => {
+    pendingToast.current = { head: `Added ${ids.length} suggested ${ids.length > 1 ? "lots" : "lot"} to your parcel.`, planEdit: true };
+    setPlan((cur) => [...cur, ...ids]);
+  }, []);
+
+  const clearPlan = useCallback(() => {
+    pendingToast.current = { head: "Cleared your parcel.", planEdit: true };
+    setPlan([]);
+  }, []);
 
   const revealOffers = useCallback(() => {
     const next = offers.slice(revealed, revealed + OFFERS_PER_REVEAL);
     if (!next.length) return;
-    pendingToast.current = `${next.length} new ${next.length > 1 ? "offers" : "offer"} on the radar: ${next.map((l) => l.name).join(", ")}. Not on the desk until you send them.`;
-    setOffDesk((cur) => new Set([...cur, ...next.map((l) => l.id)]));
+    pendingToast.current = { head: `${next.length} new ${next.length > 1 ? "offers" : "offer"} on the radar: ${next.map((l) => l.name).join(", ")}.`, planEdit: false };
     setRevealed((n) => n + next.length);
   }, [offers, revealed]);
 
   const addSignal = useCallback((cid: string, s: Signal, label: string) => {
-    pendingToast.current = `${colBy[cid]?.name}: ${label}.`;
+    pendingToast.current = { head: `${colBy[cid]?.name}: ${label}.`, planEdit: false };
     setSignals((cur) => ({ ...cur, [cid]: [...(cur[cid] ?? []), s] }));
   }, [colBy]);
 
@@ -181,16 +231,31 @@ export default function App() {
 
   if (!book) return <div className="pad muted">{err ?? "Opening the book…"}</div>;
 
-  const p = res?.portfolio;
-  const book_ = res?.compare.find((c) => c.key === "book");
+  const p = res?.plan;
+  const suggested = res?.portfolio;
+  const next = res?.next;
   const trophyAsk = Math.max(...radarLots.map((l) => l.ask));
-  const boughtIds = new Set(bought.map((x) => x.lot));
-  const poolSize = radarLots.length - bought.length;
-  const editCount = Object.values(signals).reduce((a, b) => a + b.length, 0) + passes.length + bought.length + revealed
-    + [...offDesk].filter((id) => !newOffers.some((l) => l.id === id)).length;
+  const poolSize = radarLots.length;
+  const editCount = Object.values(signals).reduce((a, b) => a + b.length, 0) + passes.length + revealed;
+  const buyersIn = (x?: Plan) => new Set((x?.picks ?? []).map((y) => y.buyer).filter(Boolean)).size;
+  const left = budget - (p?.spent ?? 0);
+  const dragged = dragLot ? lotBy[dragLot] : null;
   const placedTo = (cid: string) => (p?.picks ?? []).filter((x) => x.buyer === cid);
   const stretchOf = (lot: string, cid: string) => res?.demand[lot]?.find((r) => r.collector === cid)?.stretch ?? 0;
   const timesLargest = (lot: string, cid: string) => res?.demand[lot]?.find((r) => r.collector === cid)?.vs_largest ?? 0;
+  const row = (x: Pick_, action: string, title: string, act: () => void, quiet = false) => (
+    <div key={x.lot} className="pick-row">
+      <button className="pick" onClick={() => setLotOpen(x.lot)}>
+        <img src={lotBy[x.lot]?.image} alt="" />
+        <div style={{ minWidth: 0 }}>
+          <div className="n" title={lotBy[x.lot]?.name}>{lotBy[x.lot]?.name}</div>
+          <div className="b">{x.buyer ? <>Call <span className="who">{colBy[x.buyer]?.name}</span>, ranks it #{x.rank} of {poolSize}{stretchOf(x.lot, x.buyer) > 0 && <span className="am">, {usd(stretchOf(x.lot, x.buyer))} over capacity</span>}{timesLargest(x.lot, x.buyer) > 1 && <span>, {timesLargest(x.lot, x.buyer).toFixed(1)}× their largest purchase</span>}</> : <span className="am">No collector in range</span>}</div>
+        </div>
+        <div className="r">{usd(x.ask)}<div>est. {usd(x.resale)}</div></div>
+      </button>
+      <button className={`buy ${quiet ? "quiet" : ""}`} title={title} onClick={act}>{action}</button>
+    </div>
+  );
 
   return (
     <div className="app">
@@ -215,32 +280,38 @@ export default function App() {
         <div className="band-budget">
           <label className="lbl" htmlFor="budget">Capital to work with</label>
           <div className="budget">{usd(budget)}</div>
-          <div className="budget-sub">{bought.length ? `${usd(committedAsk)} committed, ${usd(available)} available` : "Available, not a target to spend"}</div>
+          <div className="budget-sub">{p?.picks.length ? (left >= 0 ? `${usd(p.spent)} in parcel, ${usd(left)} left` : `${usd(p.spent)} in parcel, ${usd(-left)} over`) : "Available, not a target to spend"}</div>
           <input id="budget" className="range" type="range" min={10000} max={200000} step={1000} value={budget} style={fill(budget, 10000, 200000)}
             onChange={(e) => setBudget(+e.target.value)} />
         </div>
-        <div className="band-alloc">
+        <div className={`band-alloc ${dragged ? "droppable" : ""} ${overParcel ? "over" : ""}`}
+          onDragEnter={acceptLot}
+          onDragOver={acceptLot}
+          onDragLeave={(e) => { if (!e.currentTarget.contains(e.relatedTarget as Node | null)) setOverParcel(false); }}
+          onDrop={dropOnParcel}>
           <div className="alloc-head">
             <div className="alloc-line" aria-live="polite">
               {!p ? "Reading the book…"
+                : dragged ? <>Drop to add <b>{dragged.name}</b>, {usd(dragged.ask)}: {left - dragged.ask >= 0 ? `${usd(left - dragged.ask)} would be left.` : <span className="red">{usd(dragged.ask - left)} over your capital.</span>}</>
                 : focus ? (() => {
                   const mine = placedTo(focus);
                   return mine.length
-                    ? <><b>{colBy[focus]?.name}</b> would take {mine.length} {mine.length > 1 ? "pieces" : "piece"}, <b>{usd(mine.reduce((a, x) => a + x.ask, 0))}</b> of the proposed buys.</>
-                    : <>None of the proposed buys would go to <b>{colBy[focus]?.name}</b>.</>;
+                    ? <><b>{colBy[focus]?.name}</b> would take {mine.length} {mine.length > 1 ? "pieces" : "piece"}, <b>{usd(mine.reduce((a, x) => a + x.ask, 0))}</b> of your parcel.</>
+                    : <>Nothing in your parcel goes to <b>{colBy[focus]?.name}</b> yet.</>;
                 })()
-                : p.picks.length === 0 ? "Nothing clears the bar at this budget."
-                : <><b>{bought.length ? "Proposed next:" : "Proposed buys, nothing bought yet:"}</b> {usd(p.spent)} on {p.picks.length} of {poolSize} lots, {usd(p.unspent)} stays available.</>}
+                : p.picks.length === 0 ? <><b>Your parcel is empty.</b> The suggestion is {usd(suggested?.spent ?? 0)} on {suggested?.picks.length ?? 0} lots.</>
+                : left >= 0 ? <><b>Your parcel:</b> {usd(p.spent)} on {p.picks.length} of {poolSize} lots, {usd(left)} still available.</>
+                : <><b>Your parcel:</b> {usd(p.spent)} on {p.picks.length} of {poolSize} lots, <span className="red">{usd(-left)} over your capital.</span></>}
             </div>
             <span className="alloc-key">Bar: share of budget</span>
           </div>
-          <Allocation picks={p?.picks ?? []} budget={available || 1} spent={p?.spent ?? 0} lotBy={lotBy} colBy={colBy} focus={focus} flash={flash}
+          <Allocation picks={p?.picks ?? []} budget={Math.max(budget, p?.spent ?? 0) || 1} spent={p?.spent ?? 0} lotBy={lotBy} colBy={colBy} focus={focus} flash={flash} incoming={dragged?.ask ?? 0}
             open={(id) => { setCollectorOpen(null); setCredits(false); setLotOpen(id); }} />
         </div>
         <div className="band-ledger">
-          <Line label="Paper margin" sub="Your resale estimates minus ask" value={p ? usd(p.gross_margin) : "…"} />
-          <Line label="Fit-weighted value" sub="Margin × rank fit, less holding" value={p ? usd(p.value) : "…"} />
-          <Line label="If one buyer walks" sub={res?.stress[0] ? `Worst case: ${colBy[res.stress[0].collector]?.name}` : ""} value={book_ ? `−${usd(book_.worst_loss)}` : "…"} tone="am" />
+          <Line label="Paper margin" sub={`Resale minus ask. Suggested: ${suggested ? usd(suggested.gross_margin) : "…"}`} value={p ? usd(p.gross_margin) : "…"} />
+          <Line label="Fit-weighted value" sub={`Margin × fit, less holding. Suggested: ${suggested ? usd(suggested.value) : "…"}`} value={p ? usd(p.value) : "…"} />
+          <Line label="Collectors placed" sub={`In their top ${settings.max_rank}. Suggested: ${buyersIn(suggested)}`} value={p ? `${buyersIn(p)} of ${book.collectors.length}` : "…"} />
         </div>
       </div>
 
@@ -252,6 +323,7 @@ export default function App() {
           <div className="scroll collectors-scroll">
             {book.collectors.map((c) => {
               const placed = placedTo(c.id);
+              const waiting = (next?.picks ?? []).filter((x) => x.buyer === c.id);
               const live = signals[c.id]?.length ?? 0;
               return (
                 <button key={c.id} className={`collector ${focus === c.id ? "on" : ""}`}
@@ -260,8 +332,9 @@ export default function App() {
                   <div className="c-name">{c.name}</div>
                   <div className="c-cap">{usdK(c.capacity)}</div>
                   <div className="c-city">{live > 0 ? <span className="am">{live} {live > 1 ? "signals" : "signal"} today</span> : c.city}</div>
-                  <div className="c-placed" aria-label={placed.length ? `${placed.length} placed` : undefined}>
-                    {placed.map((x) => <img key={x.lot} src={lotBy[x.lot]?.image} alt="" title={lotBy[x.lot]?.name} />)}
+                  <div className="c-placed" aria-label={placed.length + waiting.length ? `${placed.length} in your parcel, ${waiting.length} suggested` : undefined}>
+                    {placed.map((x) => <img key={x.lot} src={lotBy[x.lot]?.image} alt="" title={`In your parcel: ${lotBy[x.lot]?.name}`} />)}
+                    {waiting.map((x) => <img key={x.lot} className="suggested" src={lotBy[x.lot]?.image} alt="" title={`Suggested: ${lotBy[x.lot]?.name}`} />)}
                   </div>
                 </button>
               );
@@ -273,45 +346,44 @@ export default function App() {
         <div className="col col-radar">
           <div className="head">
             <h2>Deal Radar</h2>
-            <span className="aside">{poolSize} incoming {poolSize === 1 ? "lot" : "lots"}{offDesk.size > 0 ? `, ${radarLots.filter((l) => !offDesk.has(l.id) && !boughtIds.has(l.id)).length} on the desk` : ""}</span>
+            <span className="aside">{poolSize} incoming {poolSize === 1 ? "lot" : "lots"}{plan.length > 0 ? `, ${plan.length} in your parcel` : ""}</span>
             {revealed < offers.length && <button className="link" title="Reveals offers already in the catalog, so their rankings are real but their arrival is staged" onClick={revealOffers}>Simulate new offers ({offers.length - revealed} left)</button>}
             <span className="aside push">
-              {focus ? `Lit by ${colBy[focus]?.name}'s ranking, brightest first` : "Lit lots are in the proposed buys"}
+              {focus ? `Lit by ${colBy[focus]?.name}'s ranking, brightest first` : <><span className="for-mouse">Drag lots up to your parcel</span><span className="for-touch">Tap a lot to add it to your parcel</span></>}
             </span>
           </div>
           <div className="scroll">
             <div className="lots">
               {radarLots.map((l) => {
-                const pick = picks[l.id];
+                const pick = planned[l.id] ?? nextUp[l.id];
+                const inPlan = plan.includes(l.id);
+                const isSuggested = !inPlan && !!nextUp[l.id];
                 const isNew = newOffers.some((x) => x.id === l.id);
-                const isBought = boughtIds.has(l.id);
-                const onDesk = !offDesk.has(l.id) && !isBought;
-                const owner = bought.find((x) => x.lot === l.id)?.buyer;
                 const best = res?.demand[l.id]?.find((x) => x.rank <= settings.max_rank && x.affordable && !x.passed);
                 const d = focus ? res?.demand[l.id]?.find((x) => x.collector === focus) : null;
                 const lit = d ? ({ "--b": 0.14 + 0.86 * d.fit, "--s": 0.35 + 0.65 * d.fit }) as CSSProperties : undefined;
                 return (
-                  <div key={l.id} className="lot-cell">
-                  <button className={`lot ${pick ? "in" : ""} ${isBought ? "bought" : ""} ${flash.has(l.id) ? "flash" : ""}`} style={lit} title={l.name} onClick={() => setLotOpen(l.id)}>
+                  <div key={l.id} role="button" tabIndex={0} className={`lot ${pick ? "in" : ""} ${isSuggested && !focus ? "sug" : ""} ${dragLot === l.id ? "dragging" : ""} ${flash.has(l.id) ? "flash" : ""}`} style={lit} title={l.name}
+                    draggable={!inPlan} onDragStart={(e) => startDrag(e, l.id)} onDragEnd={endDrag}
+                    onClick={() => setLotOpen(l.id)}
+                    onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); setLotOpen(l.id); } }}>
                     <div className="thumb">
-                      <img src={l.image} alt="" loading="lazy" />
-                      {isBought ? <span className="plate top">Bought</span>
-                        : d ? <span className={`plate rank ${d.rank <= 3 ? "top" : d.rank <= settings.max_rank ? "near" : ""}`}>#{d.rank}</span>
+                      <img src={l.image} alt="" loading="lazy" draggable={false} />
+                      {d ? <span className={`plate rank ${d.rank <= 3 ? "top" : d.rank <= settings.max_rank ? "near" : ""}`}>#{d.rank}</span>
                         : isNew ? <span className="plate trophy">New offer</span>
                         : l.ask === trophyAsk ? <span className="plate trophy">Trophy</span> : null}
+                      {inPlan ? <span className="mark held">In parcel</span> : isSuggested ? <span className="mark sug">Suggested</span> : null}
                     </div>
                     <div className="ticket">
                       <div className="t-name"><span className="t-no">{l.lot_no}</span>{l.name}</div>
                       <div className="t-px"><span>{usd(l.ask)}</span><span className="est">est. {usd(l.resale)}</span></div>
                       <div className="t-to">
-                        {isBought ? (owner ? <>Bought for <b>{colBy[owner]?.name}</b></> : "Bought")
-                          : pick ? (pick.buyer ? <>For <b>{colBy[pick.buyer]?.name}</b>, #{pick.rank}</> : <span className="am">No buyer placed</span>)
-                          : best ? <>{onDesk ? "Pass. " : ""}Best match {colBy[best.collector]?.name}, #{best.rank}</>
+                        {pick?.buyer ? <>For <b>{colBy[pick.buyer]?.name}</b>, #{pick.rank}</>
+                          : inPlan ? <span className="am">No collector in range</span>
+                          : best ? <>Best match {colBy[best.collector]?.name}, #{best.rank}</>
                           : "No collector in range"}
                       </div>
                     </div>
-                  </button>
-                  {!isBought && <button className={`send ${onDesk ? "on" : ""}`} aria-pressed={onDesk} onClick={() => toggleDesk(l.id)}>{onDesk ? "On desk" : "Send to desk"}</button>}
                   </div>
                 );
               })}
@@ -320,23 +392,23 @@ export default function App() {
               <div className="lower">
                 <div>
                   <div className="head flat"><h3>What the next dollar buys</h3></div>
-                  <Frontier data={res.frontier} budget={available} />
+                  <Frontier data={res.frontier} budget={budget} />
                 </div>
                 <div>
                   <div className="head flat"><h3>Same budget, other ways to choose</h3></div>
                   <table>
-                    <thead><tr><th>Strategy</th><th>Pieces</th><th>Paper margin</th><th>Fit value</th><th>Unplaced</th><th>One buyer walks</th></tr></thead>
+                    <thead><tr><th>Strategy</th><th>Pieces</th><th>Paper margin</th><th>Fit value</th><th>Unplaced</th></tr></thead>
                     <tbody>
                       {res.compare.map((c) => (
-                        <tr key={c.key} className={c.key === "book" ? "hl" : ""} title={c.note}>
+                        <tr key={c.key} className={c.key === "plan" ? "hl" : ""} title={c.note}>
                           <td className="text">{c.name}<div className="sub">{c.note}</div></td>
                           <td>{c.pieces}</td><td>{usdK(c.gross_margin)}</td><td>{usdK(c.value)}</td>
-                          <td>{c.unplaced_capital ? usdK(c.unplaced_capital) : "–"}</td><td>{c.worst_loss ? `−${usdK(c.worst_loss)}` : "–"}</td>
+                          <td>{c.unplaced_capital ? usdK(c.unplaced_capital) : "–"}</td>
                         </tr>
                       ))}
                     </tbody>
                   </table>
-                  <div className="pad note">All four are scored by the same rules and BehaviorGPT fit, so this compares choices under this tool's assumptions. It is not a forecast of sales.</div>
+                  <div className="pad note">All are scored by the same rules and BehaviorGPT fit, so this compares choices under this tool's assumptions. It is not a forecast of sales.</div>
                 </div>
               </div>
             )}
@@ -347,73 +419,41 @@ export default function App() {
         <div className="col col-desk">
           <div className="head">
             <h2>Capital Desk</h2>
-            <span className="aside">Proposed buys</span>
+            <span className="aside">What you intend to buy</span>
             <button className="link push" onClick={() => setShowSettings((s) => !s)}>{showSettings ? "Hide assumptions" : "Assumptions"}</button>
           </div>
-          <div className="desk-tools">
-            <label className="protect" title="Weighs the value left if your most important buyer walks and their pieces go to whoever else fits. It is a scoring choice, not a chance that anyone leaves.">
-              <input type="checkbox" checked={protect} onChange={(e) => setProtect(e.target.checked)} />
-              Protect against a buyer walking
-            </label>
-            {editCount > 0 && <button className="link" onClick={() => { setSignals({}); setPasses([]); setBought([]); setOffDesk(new Set()); setRevealed(0); }}>Reset {editCount} {editCount > 1 ? "edits" : "edit"}</button>}
-          </div>
-          {protect && (busy || res?.protection) && (
-            <div className="pad note protect-note">
-              {busy || !res?.protection ? "Comparing against the plan without protection…" : !res.protection.changed
-                ? "At this capital, protecting against a walkout changes nothing."
-                : <>{res.protection.value_given_up! > 0 ? <>Gives up {usd(res.protection.value_given_up!)} of fit-weighted value to cut</> : "Cuts"} the worst walkout loss from {usd(res.protection.worst_before!)} to {usd(res.protection.worst_after!)}, under this tool's assumptions.</>}
+          {editCount > 0 && (
+            <div className="desk-tools">
+              <button className="link" onClick={() => { setSignals({}); setPasses([]); setRevealed(0); setPlan((cur) => cur.filter((id) => opening.some((l) => l.id === id))); }}>Reset {editCount} {editCount > 1 ? "edits" : "edit"}</button>
             </div>
           )}
           {showSettings && <Assumptions s={settings} set={setSettings} />}
           <div className="scroll">
-            {bought.length > 0 && (
-              <>
-                <div className="head flat"><h3>Committed</h3><span className="aside push">{usd(committedAsk)} spent</span></div>
-                {bought.map((x) => (
-                  <div key={x.lot} className="bought-row">
-                    <img src={lotBy[x.lot]?.image} alt="" />
-                    <div style={{ minWidth: 0 }}>
-                      <div className="n" title={lotBy[x.lot]?.name}>{lotBy[x.lot]?.name}</div>
-                      <div className="b">{x.buyer ? <>For <span className="who">{colBy[x.buyer]?.name}</span></> : "No buyer placed"}, {usd(x.ask)}</div>
-                    </div>
-                    <button className="link" onClick={() => undoBuy(x.lot)}>Undo</button>
-                  </div>
-                ))}
-                <div className="head flat"><h3>Proposed next</h3><span className="aside push">{usd(available)} available</span></div>
-              </>
-            )}
-            {p?.picks.length === 0 && <div className="pad muted">{available === 0 ? "No capital left to propose anything." : "Nothing here clears the bar. That's a fine answer: the capital stays available."}</div>}
-            {p?.picks.map((x) => (
-              <div key={x.lot} className="pick-row">
-              <button className="pick" onClick={() => setLotOpen(x.lot)}>
-                <img src={lotBy[x.lot]?.image} alt="" />
-                <div style={{ minWidth: 0 }}>
-                  <div className="n" title={lotBy[x.lot]?.name}>{lotBy[x.lot]?.name}</div>
-                  <div className="b">{x.buyer ? <>Call <span className="who">{colBy[x.buyer]?.name}</span>, ranks it #{x.rank} of {poolSize}{stretchOf(x.lot, x.buyer) > 0 && <span className="am">, {usd(stretchOf(x.lot, x.buyer))} over capacity</span>}{timesLargest(x.lot, x.buyer) > 1 && <span>, {timesLargest(x.lot, x.buyer).toFixed(1)}× their largest purchase</span>}</> : <span className="am">No buyer placed</span>}</div>
-                </div>
-                <div className="r">{usd(x.ask)}<div>est. {usd(x.resale)}</div></div>
-              </button>
-              <button className="buy" title={`Commit to buying this for ${usd(x.ask)}`} onClick={() => buy(x)}>Buy</button>
-              </div>
-            ))}
+            <div className="head flat">
+              <h3>Your parcel</h3>
+              {plan.length > 0 && <button className="link" onClick={clearPlan}>Clear</button>}
+              <span className={`aside push ${left < 0 ? "red" : ""}`}>{usd(p?.spent ?? 0)} of {usd(budget)}</span>
+            </div>
+            {p?.picks.length === 0 && <div className="pad muted">Nothing in your parcel yet. Drag lots from the Deal Radar to the parcel at the top, or add from the suggestion below.</div>}
+            {p?.picks.map((x) => row(x, "Remove", "Take this out of your parcel", () => togglePlan(x.lot), true))}
             {p && p.picks.length > 0 && (
               <div className="total">
                 <span>Total, {p.picks.length} {p.picks.length > 1 ? "pieces" : "piece"}</span>
                 <span className="r">{usd(p.spent)}<div>est. {usd(p.spent + p.gross_margin)}</div></span>
               </div>
             )}
-            {res && res.stress.length > 0 && (
-              <>
-                <div className="head flat"><h3>If this buyer walks</h3><span className="aside push">The buys are re-placed</span></div>
-                <table>
-                  <thead><tr><th>Buyer lost</th><th>Value lost</th><th>Left unplaced</th></tr></thead>
-                  <tbody>
-                    {res.stress.slice(0, 6).map((s) => (
-                      <tr key={s.collector} onMouseEnter={() => setFocus(s.collector)} onMouseLeave={() => setFocus(null)}><td className="text">{colBy[s.collector]?.name}</td><td>{s.value_lost >= 1 ? `−${usd(s.value_lost)}` : "$0"}</td><td>{s.unplaced_capital ? <span className="am">{usd(s.unplaced_capital)}</span> : "none"}</td></tr>
-                    ))}
-                  </tbody>
-                </table>
-              </>
+            <div className="head flat">
+              <h3>{plan.length ? "Suggested next" : "Suggested parcel"}</h3>
+              {!!next?.picks.length && <button className="link" onClick={() => addAll(next.picks.map((x) => x.lot))}>Add all {next.picks.length}</button>}
+              <span className="aside push">{usd(Math.max(0, left))} available</span>
+            </div>
+            {next?.picks.length === 0 && <div className="pad muted">{left <= 0 ? "No capital left to suggest anything." : "Nothing else clears the bar. That's a fine answer: the capital stays available."}</div>}
+            {next?.picks.map((x) => row(x, "Add", "Add this to your parcel", () => togglePlan(x.lot)))}
+            {next && next.picks.length > 0 && (
+              <div className="total">
+                <span>{next.picks.length} {next.picks.length > 1 ? "pieces" : "piece"}, fit-weighted value {usd(next.value)}</span>
+                <span className="r">{usd(next.spent)}<div>est. {usd(next.spent + next.gross_margin)}</div></span>
+              </div>
             )}
           </div>
         </div>
@@ -428,7 +468,7 @@ export default function App() {
       </footer>
 
       {lotOpen && lotBy[lotOpen] && res && (
-        <LotDrawer lot={lotBy[lotOpen]} res={res} colBy={colBy} body={body} total={poolSize} passes={passes} togglePass={togglePass} lotBy={lotBy}
+        <LotDrawer lot={lotBy[lotOpen]} res={res} colBy={colBy} total={poolSize} passes={passes} togglePass={togglePass} inPlan={plan.includes(lotOpen)} togglePlan={togglePlan}
           maxRank={settings.max_rank} onClose={() => setLotOpen(null)} logView={(cid) => addSignal(cid, { type: "view", id: lotOpen }, `looked at ${lotBy[lotOpen].name}`)} />
       )}
       {collectorOpen && colBy[collectorOpen] && res && (
@@ -439,14 +479,27 @@ export default function App() {
       {credits && <Credits lots={Object.values(lotBy)} onClose={() => setCredits(false)} />}
       {toast && (
         <div className="toast" role="status">
-          <div>{toast.head} Re-ranked in {toast.ms} ms.</div>
-          {toast.added.map((n) => <div className="tl" key={n}><span className="in">In</span><span>{n}</span></div>)}
-          {toast.removed.map((n) => <div className="tl" key={n}><span className="out">Out</span><span className="ink2">{n}</span></div>)}
-          {toast.added.length + toast.removed.length === 0 && <div className="note">The proposed buys hold.</div>}
+          <div>{toast.head}{toast.ms !== null && ` Re-ranked in ${toast.ms} ms.`}</div>
+          {toast.delta && <div className="note">{toast.delta}</div>}
+          {toast.moved.map((n) => <div className="note" key={n}>{n}</div>)}
+          {toast.added.map((n) => <div className="tl" key={n}><span className="in">In</span><span>Suggestion: {n}</span></div>)}
+          {toast.removed.map((n) => <div className="tl" key={n}><span className="out">Out</span><span className="ink2">Suggestion: {n}</span></div>)}
+          {toast.ms !== null && toast.added.length + toast.removed.length === 0 && <div className="note">The suggestion holds.</div>}
         </div>
       )}
     </div>
   );
+}
+
+/** The collector each radar card names: its parcel or suggested buyer, otherwise its best match. */
+function buyersOnScreen(r: Result, maxRank: number): Record<string, string> {
+  const out: Record<string, string> = {};
+  for (const [lot, rows] of Object.entries(r.demand)) {
+    const best = rows.find((x) => x.rank <= maxRank && x.affordable && !x.passed);
+    if (best) out[lot] = best.collector;
+  }
+  for (const x of [...r.next.picks, ...r.plan.picks]) if (x.buyer) out[x.lot] = x.buyer;
+  return out;
 }
 
 function Line({ label, sub, value, tone }: { label: string; sub?: string; value: string; tone?: string }) {
@@ -458,8 +511,8 @@ function Line({ label, sub, value, tone }: { label: string; sub?: string; value:
   );
 }
 
-function Allocation({ picks, budget, spent, lotBy, colBy, focus, flash, open }: {
-  picks: Pick_[]; budget: number; spent: number; lotBy: Record<string, Piece>; colBy: Record<string, Collector>; focus: string | null; flash: Set<string>; open: (id: string) => void;
+function Allocation({ picks, budget, spent, lotBy, colBy, focus, flash, incoming, open }: {
+  picks: Pick_[]; budget: number; spent: number; lotBy: Record<string, Piece>; colBy: Record<string, Collector>; focus: string | null; flash: Set<string>; incoming: number; open: (id: string) => void;
 }) {
   const ordered = [...picks].sort((a, b) => (lotBy[a.lot]?.lot_no ?? 0) - (lotBy[b.lot]?.lot_no ?? 0));
   const dry = budget - spent;
@@ -476,14 +529,16 @@ function Allocation({ picks, budget, spent, lotBy, colBy, focus, flash, open }: 
   const dimmed = (x: Pick_) => (focus && x.buyer !== focus ? "dim" : "");
   return (
     <>
-      <div className="share" role="img" aria-label={`${usd(spent)} of ${usd(budget)} proposed across ${picks.length} lots, ${usd(dry)} left unspent`}>
+      <div className="share" role="img" aria-label={`${usd(spent)} of ${usd(budget)} in the parcel across ${picks.length} lots, ${usd(dry)} left unspent`}>
         {ordered.map((x) => (
           <i key={x.lot} className={`${dimmed(x)} ${hot === x.lot ? "hot" : ""}`} style={{ flexBasis: `${(x.ask / budget) * 100}%` }}
             title={`${lotBy[x.lot]?.name}: ${usd(x.ask)}, ${Math.round((x.ask / budget) * 100)}% of the budget`} />
         ))}
+        {incoming > 0 && <i className={`incoming ${incoming > dry ? "over" : ""}`} style={{ flexBasis: `${(incoming / budget) * 100}%` }} />}
       </div>
-      <div className="tiles" ref={row} role="group" aria-label="Proposed buys"
+      <div className="tiles" ref={row} role="group" aria-label="Your parcel"
         onWheel={(e) => { if (Math.abs(e.deltaY) > Math.abs(e.deltaX)) e.currentTarget.scrollLeft += e.deltaY; }}>
+        {ordered.length === 0 && <div className="tiles-empty"><span className="for-mouse">Drag lots here from the Deal Radar</span><span className="for-touch">Tap a lot on the Deal Radar to add it here</span></div>}
         {ordered.map((x) => {
           const said = `${lotBy[x.lot]?.name}, ${usd(x.ask)}, ${x.buyer ? `for ${colBy[x.buyer]?.name}` : "no buyer placed"}`;
           return (
@@ -590,33 +645,27 @@ function Frontier({ data, budget }: { data: Result["frontier"]; budget: number }
   );
 }
 
-function LotDrawer({ lot, res, colBy, lotBy, body, total, passes, togglePass, maxRank, onClose, logView }: {
-  lot: Piece; res: Result; colBy: Record<string, Collector>; lotBy: Record<string, Piece>; body: object; total: number; passes: [string, string][];
-  togglePass: (l: string, c: string) => void; maxRank: number; onClose: () => void; logView: (cid: string) => void;
+function LotDrawer({ lot, res, colBy, total, passes, togglePass, inPlan, togglePlan, maxRank, onClose, logView }: {
+  lot: Piece; res: Result; colBy: Record<string, Collector>; total: number; passes: [string, string][];
+  togglePass: (l: string, c: string) => void; inPlan: boolean; togglePlan: (id: string) => void; maxRank: number; onClose: () => void; logView: (cid: string) => void;
 }) {
-  const pick = res.portfolio.picks.find((x) => x.lot === lot.id);
+  const pick = res.plan.picks.find((x) => x.lot === lot.id) ?? res.next.picks.find((x) => x.lot === lot.id);
   const rows = res.demand[lot.id] ?? [];
-  const [what, setWhat] = useState<WhatIf | null>(null);
-  const [loading, setLoading] = useState(false);
-  useEffect(() => setWhat(null), [lot.id, body]);
-  const force = async () => {
-    setLoading(true);
-    const r = await fetch("/api/whatif", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ ...body, lot: lot.id }) });
-    setWhat(await r.json());
-    setLoading(false);
-  };
   const eligible = rows.filter((r) => r.rank <= maxRank && r.affordable && !r.passed);
-  const placed = new Set(res.portfolio.picks.map((x) => x.buyer));
+  const taken = new Set([...res.plan.picks, ...res.next.picks].map((x) => x.buyer));
   const nearest = rows.filter((r) => r.rank <= maxRank && !r.affordable && !r.passed).sort((a, b) => a.over_by - b.over_by)[0];
-  const reason = pick
-    ? pick.buyer ? `Placed with ${colBy[pick.buyer]?.name}, who ranks it #${pick.rank} of ${total}.` : "Bought, but no buyer could be placed."
-    : eligible.length === 0
-      ? nearest
-        ? `No collector who ranks this within #${maxRank} has the capacity for ${usd(lot.resale)}. Closest: ${colBy[nearest.collector]?.name}, over by ${usd(nearest.over_by)}.`
-        : `No collector ranks this within #${maxRank}.`
-      : eligible.every((r) => placed.has(r.collector))
-        ? `Everyone in range for it (${eligible.slice(0, 3).map((r) => colBy[r.collector]?.name).join(", ")}) already has a piece placed.`
-        : "Collectors are in range, but this budget earns more fit-weighted value elsewhere. Force it in to see the cost.";
+  const noBuyer = eligible.length === 0
+    ? nearest
+      ? `No collector who ranks this within #${maxRank} has the capacity for ${usd(lot.resale)}. Closest: ${colBy[nearest.collector]?.name}, over by ${usd(nearest.over_by)}.`
+      : `No collector ranks this within #${maxRank}.`
+    : eligible.every((r) => taken.has(r.collector))
+      ? `Everyone in range for it (${eligible.slice(0, 3).map((r) => colBy[r.collector]?.name).join(", ")}) already has a piece placed.`
+      : "Collectors are in range, but other lots earn more fit-weighted value at this budget. Add it to see what it does to your parcel.";
+  const tied = (inPlan ? res.plan : res.next).ties?.[lot.id] ?? [];
+  const tieNames = pick?.buyer ? [pick.buyer, ...tied].map((c) => colBy[c]?.name) : [];
+  const reason = inPlan
+    ? pick?.buyer ? `In your parcel, placed with ${colBy[pick.buyer]?.name}, who ranks it #${pick.rank} of ${total}.` : `In your parcel with no buyer. ${noBuyer} It takes the holding charge until someone is found.`
+    : pick?.buyer ? `Suggested for ${colBy[pick.buyer]?.name}, who ranks it #${pick.rank} of ${total}.` : noBuyer;
   return (
     <>
       <div className="scrim" onClick={onClose} />
@@ -635,31 +684,26 @@ function LotDrawer({ lot, res, colBy, lotBy, body, total, passes, togglePass, ma
         <div className="dsec">
           <h3>Decision</h3>
           <div>{reason}</div>
-          {!pick && (
-            <div className="row" style={{ marginTop: 8 }}>
-              <button className="btn primary" disabled={loading} onClick={force}>{loading ? "Solving…" : "See the cost of forcing it in"}</button>
+          {pick?.buyer && tied.length > 0 && (
+            <div className="tie">
+              {tieNames.slice(0, -1).join(", ")} and {tieNames[tieNames.length - 1]} tie for this lot. {inPlan ? "Your parcel" : "The suggestion"} scores the same with {tied.length > 1 ? "any of them" : "either"}, so the choice of {colBy[pick.buyer]?.name} is arbitrary.
             </div>
           )}
-          {what && (what.feasible ? (
-            <div style={{ marginTop: 8 }}>
-              <div>Insisting on this lot changes fit-weighted value by <b className={(what.value_delta ?? 0) < 0 ? "red" : "em"}>{signed(what.value_delta ?? 0)}</b> and paper margin by <span className="num">{signed(what.margin_delta ?? 0)}</span>.</div>
-              {!!what.displaced?.length && <div className="note">Pushes out: {what.displaced.map((x) => lotBy[x]?.name).join(", ")}.</div>}
-              {!!what.added?.length && <div className="note">Brings in: {what.added.map((x) => lotBy[x]?.name).join(", ")}.</div>}
-              <div className="note">{what.buyer ? `Would be placed with ${colBy[what.buyer]?.name} at #${what.rank}.` : "No collector could be placed against it."}</div>
-            </div>
-          ) : <div className="note" style={{ marginTop: 8 }}>{what.reason}</div>)}
+          <div className="row" style={{ marginTop: 8 }}>
+            <button className={`btn ${inPlan ? "" : "primary"}`} onClick={() => togglePlan(lot.id)}>{inPlan ? "Remove from parcel" : "Add to parcel"}</button>
+          </div>
         </div>
         <div className="dsec flush">
           <h3>Who ranks it where</h3>
           <table>
-            <thead><tr><th>Collector</th><th title="Recent behavior and purchases blended, then adjusted for how much more this collector ranks the lot than the book does">Book</th><th title="Full behavior sequence">Seq</th><th title="Purchases only">Buys</th><th title="Tag-overlap baseline, not BehaviorGPT">Tags</th><th></th></tr></thead>
+            <thead><tr><th>Collector</th><th className="rank-lead" title="The rank used to choose buyers: Activity and Purchases blended, then adjusted for how much more this collector ranks the lot than other collectors do">Overall</th><th title="BehaviorGPT, reading everything they did in order: views, searches and purchases">Activity</th><th title="BehaviorGPT, reading only what they bought">Purchases</th><th title="Simple overlap in form, era, style, stone and metal. Not BehaviorGPT and not used to choose buyers">Tag match</th><th></th></tr></thead>
             <tbody>
               {rows.slice(0, 10).map((r) => {
                 const passed = passes.some(([l, c]) => l === lot.id && c === r.collector);
                 return (
-                  <tr key={r.collector} className={`${pick?.buyer === r.collector ? "hl" : ""} ${passed ? "dim" : ""}`}>
+                  <tr key={r.collector} className={`${pick?.buyer === r.collector || tied.includes(r.collector) ? "hl" : ""} ${passed ? "dim" : ""}`}>
                     <td className="text">{colBy[r.collector]?.name}{!r.affordable && <span className="muted">, {usd(r.over_by)} past the limit</span>}{r.stretch > 0 && <span className="am">, {usd(r.stretch)} over capacity</span>}{r.vs_largest !== null && <span className="muted">, {r.vs_largest.toFixed(1)}× largest purchase</span>}</td>
-                    <td>#{r.rank}</td><td>#{r.rank_full}</td><td>#{r.rank_orders}</td>
+                    <td className="rank-lead">#{r.rank}</td><td>#{r.rank_full}</td><td>#{r.rank_orders}</td>
                     <td className={Math.abs(r.rank_tags - r.rank_full) >= 8 ? "am" : ""}>#{r.rank_tags}</td>
                     <td><span className="row" style={{ justifyContent: "flex-end" }}>
                       <button className="link" onClick={() => logView(r.collector)}>viewed</button>
@@ -670,7 +714,7 @@ function LotDrawer({ lot, res, colBy, lotBy, body, total, passes, togglePass, ma
               })}
             </tbody>
           </table>
-          <div className="pad note">Amber Tags: tag matching and BehaviorGPT disagree by 8+ places. That disagreement could be insight or noise, so treat it as a question to ask the collector. “Viewed” re-ranks that collector live. “Passed” only removes them as a buyer for this lot.</div>
+          <div className="pad note">Amber Tag match: tag matching and BehaviorGPT's Activity rank disagree by 8+ places. That disagreement could be insight or noise, so treat it as a question to ask the collector. “Viewed” re-ranks that collector live. “Passed” only removes them as a buyer for this lot.</div>
         </div>
         <div className="dsec note">
           {lot.credit
@@ -723,7 +767,7 @@ function Inventory({ holdings, lotBy, colBy, maxRank }: {
           </tbody>
         </table>
       </div>
-      <div className="pad note">Everything viewed but never bought is still yours. Ranked only against your own stock. A piece ranks higher for someone who has viewed it, so "Viewed by" is a lead, not independent demand. Inventory does not change the proposed buys. Pieces, costs and views are invented.</div>
+      <div className="pad note">Everything viewed but never bought is still yours. Ranked only against your own stock. A piece ranks higher for someone who has viewed it, so "Viewed by" is a lead, not independent demand. Inventory does not change your parcel or the suggestion. Pieces, costs and views are invented.</div>
     </div>
   );
 }

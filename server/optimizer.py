@@ -249,6 +249,61 @@ def evaluate(p: Problem, q: Params, chosen: list[int]) -> dict:
     return _result(p, q, place(p, q, chosen), chosen=chosen)
 
 
+def _swap_is_tie(p: Problem, q: Params, assign: dict[int, int], i: int, k: int) -> bool:
+    """Could lot i move to collector k with nothing else changing?
+
+    Equal rank is not enough. The other collector must be eligible and have a free slot and room
+    under their limit with their other pieces still in place, and the over-capacity charge must
+    come out the same.
+    """
+    j = assign[i]
+    if k == j or (i, k) not in _eligible(p, q):
+        return False
+    v = value_matrix(p, q)
+    if not np.isclose(v[i, k], v[i, j]):
+        return False
+    c = p.collectors[k]
+    resale = p.lots[i]["resale"]
+    total = lambda b: sum(p.lots[a]["resale"] for a, b_ in assign.items() if b_ == b)
+    if sum(b == k for b in assign.values()) + 1 > slots_of(c, q) or total(k) + resale > limit(c, q):
+        return False
+    over = lambda b, amount: max(0.0, amount - p.collectors[b]["capacity"])
+    return bool(np.isclose(over(j, total(j)) + over(k, total(k)),
+                           over(j, total(j) - resale) + over(k, total(k) + resale)))
+
+
+def _assignment(p: Problem, result: dict) -> dict[int, int]:
+    lot_at = {l["id"]: i for i, l in enumerate(p.lots)}
+    col_at = {c["id"]: j for j, c in enumerate(p.collectors)}
+    return {lot_at[x["lot"]]: col_at[x["buyer"]] for x in result["picks"] if x["buyer"]}
+
+
+def buyer_ties(p: Problem, q: Params, result: dict) -> dict[str, list[str]]:
+    """Lots whose buyer could be swapped with nothing changing: {lot: other equally good collectors}."""
+    assign = _assignment(p, result)
+    ties: dict[str, list[str]] = {}
+    for i in assign:
+        for k, c in enumerate(p.collectors):
+            if _swap_is_tie(p, q, assign, i, k):
+                ties.setdefault(p.lots[i]["id"], []).append(c["id"])
+    return ties
+
+
+def keep_buyers(p: Problem, q: Params, result: dict, prefer: dict[str, str]) -> dict:
+    """Break exact ties toward the buyer the dealer was already shown. Never changes the score:
+    anything short of an exact tie keeps the placement the solver chose."""
+    lot_at = {l["id"]: i for i, l in enumerate(p.lots)}
+    col_at = {c["id"]: j for j, c in enumerate(p.collectors)}
+    assign = _assignment(p, result)
+    changed = False
+    for lot, cid in prefer.items():
+        i, k = lot_at.get(lot), col_at.get(cid)
+        if i in assign and k is not None and _swap_is_tie(p, q, assign, i, k):
+            assign[i] = k
+            changed = True
+    return _result(p, q, assign, chosen=[lot_at[x["lot"]] for x in result["picks"]]) if changed else result
+
+
 def stress(p: Problem, q: Params, chosen: list[int]) -> list[dict]:
     """Every buyer walks, one at a time: what still has a home?"""
     base = evaluate(p, q, chosen)
