@@ -44,11 +44,14 @@ Verified by running it (some of this differs from the README):
 - `server/optimizer.py`: MILP, stress test, frontier, comparison strategies
 - `server/rankings.py`: BehaviorGPT calls, lenses, cache, snapshot
 - `server/app.py`: API; also serves `data/images/` and `web/dist/`
-- `scripts/`: data fetch, catalog build, embed, SDK validation
-- `data/book/`: `pieces.json`, `collectors.json`, `rankings_snapshot.json` (not created yet; `server/app.py` fails at import until they exist)
-- `data/images/`: re-hosted images (not created yet)
-- `web/`: React + Vite terminal UI (not built yet)
+- `scripts/build_book.py`: builds the simulated book from `data/book/curated.json`; `scripts/embed_catalog.py` uploads it; `scripts/check_e2e.py` checks a running server
+- `data/book/`: `curated.json` (source), `pieces.json`, `collectors.json`, `rankings_snapshot.json` (generated). Rebuilding deletes the snapshot, because ids may change
+- `data/photos/`: reviewed photos with `credits.json`; `data/images/`: what the app serves (copies plus placeholder art)
+- `web/`: React + Vite terminal UI
 - `data/raw/` is gitignored working data; never publish from it directly
+- `scripts/validate_sdk.py` and `scripts/build_catalog.py` are the early validation on Cleveland museum records. They don't run against the current catalog
+
+Repo: github.com/makk9/uncut-book (public). Catalog image URLs point at its `main` branch, so push photos before embedding.
 
 ## Data and images
 
@@ -67,19 +70,14 @@ Dark charcoal, emerald, amber; dense professional trading terminal with rich gem
 
 ```bash
 uv sync
-uv run python scripts/build_catalog.py
+uv run python scripts/build_book.py
 uv run python scripts/embed_catalog.py
-uv run python scripts/validate_sdk.py
-```
-
-Not yet verified (needs `data/book/` and `web/`):
-
-```bash
 uv run uvicorn server.app:app --reload
 cd web && npm install && npm run dev
+uv run python scripts/check_e2e.py
 ```
 
-`scripts/build_catalog.py` currently reads the Cleveland museum records. The catalog is moving to reviewed Diamond District imagery, so check it before re-running.
+The server loads `data/book/` at import, so restart it after a rebuild. Docker's `--env-file` keeps quotes that python-dotenv strips, and a quoted key fails as "Invalid API key". Pass the key without quotes on any host.
 
 ## Secrets
 
