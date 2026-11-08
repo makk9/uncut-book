@@ -24,7 +24,7 @@ type Result = {
   meta: { source: string; rank_ms: number; solve_ms: number; calls: number };
 };
 type Signal = { type: "search" | "view"; q?: string; id?: string };
-type Settings = { fit_decay: number; holding_penalty: number; max_rank: number; slots: number; recency: number; capacity_tolerance: number };
+type Settings = { fit_decay: number; holding_penalty: number; max_rank: number; slots: number; recency: number; capacity_tolerance: number; relative: number };
 type WhatIf = { feasible: boolean; reason?: string; already_in?: boolean; value_delta?: number; margin_delta?: number; displaced?: string[]; added?: string[]; buyer?: string | null; rank?: number | null };
 
 const usd = (n: number) => `$${Math.round(n).toLocaleString("en-US")}`;
@@ -35,7 +35,7 @@ const MODES = [
   { key: "balanced", label: "Balanced", res: 0.5 },
   { key: "hardened", label: "Buyer-proof", res: 0.9 },
 ];
-const DEFAULTS: Settings = { fit_decay: 4, holding_penalty: 0.15, max_rank: 8, slots: 2, recency: 0.6, capacity_tolerance: 0.1 };
+const DEFAULTS: Settings = { fit_decay: 4, holding_penalty: 0.15, max_rank: 8, slots: 2, recency: 0.6, capacity_tolerance: 0.1, relative: 1 };
 
 export default function App() {
   const [book, setBook] = useState<Book | null>(null);
@@ -347,6 +347,7 @@ function Assumptions({ s, set }: { s: Settings; set: (x: Settings) => void }) {
   return (
     <div className="settings">
       {Row("recency", "Recent behavior vs purchases", 0, 1, 0.05, (n) => `${Math.round(n * 100)}/${Math.round((1 - n) * 100)}`)}
+      {Row("relative", "Favor what sets a collector apart", 0, 2, 0.25, (n) => `${n}`)}
       {Row("fit_decay", "Fit falls off by rank", 1, 12, 0.5, (n) => `${n}`)}
       {Row("max_rank", "Candidate buyer down to rank", 1, 24, 1, (n) => `#${n}`)}
       {Row("slots", "Pieces per collector", 1, 5, 1, (n) => `${n}`)}
@@ -487,7 +488,7 @@ function LotDrawer({ lot, res, colBy, lotBy, body, total, passes, togglePass, ma
         <div className="dsec" style={{ padding: 0 }}>
           <span className="up" style={{ padding: "12px 14px 6px" }}>Who ranks it where</span>
           <table>
-            <thead><tr><th>Collector</th><th title="Blend of recent behavior and purchases">Book</th><th title="Full behavior sequence">Seq</th><th title="Purchases only">Buys</th><th title="Tag-overlap baseline, not BehaviorGPT">Tags</th><th></th></tr></thead>
+            <thead><tr><th>Collector</th><th title="Recent behavior and purchases blended, then adjusted for how much more this collector ranks the lot than the book does">Book</th><th title="Full behavior sequence">Seq</th><th title="Purchases only">Buys</th><th title="Tag-overlap baseline, not BehaviorGPT">Tags</th><th></th></tr></thead>
             <tbody>
               {rows.slice(0, 10).map((r) => {
                 const passed = passes.some(([l, c]) => l === lot.id && c === r.collector);

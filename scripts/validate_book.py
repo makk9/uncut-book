@@ -76,7 +76,7 @@ def tag_rank(rows, ids=IDS):
 def blend(c, recency=0.6):
     full = {x: n + 1 for n, x in enumerate(rank(c["events"]))}
     orders = {x: n + 1 for n, x in enumerate(rank([e for e in c["events"] if e["type"] == "order"]))}
-    return sorted(IDS, key=lambda x: (recency * full[x] + (1 - recency) * orders[x], full[x]))
+    return {x: recency * full[x] + (1 - recency) * orders[x] for x in IDS}
 
 
 def taste_score(order, weights):
@@ -87,7 +87,11 @@ def taste_score(order, weights):
 print(f"catalog {CATALOG}: {len(P)} pieces, {sum(1 for p in P.values() if p.get('image_url'))} with photos")
 
 print("\n[1] BehaviorGPT vs tag matching")
-orders = {c["id"]: blend(c) for c in CS}
+positions = {c["id"]: blend(c) for c in CS}
+book = {x: st.mean(p[x] for p in positions.values()) for x in IDS}
+orders = {k: sorted(IDS, key=lambda x: (p[x] - (book[x] - p[x]), p[x])) for k, p in positions.items()}
+raw_first = Counter(min(IDS, key=lambda x: p[x]) for p in positions.values())
+print(f"  before the relative adjustment: {len(raw_first)} distinct #1 lots, most common x{raw_first.most_common(1)[0][1]}")
 tagged = {c["id"]: tag_rank(c["events"]) for c in CS}
 b_scores, t_scores, agree = [], [], []
 for c in CS:

@@ -48,6 +48,7 @@ class Request(BaseModel):
     resilience: float = Field(default=0.0, ge=0, le=1)
     capacity_tolerance: float = Field(default=0.10, ge=0, le=0.5)
     recency: float = Field(default=0.6, ge=0, le=1)
+    relative: float = Field(default=1.0, ge=0, le=3)
     signals: dict[str, list[Signal]] = Field(default_factory=dict)
     passes: list[tuple[str, str]] = Field(default_factory=list)
 
@@ -77,9 +78,17 @@ def within(order: list[str], ids: list[str]) -> dict[str, int]:
     return ranks
 
 
-def blended(full: dict[str, int], orders: dict[str, int], recency: float, ids: list[str]) -> dict[str, int]:
-    keyed = sorted(ids, key=lambda i: (recency * full[i] + (1 - recency) * orders[i], full[i]))
-    return {i: n + 1 for n, i in enumerate(keyed)}
+def relative_ranks(position: dict[str, dict[str, float]], relative: float, ids: list[str]) -> dict[str, dict[str, int]]:
+    """Rank each collector's lots by own position plus how far above the book average it is.
+
+    Some lots rank well for almost everyone, so raw rank piles the whole book onto them.
+    Only real BehaviorGPT ranks go in, and no scores or probabilities are involved.
+    """
+    book = {i: sum(p[i] for p in position.values()) / len(position) for i in ids}
+    return {
+        cid: {i: n + 1 for n, i in enumerate(sorted(ids, key=lambda i: (p[i] - relative * (book[i] - p[i]), p[i])))}
+        for cid, p in position.items()
+    }
 
 
 async def gather_rankings(req: Request) -> dict:
@@ -132,9 +141,12 @@ async def build(req: Request):
         cid = c["id"]
         full = within(raw[cid]["full"], LOT_IDS)
         orders = within(raw[cid]["orders"], LOT_IDS)
-        lens[cid] = {"full": full, "orders": orders,
-                     "blend": blended(full, orders, req.recency, LOT_IDS)}
+        lens[cid] = {"full": full, "orders": orders}
         tags[cid] = within(tag_rank(c["events"], LOT_IDS), LOT_IDS)
+    position = {cid: {l: req.recency * v["full"][l] + (1 - req.recency) * v["orders"][l] for l in LOT_IDS}
+                for cid, v in lens.items()}
+    for cid, order in relative_ranks(position, req.relative, LOT_IDS).items():
+        lens[cid]["blend"] = order
 
     ranks = np.array([[lens[c["id"]]["blend"][l] for c in COLLECTORS] for l in LOT_IDS], float)
     tag_ranks = np.array([[tags[c["id"]][l] for c in COLLECTORS] for l in LOT_IDS], float)
