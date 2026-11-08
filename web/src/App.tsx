@@ -3,7 +3,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 type Credit = { title: string; author: string; license: string; license_url: string; source: string; landing_url: string };
 type Piece = {
   id: string; lot_no: number; name: string; form: string; era: string; style: string; stones: string[]; metals: string[];
-  ask: number; resale: number; image: string; description: string; condition?: string; supplier?: string; credit: Credit;
+  ask: number; resale: number; image: string; description: string; credit: Credit | null;
 };
 type TimelineEvent = { type: string; q?: string; id?: string; name?: string; image?: string };
 type Collector = {
@@ -163,7 +163,6 @@ export default function App() {
           <div className="scroll collectors-scroll">
             {book.collectors.map((c) => {
               const placed = placedTo(c.id);
-              const gap = res?.drift[c.id]?.gap ?? 0;
               const live = signals[c.id]?.length ?? 0;
               return (
                 <button key={c.id} className={`collector ${focus === c.id ? "on" : ""}`}
@@ -174,7 +173,6 @@ export default function App() {
                     <span>{c.city}</span>
                     <span>
                       {live > 0 && <span className="chip a">{live} signal{live > 1 ? "s" : ""}</span>}{" "}
-                      {gap >= 5 && <span className="chip n" title="Recent behavior ranks this batch differently from what they have bought">drifting</span>}{" "}
                       {placed.length > 0 && <span className="chip g">{placed.length} placed</span>}
                     </span>
                   </div>
@@ -296,7 +294,7 @@ export default function App() {
                   <thead><tr><th>Buyer lost</th><th>Value lost</th><th>Left unplaced</th></tr></thead>
                   <tbody>
                     {res.stress.slice(0, 6).map((s) => (
-                      <tr key={s.collector}><td className="text">{colBy[s.collector]?.name}</td><td>−{usd(s.value_lost)}</td><td>{s.unplaced_capital ? <span className="am">{usd(s.unplaced_capital)}</span> : "none"}</td></tr>
+                      <tr key={s.collector}><td className="text">{colBy[s.collector]?.name}</td><td>{s.value_lost >= 1 ? `−${usd(s.value_lost)}` : "$0"}</td><td>{s.unplaced_capital ? <span className="am">{usd(s.unplaced_capital)}</span> : "none"}</td></tr>
                     ))}
                   </tbody>
                 </table>
@@ -504,7 +502,12 @@ function LotDrawer({ lot, res, colBy, lotBy, body, total, passes, togglePass, ma
           </table>
           <div className="pad note">Amber Tags: tag matching and BehaviorGPT disagree by 8+ places. That disagreement could be insight or noise, so treat it as a question to ask the collector. “Viewed” re-ranks that collector live. “Passed” only removes them as a buyer for this lot.</div>
         </div>
-        <div className="dsec note">Stand-in photo: “{lot.credit.title}” by {lot.credit.author || "unknown"}, {lot.credit.license}, via <a href={lot.credit.landing_url} target="_blank" rel="noreferrer">{lot.credit.source}</a>. The lot itself, its ask and resale are invented.</div>
+        <div className="dsec note">
+          {lot.credit
+            ? <>Stand-in photo: “{lot.credit.title}” by {lot.credit.author || "unknown"}, {lot.credit.license}, via <a href={lot.credit.landing_url} target="_blank" rel="noreferrer">{lot.credit.source}</a>. </>
+            : "Placeholder art, not a photo of this piece. "}
+          The lot itself, its ask and resale are invented.
+        </div>
       </aside>
     </>
   );
@@ -590,6 +593,7 @@ function CollectorDrawer({ c, res, lotBy, signals, onClose, addSearch }: {
 }
 
 function Credits({ lots, onClose }: { lots: Piece[]; onClose: () => void }) {
+  const credited = lots.filter((l) => l.credit);
   return (
     <>
       <div className="scrim" onClick={onClose} />
@@ -597,9 +601,10 @@ function Credits({ lots, onClose }: { lots: Piece[]; onClose: () => void }) {
         <div className="dhead"><span className="up muted">Photo credits</span><button className="btn" onClick={onClose}>Close</button></div>
         <div className="dsec note">Photos stand in for fictional lots. Descriptions, asks and resale figures are invented and say nothing about the pictured objects or their owners. The full list for every image is in CREDITS.md in the repository.</div>
         <div className="dsec">
-          {lots.map((l) => (
+          {credited.length === 0 && <div className="note">Lot art is placeholder for now, so there are no photos to credit yet.</div>}
+          {credited.map((l) => (
             <div key={l.id} className="note" style={{ marginBottom: 6 }}>
-              <b className="ink2">{l.name}</b>: “{l.credit.title}” by {l.credit.author || "unknown"}, <a href={l.credit.license_url} target="_blank" rel="noreferrer">{l.credit.license}</a>, <a href={l.credit.landing_url} target="_blank" rel="noreferrer">{l.credit.source}</a>
+              <b className="ink2">{l.name}</b>: “{l.credit!.title}” by {l.credit!.author || "unknown"}, <a href={l.credit!.license_url} target="_blank" rel="noreferrer">{l.credit!.license}</a>, <a href={l.credit!.landing_url} target="_blank" rel="noreferrer">{l.credit!.source}</a>
             </div>
           ))}
         </div>

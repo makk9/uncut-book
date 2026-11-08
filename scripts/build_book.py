@@ -78,6 +78,9 @@ def weighted_sample(pool: list[dict], weights: dict, k: int) -> list[dict]:
     return out
 
 
+ID_PREFIX = {"lot": "lot", "holding": "inv", "history": "his"}
+
+
 def placeholder_svg(p: dict) -> str:
     """Temporary art: a faceted stone in the piece's real color. Labeled, never passed off as a photo."""
     color = STONE_COLOR.get((p["stones"] or [""])[0]) or METAL_COLOR.get((p["metals"] or [""])[0], "#888")
@@ -107,7 +110,7 @@ def main() -> None:
     pieces, lot_no = [], 0
     for role in ("lot", "holding", "history"):
         for n, row in enumerate(curated[role]):
-            pid = f"{role[0]}{n:03d}"
+            pid = f"{ID_PREFIX[role]}{n:03d}"
             lot_no += role == "lot"
             ask = row["ask"]
             piece = {
@@ -120,6 +123,9 @@ def main() -> None:
             }
             (IMAGES / f"{pid}.svg").write_text(placeholder_svg(piece))
             pieces.append(piece)
+
+    # the server keys pieces by id and the catalog keeps the first row of a duplicate id
+    assert len({p["id"] for p in pieces}) == len(pieces), "piece ids must be unique"
 
     history_pool = [p for p in pieces if p["role"] == "history"]
     available = {p["id"]: p for p in history_pool}

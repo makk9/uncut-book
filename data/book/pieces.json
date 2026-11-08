@@ -1,6 +1,6 @@
 [
  {
-  "id": "l000",
+  "id": "lot000",
   "role": "lot",
   "lot_no": 1,
   "name": "3.02 ct Oval Diamond Solitaire",
@@ -16,12 +16,12 @@
   "description": "Platinum four-prong setting, knife-edge band, GIA F VS2",
   "ask": 28000,
   "resale": 36500,
-  "image": "/img/l000.svg",
+  "image": "/img/lot000.svg",
   "image_url": null,
   "credit": null
  },
  {
-  "id": "l001",
+  "id": "lot001",
   "role": "lot",
   "lot_no": 2,
   "name": "Art Deco Filigree Diamond Ring, c. 1925",
@@ -37,12 +37,12 @@
   "description": "Old European cut center in pierced platinum filigree with milgrain edges",
   "ask": 9500,
   "resale": 14800,
-  "image": "/img/l001.svg",
+  "image": "/img/lot001.svg",
   "image_url": null,
   "credit": null
  },
  {
-  "id": "l002",
+  "id": "lot002",
   "role": "lot",
   "lot_no": 3,
   "name": "5.1 ct Ceylon Sapphire Cocktail Ring",
@@ -59,12 +59,12 @@
   "description": "Unheated cornflower blue cushion sapphire with tapered baguette shoulders",
   "ask": 34000,
   "resale": 46000,
-  "image": "/img/l002.svg",
+  "image": "/img/lot002.svg",
   "image_url": null,
   "credit": null
  },
  {
-  "id": "l003",
+  "id": "lot003",
   "role": "lot",
   "lot_no": 4,
   "name": "Colombian Emerald Three-Stone Ring",
@@ -81,12 +81,12 @@
   "description": "3.4 ct emerald-cut Colombian emerald flanked by trapezoid diamonds in 18k gold",
   "ask": 19000,
   "resale": 26000,
-  "image": "/img/l003.svg",
+  "image": "/img/lot003.svg",
   "image_url": null,
   "credit": null
  },
  {
-  "id": "l004",
+  "id": "lot004",
   "role": "lot",
   "lot_no": 5,
   "name": "10 ct Diamond Tennis Bracelet",
@@ -102,12 +102,12 @@
   "description": "Round brilliant diamonds in four-prong 18k white gold line with box clasp",
   "ask": 14500,
   "resale": 19800,
-  "image": "/img/l004.svg",
+  "image": "/img/lot004.svg",
   "image_url": null,
   "credit": null
  },
  {
-  "id": "l005",
+  "id": "lot005",
   "role": "lot",
   "lot_no": 6,
   "name": "22 ct Diamond Riviere Necklace",
@@ -123,12 +123,12 @@
   "description": "Graduated round brilliant riviere in platinum, sixteen inches",
   "ask": 52000,
   "resale": 68000,
-  "image": "/img/l005.svg",
+  "image": "/img/lot005.svg",
   "image_url": null,
   "credit": null
  },
  {
-  "id": "l006",
+  "id": "lot006",
   "role": "lot",
   "lot_no": 7,
   "name": "Burmese Ruby and Diamond Suite",
@@ -145,12 +145,12 @@
   "description": "8 ct unheated Burmese ruby center necklace with matching ear clips",
   "ask": 62000,
   "resale": 86000,
-  "image": "/img/l006.svg",
+  "image": "/img/lot006.svg",
   "image_url": null,
   "credit": null
  },
  {
-  "id": "l007",
+  "id": "lot007",
   "role": "lot",
   "lot_no": 8,
   "name": "14k Miami Cuban Link, 180 g",
@@ -164,12 +164,12 @@
   "description": "Heavy solid 14k yellow gold Miami Cuban link chain, twenty-four inches",
   "ask": 11500,
   "resale": 14600,
-  "image": "/img/l007.svg",
+  "image": "/img/lot007.svg",
   "image_url": null,
   "credit": null
  },
  {
-  "id": "l008",
+  "id": "lot008",
   "role": "lot",
   "lot_no": 9,
   "name": "Victorian Shell Cameo Brooch",
@@ -185,12 +185,12 @@
   "description": "Hand-carved shell cameo in a twisted-wire 14k gold frame, about 1870",
   "ask": 1800,
   "resale": 3200,
-  "image": "/img/l008.svg",
+  "image": "/img/lot008.svg",
   "image_url": null,
   "credit": null
  },
  {
-  "id": "l009",
+  "id": "lot009",
   "role": "lot",
   "lot_no": 10,
   "name": "Edwardian Diamond Garland Brooch",
@@ -206,12 +206,12 @@
   "description": "Platinum-topped garland with old mine cut diamonds and a pearl drop, about 1908",
   "ask": 12500,
   "resale": 18500,
-  "image": "/img/l009.svg",
+  "image": "/img/lot009.svg",
   "image_url": null,
   "credit": null
  },
  {
-  "id": "l010",
+  "id": "lot010",
   "role": "lot",
   "lot_no": 11,
   "name": "Edwardian Convertible Diamond Tiara",
@@ -228,12 +228,12 @@
   "description": "Scroll and pearl tiara that converts to a necklace, original fitted case",
   "ask": 38000,
   "resale": 54000,
-  "image": "/img/l010.svg",
+  "image": "/img/lot010.svg",
   "image_url": null,
   "credit": null
  },
  {
-  "id": "l011",
+  "id": "lot011",
   "role": "lot",
   "lot_no": 12,
   "name": "South Sea Pearl Strand, 13 mm",
@@ -249,12 +249,12 @@
   "description": "Matched white South Sea pearls on a plain 18k gold clasp",
   "ask": 7200,
   "resale": 10400,
-  "image": "/img/l011.svg",
+  "image": "/img/lot011.svg",
   "image_url": null,
   "credit": null
  },
  {
-  "id": "l012",
+  "id": "lot012",
   "role": "lot",
   "lot_no": 13,
   "name": "6 ct Diamond Chandelier Earrings",
@@ -270,12 +270,12 @@
   "description": "Articulated pear and marquise diamond chandeliers in 18k white gold",
   "ask": 13800,
   "resale": 19000,
-  "image": "/img/l012.svg",
+  "image": "/img/lot012.svg",
   "image_url": null,
   "credit": null
  },
  {
-  "id": "l013",
+  "id": "lot013",
   "role": "lot",
   "lot_no": 14,
   "name": "18k Gold Huggie Hoops",
@@ -289,12 +289,12 @@
   "description": "Plain polished domed 18k yellow gold hoops for everyday wear",
   "ask": 1600,
   "resale": 2600,
-  "image": "/img/l013.svg",
+  "image": "/img/lot013.svg",
   "image_url": null,
   "credit": null
  },
  {
-  "id": "l014",
+  "id": "lot014",
   "role": "lot",
   "lot_no": 15,
   "name": "GIA 2.01 ct Round Brilliant, Loose",
@@ -308,12 +308,12 @@
   "description": "Unset round brilliant diamond, G color, VS1 clarity, excellent cut, sealed",
   "ask": 17500,
   "resale": 21500,
-  "image": "/img/l014.svg",
+  "image": "/img/lot014.svg",
   "image_url": null,
   "credit": null
  },
  {
-  "id": "l015",
+  "id": "lot015",
   "role": "lot",
   "lot_no": 16,
   "name": "6 ct Neon Tourmaline, Loose",
@@ -327,12 +327,12 @@
   "description": "Unset neon blue-green cuprian tourmaline, oval cut, rare saturation",
   "ask": 16000,
   "resale": 24500,
-  "image": "/img/l015.svg",
+  "image": "/img/lot015.svg",
   "image_url": null,
   "credit": null
  },
  {
-  "id": "l016",
+  "id": "lot016",
   "role": "lot",
   "lot_no": 17,
   "name": "Boulder Opal and Diamond Ring",
@@ -349,12 +349,12 @@
   "description": "Freeform Queensland boulder opal in a diamond halo, 18k gold",
   "ask": 5400,
   "resale": 8900,
-  "image": "/img/l016.svg",
+  "image": "/img/lot016.svg",
   "image_url": null,
   "credit": null
  },
  {
-  "id": "l017",
+  "id": "lot017",
   "role": "lot",
   "lot_no": 18,
   "name": "Vintage 18k Gold Dress Watch",
@@ -368,12 +368,12 @@
   "description": "1960s slim manual-wind dress watch with an integrated gold mesh bracelet",
   "ask": 6200,
   "resale": 8600,
-  "image": "/img/l017.svg",
+  "image": "/img/lot017.svg",
   "image_url": null,
   "credit": null
  },
  {
-  "id": "l018",
+  "id": "lot018",
   "role": "lot",
   "lot_no": 19,
   "name": "Hand-Engraved Gold Signet Ring",
@@ -387,12 +387,12 @@
   "description": "Heavy 18k gold oval signet with a hand-cut intaglio face",
   "ask": 2400,
   "resale": 3900,
-  "image": "/img/l018.svg",
+  "image": "/img/lot018.svg",
   "image_url": null,
   "credit": null
  },
  {
-  "id": "l019",
+  "id": "lot019",
   "role": "lot",
   "lot_no": 20,
   "name": "Retro Aquamarine Cocktail Ring, 1940s",
@@ -408,12 +408,12 @@
   "description": "12 ct emerald-cut aquamarine in a sculptural rose gold scroll mount",
   "ask": 3900,
   "resale": 6200,
-  "image": "/img/l019.svg",
+  "image": "/img/lot019.svg",
   "image_url": null,
   "credit": null
  },
  {
-  "id": "h000",
+  "id": "inv000",
   "role": "holding",
   "lot_no": null,
   "name": "Emerald-Cut Diamond Eternity Band",
@@ -429,12 +429,12 @@
   "description": "Full eternity band of emerald-cut diamonds in platinum",
   "ask": 7800,
   "resale": 10400,
-  "image": "/img/h000.svg",
+  "image": "/img/inv000.svg",
   "image_url": null,
   "credit": null
  },
  {
-  "id": "h001",
+  "id": "inv001",
   "role": "holding",
   "lot_no": null,
   "name": "Retro Gold Tank Bracelet, 1940s",
@@ -448,12 +448,12 @@
   "description": "Heavy rose gold tank tread bracelet, about 1945",
   "ask": 9200,
   "resale": 12000,
-  "image": "/img/h001.svg",
+  "image": "/img/inv001.svg",
   "image_url": null,
   "credit": null
  },
  {
-  "id": "h002",
+  "id": "inv002",
   "role": "holding",
   "lot_no": null,
   "name": "Antique Mine-Cut Diamond Studs",
@@ -469,12 +469,12 @@
   "description": "Old mine cut diamonds, about two carats total, in later gold mounts",
   "ask": 6400,
   "resale": 8800,
-  "image": "/img/h002.svg",
+  "image": "/img/inv002.svg",
   "image_url": null,
   "credit": null
  },
  {
-  "id": "h003",
+  "id": "inv003",
   "role": "holding",
   "lot_no": null,
   "name": "Amethyst and Seed Pearl Pendant",
@@ -491,12 +491,12 @@
   "description": "Oval amethyst with a seed pearl surround on a gold bail",
   "ask": 1900,
   "resale": 2900,
-  "image": "/img/h003.svg",
+  "image": "/img/inv003.svg",
   "image_url": null,
   "credit": null
  },
  {
-  "id": "h004",
+  "id": "inv004",
   "role": "holding",
   "lot_no": null,
   "name": "Sterling Turquoise Statement Cuff",
@@ -512,12 +512,12 @@
   "description": "Wide stamped sterling cuff with a large natural turquoise cabochon",
   "ask": 2200,
   "resale": 3400,
-  "image": "/img/h004.svg",
+  "image": "/img/inv004.svg",
   "image_url": null,
   "credit": null
  },
  {
-  "id": "h005",
+  "id": "inv005",
   "role": "holding",
   "lot_no": null,
   "name": "14k Rope Chain, 24 in",
@@ -531,12 +531,12 @@
   "description": "Solid 14k yellow gold rope chain, five millimeters wide",
   "ask": 3100,
   "resale": 4000,
-  "image": "/img/h005.svg",
+  "image": "/img/inv005.svg",
   "image_url": null,
   "credit": null
  },
  {
-  "id": "h000",
+  "id": "his000",
   "role": "history",
   "lot_no": null,
   "name": "1.5 ct Round Solitaire",
@@ -552,12 +552,12 @@
   "description": "Round brilliant on a slim platinum band",
   "ask": 11000,
   "resale": 14300.0,
-  "image": "/img/h000.svg",
+  "image": "/img/his000.svg",
   "image_url": null,
   "credit": null
  },
  {
-  "id": "h001",
+  "id": "his001",
   "role": "history",
   "lot_no": null,
   "name": "Cushion Diamond Halo Ring",
@@ -573,12 +573,12 @@
   "description": "Cushion center in a micro-pave halo",
   "ask": 8500,
   "resale": 11000.0,
-  "image": "/img/h001.svg",
+  "image": "/img/his001.svg",
   "image_url": null,
   "credit": null
  },
  {
-  "id": "h002",
+  "id": "his002",
   "role": "history",
   "lot_no": null,
   "name": "2 ct Oval Diamond Ring",
@@ -594,12 +594,12 @@
   "description": "Oval diamond on an 18k gold band",
   "ask": 15000,
   "resale": 19500.0,
-  "image": "/img/h002.svg",
+  "image": "/img/his002.svg",
   "image_url": null,
   "credit": null
  },
  {
-  "id": "h003",
+  "id": "his003",
   "role": "history",
   "lot_no": null,
   "name": "Three-Stone Diamond Ring",
@@ -615,12 +615,12 @@
   "description": "Round center with pear side stones",
   "ask": 7200,
   "resale": 9400.0,
-  "image": "/img/h003.svg",
+  "image": "/img/his003.svg",
   "image_url": null,
   "credit": null
  },
  {
-  "id": "h004",
+  "id": "his004",
   "role": "history",
   "lot_no": null,
   "name": "14k Franco Chain",
@@ -634,12 +634,12 @@
   "description": "Solid yellow gold Franco link",
   "ask": 6200,
   "resale": 8100.0,
-  "image": "/img/h004.svg",
+  "image": "/img/his004.svg",
   "image_url": null,
   "credit": null
  },
  {
-  "id": "h005",
+  "id": "his005",
   "role": "history",
   "lot_no": null,
   "name": "18k Rope Chain",
@@ -653,12 +653,12 @@
   "description": "Heavy solid rope chain",
   "ask": 7400,
   "resale": 9600.0,
-  "image": "/img/h005.svg",
+  "image": "/img/his005.svg",
   "image_url": null,
   "credit": null
  },
  {
-  "id": "h006",
+  "id": "his006",
   "role": "history",
   "lot_no": null,
   "name": "Gold Curb Link Chain",
@@ -672,12 +672,12 @@
   "description": "Wide flat curb chain, 14k",
   "ask": 9000,
   "resale": 11700.0,
-  "image": "/img/h006.svg",
+  "image": "/img/his006.svg",
   "image_url": null,
   "credit": null
  },
  {
-  "id": "h007",
+  "id": "his007",
   "role": "history",
   "lot_no": null,
   "name": "Gold Medallion Pendant",
@@ -691,12 +691,12 @@
   "description": "Large round medallion in 14k gold",
   "ask": 2600,
   "resale": 3400.0,
-  "image": "/img/h007.svg",
+  "image": "/img/his007.svg",
   "image_url": null,
   "credit": null
  },
  {
-  "id": "h008",
+  "id": "his008",
   "role": "history",
   "lot_no": null,
   "name": "5 ct Diamond Line Bracelet",
@@ -712,12 +712,12 @@
   "description": "Four-prong white gold tennis bracelet",
   "ask": 6800,
   "resale": 8800.0,
-  "image": "/img/h008.svg",
+  "image": "/img/his008.svg",
   "image_url": null,
   "credit": null
  },
  {
-  "id": "h009",
+  "id": "his009",
   "role": "history",
   "lot_no": null,
   "name": "12 ct Diamond Line Necklace",
@@ -733,12 +733,12 @@
   "description": "Tennis necklace in 18k white gold",
   "ask": 16000,
   "resale": 20800.0,
-  "image": "/img/h009.svg",
+  "image": "/img/his009.svg",
   "image_url": null,
   "credit": null
  },
  {
-  "id": "h010",
+  "id": "his010",
   "role": "history",
   "lot_no": null,
   "name": "Bezel Diamond Station Necklace",
@@ -754,12 +754,12 @@
   "description": "Bezel-set diamonds spaced on a fine chain",
   "ask": 4200,
   "resale": 5500.0,
-  "image": "/img/h010.svg",
+  "image": "/img/his010.svg",
   "image_url": null,
   "credit": null
  },
  {
-  "id": "h011",
+  "id": "his011",
   "role": "history",
   "lot_no": null,
   "name": "Emerald Halo Ring",
@@ -776,12 +776,12 @@
   "description": "Colombian emerald with a diamond halo",
   "ask": 8200,
   "resale": 10700.0,
-  "image": "/img/h011.svg",
+  "image": "/img/his011.svg",
   "image_url": null,
   "credit": null
  },
  {
-  "id": "h012",
+  "id": "his012",
   "role": "history",
   "lot_no": null,
   "name": "Emerald Drop Pendant",
@@ -797,12 +797,12 @@
   "description": "Pear emerald on a gold bail",
   "ask": 5400,
   "resale": 7000.0,
-  "image": "/img/h012.svg",
+  "image": "/img/his012.svg",
   "image_url": null,
   "credit": null
  },
  {
-  "id": "h013",
+  "id": "his013",
   "role": "history",
   "lot_no": null,
   "name": "Zambian Emerald Cushion Ring",
@@ -818,12 +818,12 @@
   "description": "Deep bluish-green Zambian emerald",
   "ask": 11800,
   "resale": 15300.0,
-  "image": "/img/h013.svg",
+  "image": "/img/his013.svg",
   "image_url": null,
   "credit": null
  },
  {
-  "id": "h014",
+  "id": "his014",
   "role": "history",
   "lot_no": null,
   "name": "Cornflower Sapphire Halo Ring",
@@ -840,12 +840,12 @@
   "description": "Oval blue sapphire with a diamond halo",
   "ask": 9600,
   "resale": 12500.0,
-  "image": "/img/h014.svg",
+  "image": "/img/his014.svg",
   "image_url": null,
   "credit": null
  },
  {
-  "id": "h015",
+  "id": "his015",
   "role": "history",
   "lot_no": null,
   "name": "Sapphire and Diamond Line Bracelet",
@@ -862,12 +862,12 @@
   "description": "Alternating blue sapphires and diamonds",
   "ask": 7800,
   "resale": 10100.0,
-  "image": "/img/h015.svg",
+  "image": "/img/his015.svg",
   "image_url": null,
   "credit": null
  },
  {
-  "id": "h016",
+  "id": "his016",
   "role": "history",
   "lot_no": null,
   "name": "3 ct Ceylon Sapphire, Loose",
@@ -881,12 +881,12 @@
   "description": "Unset oval Ceylon blue sapphire",
   "ask": 6400,
   "resale": 8300.0,
-  "image": "/img/h016.svg",
+  "image": "/img/his016.svg",
   "image_url": null,
   "credit": null
  },
  {
-  "id": "h017",
+  "id": "his017",
   "role": "history",
   "lot_no": null,
   "name": "Art Deco Sapphire Bar Brooch",
@@ -903,12 +903,12 @@
   "description": "Calibre sapphires and diamonds, about 1928",
   "ask": 4800,
   "resale": 6200.0,
-  "image": "/img/h017.svg",
+  "image": "/img/his017.svg",
   "image_url": null,
   "credit": null
  },
  {
-  "id": "h018",
+  "id": "his018",
   "role": "history",
   "lot_no": null,
   "name": "Art Deco Diamond Line Bracelet",
@@ -924,12 +924,12 @@
   "description": "Geometric platinum links, about 1930",
   "ask": 15500,
   "resale": 20200.0,
-  "image": "/img/h018.svg",
+  "image": "/img/his018.svg",
   "image_url": null,
   "credit": null
  },
  {
-  "id": "h019",
+  "id": "his019",
   "role": "history",
   "lot_no": null,
   "name": "Art Deco Dinner Ring",
@@ -945,12 +945,12 @@
   "description": "Pierced platinum plaque ring",
   "ask": 7600,
   "resale": 9900.0,
-  "image": "/img/h019.svg",
+  "image": "/img/his019.svg",
   "image_url": null,
   "credit": null
  },
  {
-  "id": "h020",
+  "id": "his020",
   "role": "history",
   "lot_no": null,
   "name": "Victorian Seed Pearl Locket",
@@ -966,12 +966,12 @@
   "description": "Engraved gold locket with seed pearls",
   "ask": 1200,
   "resale": 1600.0,
-  "image": "/img/h020.svg",
+  "image": "/img/his020.svg",
   "image_url": null,
   "credit": null
  },
  {
-  "id": "h021",
+  "id": "his021",
   "role": "history",
   "lot_no": null,
   "name": "Hardstone Cameo Pendant",
@@ -987,12 +987,12 @@
   "description": "Carved hardstone cameo in gold",
   "ask": 900,
   "resale": 1200.0,
-  "image": "/img/h021.svg",
+  "image": "/img/his021.svg",
   "image_url": null,
   "credit": null
  },
  {
-  "id": "h022",
+  "id": "his022",
   "role": "history",
   "lot_no": null,
   "name": "Victorian Mourning Brooch",
@@ -1008,12 +1008,12 @@
   "description": "Black enamel and seed pearl brooch",
   "ask": 1100,
   "resale": 1400.0,
-  "image": "/img/h022.svg",
+  "image": "/img/his022.svg",
   "image_url": null,
   "credit": null
  },
  {
-  "id": "h023",
+  "id": "his023",
   "role": "history",
   "lot_no": null,
   "name": "Edwardian Diamond Lavalier",
@@ -1030,12 +1030,12 @@
   "description": "Platinum and pearl drop lavalier",
   "ask": 3800,
   "resale": 4900.0,
-  "image": "/img/h023.svg",
+  "image": "/img/his023.svg",
   "image_url": null,
   "credit": null
  },
  {
-  "id": "h024",
+  "id": "his024",
   "role": "history",
   "lot_no": null,
   "name": "Edwardian Diamond Ring",
@@ -1051,12 +1051,12 @@
   "description": "Old European cut in a milgrain mount",
   "ask": 5200,
   "resale": 6800.0,
-  "image": "/img/h024.svg",
+  "image": "/img/his024.svg",
   "image_url": null,
   "credit": null
  },
  {
-  "id": "h025",
+  "id": "his025",
   "role": "history",
   "lot_no": null,
   "name": "Akoya Pearl Strand",
@@ -1072,12 +1072,12 @@
   "description": "Classic matched seven millimeter akoya",
   "ask": 2400,
   "resale": 3100.0,
-  "image": "/img/h025.svg",
+  "image": "/img/his025.svg",
   "image_url": null,
   "credit": null
  },
  {
-  "id": "h026",
+  "id": "his026",
   "role": "history",
   "lot_no": null,
   "name": "Pearl Drop Earrings",
@@ -1093,12 +1093,12 @@
   "description": "Single pearl on a plain gold post",
   "ask": 1300,
   "resale": 1700.0,
-  "image": "/img/h026.svg",
+  "image": "/img/his026.svg",
   "image_url": null,
   "credit": null
  },
  {
-  "id": "h027",
+  "id": "his027",
   "role": "history",
   "lot_no": null,
   "name": "Fine Gold Hoop Earrings",
@@ -1112,12 +1112,12 @@
   "description": "Slim polished 18k gold hoops",
   "ask": 1500,
   "resale": 2000.0,
-  "image": "/img/h027.svg",
+  "image": "/img/his027.svg",
   "image_url": null,
   "credit": null
  },
  {
-  "id": "h028",
+  "id": "his028",
   "role": "history",
   "lot_no": null,
   "name": "Ruby Cocktail Ring",
@@ -1134,12 +1134,12 @@
   "description": "Oval ruby with a bold diamond surround",
   "ask": 8800,
   "resale": 11400.0,
-  "image": "/img/h028.svg",
+  "image": "/img/his028.svg",
   "image_url": null,
   "credit": null
  },
  {
-  "id": "h029",
+  "id": "his029",
   "role": "history",
   "lot_no": null,
   "name": "Fancy Yellow Diamond Cocktail Ring",
@@ -1155,12 +1155,12 @@
   "description": "Radiant cut fancy yellow center stone",
   "ask": 17000,
   "resale": 22100.0,
-  "image": "/img/h029.svg",
+  "image": "/img/his029.svg",
   "image_url": null,
   "credit": null
  },
  {
-  "id": "h030",
+  "id": "his030",
   "role": "history",
   "lot_no": null,
   "name": "1.0 ct Round Diamond, Loose",
@@ -1174,12 +1174,12 @@
   "description": "Unset certified round brilliant",
   "ask": 5200,
   "resale": 6800.0,
-  "image": "/img/h030.svg",
+  "image": "/img/his030.svg",
   "image_url": null,
   "credit": null
  },
  {
-  "id": "h031",
+  "id": "his031",
   "role": "history",
   "lot_no": null,
   "name": "2 ct Burmese Ruby, Loose",
@@ -1193,12 +1193,12 @@
   "description": "Unset unheated cushion ruby",
   "ask": 9400,
   "resale": 12200.0,
-  "image": "/img/h031.svg",
+  "image": "/img/his031.svg",
   "image_url": null,
   "credit": null
  },
  {
-  "id": "h032",
+  "id": "his032",
   "role": "history",
   "lot_no": null,
   "name": "3 ct Emerald-Cut Diamond, Loose",
@@ -1212,12 +1212,12 @@
   "description": "Unset certified step-cut diamond",
   "ask": 24000,
   "resale": 31200.0,
-  "image": "/img/h032.svg",
+  "image": "/img/his032.svg",
   "image_url": null,
   "credit": null
  },
  {
-  "id": "h033",
+  "id": "his033",
   "role": "history",
   "lot_no": null,
   "name": "Two-Tone Vintage Wristwatch",
@@ -1232,12 +1232,12 @@
   "description": "1970s steel and gold automatic",
   "ask": 4500,
   "resale": 5800.0,
-  "image": "/img/h033.svg",
+  "image": "/img/his033.svg",
   "image_url": null,
   "credit": null
  },
  {
-  "id": "h034",
+  "id": "his034",
   "role": "history",
   "lot_no": null,
   "name": "18k Gold Chronograph",
@@ -1251,12 +1251,12 @@
   "description": "Vintage gold cased chronograph on leather",
   "ask": 7800,
   "resale": 10100.0,
-  "image": "/img/h034.svg",
+  "image": "/img/his034.svg",
   "image_url": null,
   "credit": null
  },
  {
-  "id": "h035",
+  "id": "his035",
   "role": "history",
   "lot_no": null,
   "name": "Men's Diamond Pinky Ring",
@@ -1272,12 +1272,12 @@
   "description": "Heavy gold ring with a pave face",
   "ask": 4200,
   "resale": 5500.0,
-  "image": "/img/h035.svg",
+  "image": "/img/his035.svg",
   "image_url": null,
   "credit": null
  },
  {
-  "id": "h036",
+  "id": "his036",
   "role": "history",
   "lot_no": null,
   "name": "Crystal Opal Pendant",
@@ -1293,12 +1293,12 @@
   "description": "Bright crystal opal in a gold bezel",
   "ask": 2800,
   "resale": 3600.0,
-  "image": "/img/h036.svg",
+  "image": "/img/his036.svg",
   "image_url": null,
   "credit": null
  },
  {
-  "id": "h037",
+  "id": "his037",
   "role": "history",
   "lot_no": null,
   "name": "Natural Turquoise Ring",
@@ -1314,12 +1314,12 @@
   "description": "Large natural turquoise in hammered silver",
   "ask": 1400,
   "resale": 1800.0,
-  "image": "/img/h037.svg",
+  "image": "/img/his037.svg",
   "image_url": null,
   "credit": null
  },
  {
-  "id": "h038",
+  "id": "his038",
   "role": "history",
   "lot_no": null,
   "name": "Aquamarine Pendant",
@@ -1335,12 +1335,12 @@
   "description": "Emerald-cut aquamarine on a fine chain",
   "ask": 3600,
   "resale": 4700.0,
-  "image": "/img/h038.svg",
+  "image": "/img/his038.svg",
   "image_url": null,
   "credit": null
  },
  {
-  "id": "h039",
+  "id": "his039",
   "role": "history",
   "lot_no": null,
   "name": "Diamond Bandeau Tiara",
@@ -1356,12 +1356,12 @@
   "description": "Low platinum bandeau, about 1912",
   "ask": 19000,
   "resale": 24700.0,
-  "image": "/img/h039.svg",
+  "image": "/img/his039.svg",
   "image_url": null,
   "credit": null
  },
  {
-  "id": "h040",
+  "id": "his040",
   "role": "history",
   "lot_no": null,
   "name": "Important Belle Epoque Bow Brooch",
@@ -1377,12 +1377,12 @@
   "description": "Large ribbon bow in old cut diamonds",
   "ask": 9200,
   "resale": 12000.0,
-  "image": "/img/h040.svg",
+  "image": "/img/his040.svg",
   "image_url": null,
   "credit": null
  },
  {
-  "id": "h041",
+  "id": "his041",
   "role": "history",
   "lot_no": null,
   "name": "Georgian Paste Brooch",
@@ -1398,7 +1398,7 @@
   "description": "Foil-backed silver spray brooch",
   "ask": 3400,
   "resale": 4400.0,
-  "image": "/img/h041.svg",
+  "image": "/img/his041.svg",
   "image_url": null,
   "credit": null
  }

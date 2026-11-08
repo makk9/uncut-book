@@ -63,12 +63,21 @@ class Ranker:
                     )
                 order = [i.id for i in res.items]
                 self.cache[key] = order
+                self._persist(key, order)
                 return order, "live"
             except Exception as exc:  # the demo must survive a network failure
                 print("ranking failed, using snapshot:", type(exc).__name__, str(exc)[:160], flush=True)
         if key in self.snapshot:
             return self.snapshot[key], "snapshot"
         return [], "missing"
+
+    def _persist(self, key: str, order: list[str]) -> None:
+        """Keep every real ranking on disk, so an outage replays real output instead of failing."""
+        self.snapshot[key] = order
+        try:
+            self.snapshot_path.write_text(json.dumps(self.snapshot))
+        except OSError:
+            pass  # a read-only host still has the snapshot it shipped with
 
     async def collector(self, events: list[dict], signals: list[dict]) -> dict:
         full_rows = events + signals
@@ -84,5 +93,3 @@ class Ranker:
                                          register_event=False)
         return [i.id for i in res.items if i.id not in exclude][:limit]
 
-    def save_snapshot(self, path: Path | None = None) -> None:
-        (path or self.snapshot_path).write_text(json.dumps(self.cache))
