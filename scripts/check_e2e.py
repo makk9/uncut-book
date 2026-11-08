@@ -121,11 +121,22 @@ print(f"  {trophy['name']} (${trophy['ask']:,}): already in={w.get('already_in')
 if not w.get("already_in"):
     check((w.get("value_delta") or 0) <= 1, "forcing a lot in never raises value above the optimum")
 
-print("\n[7] resilience mode trades value for a smaller single-buyer loss")
-for label, res in (("Max value", 0), ("Balanced", 0.5), ("Buyer-proof", 0.9)):
-    r = solve(budget=80_000, resilience=res)
-    c = next(x for x in r["compare"] if x["key"] == "book")
-    print(f"    {label:12} pieces {c['pieces']:2} value ${c['value']:>8,.0f} one-buyer loss ${c['worst_loss']:>7,.0f} solve {r['meta']['solve_ms']}ms")
+print("\n[7] protection trades value for a smaller single-buyer loss, or says it changes nothing")
+opening = [p["id"] for p in PIECES.values() if p["role"] == "lot"][:20]
+plan_of = lambda r: sorted((x["lot"], x["buyer"]) for x in r["portfolio"]["picks"])
+worst_of = lambda r: next(x for x in r["compare"] if x["key"] == "book")["worst_loss"]
+check(solve(budget=80_000, radar=opening)["protection"] is None, "protection off reports no comparison")
+for budget in (60_000, 80_000, 120_000):
+    off, on = solve(budget=budget, radar=opening), solve(budget=budget, radar=opening, resilience=0.9)
+    p = on["protection"]
+    print(f"    ${budget:,}: off value ${off['portfolio']['value']:,.0f}, worst ${worst_of(off):,.0f} | on value ${on['portfolio']['value']:,.0f}, worst ${worst_of(on):,.0f} | {p} | solve {on['meta']['solve_ms']}ms")
+    if p["changed"]:
+        check(worst_of(on) < worst_of(off), f"${budget:,}: a changed plan has a smaller worst loss")
+        check(abs(p["value_given_up"] - (off["portfolio"]["value"] - on["portfolio"]["value"])) <= 1, f"${budget:,}: value given up matches the two plans")
+    else:
+        check(plan_of(on) == plan_of(off), f"${budget:,}: 'changes nothing' means the plan is identical")
+check(not solve(budget=80_000, radar=opening, resilience=0.9)["protection"]["changed"], "the $80,000 opening plan is unchanged by protection")
+check(solve(budget=120_000, radar=opening, resilience=0.9)["protection"]["changed"], "at $120,000 protection changes the plan")
 
 print("\n[8] capacity ceiling and stretch cost")
 for tol in (0.0, 0.10, 0.25, 0.50):

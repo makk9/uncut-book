@@ -5,6 +5,7 @@ import asyncio
 import json
 import os
 import time
+from dataclasses import replace
 from pathlib import Path
 
 import numpy as np
@@ -199,6 +200,25 @@ async def build(req: Request):
     return raw, sources, rank_ms, lens, tags, ranks, tag_ranks, lots, buyers, blocked, pool, problem, q
 
 
+def plan(problem: opt.Problem, q: opt.Params) -> tuple[dict, dict | None]:
+    """The proposal. With protection on, the protected plan is kept only if it lowers the worst
+    walkout loss, so ties and rounding in the solver never look like protection."""
+    plain = opt.solve(problem, replace(q, resilience=0.0))
+    if q.resilience <= 0:
+        return plain, None
+    guarded = opt.solve(problem, q)
+
+    def worst(r: dict) -> float:
+        s = opt.stress(problem, q, opt.lots_for(problem, r))
+        return s[0]["value_lost"] if s else 0.0
+
+    before, after = worst(plain), worst(guarded)
+    if after >= before - 1:
+        return plain, {"changed": False, "worst_loss": before}
+    return guarded, {"changed": True, "worst_before": before, "worst_after": after,
+                     "value_given_up": plain["value"] - guarded["value"]}
+
+
 FRONTIER_CACHE: dict[bytes, list] = {}
 
 
@@ -231,7 +251,7 @@ async def whatif(req: WhatIf):
     *_, problem, q = await build(req)
     if not any(l["id"] == req.lot for l in problem.lots):
         return {"feasible": False, "reason": "This lot isn't on the radar yet."}
-    base = opt.solve(problem, q)
+    base, _ = plan(problem, q)
     if lot["ask"] > q.budget:
         return {"feasible": False, "reason": "This lot's ask is above the capital still available."}
     problem.forced = {req.lot}
@@ -254,7 +274,7 @@ async def portfolio(req: Request):
     raw, sources, rank_ms, lens, tags, ranks, tag_ranks, lots, buyers, blocked, pool, problem, q = await build(req)
 
     t1 = time.perf_counter()
-    base = opt.solve(problem, q)
+    base, protection = plan(problem, q)
     chosen = opt.lots_for(problem, base)
     stress = opt.stress(problem, q, chosen)
     solve_ms = (time.perf_counter() - t1) * 1000
@@ -316,6 +336,7 @@ async def portfolio(req: Request):
 
     return {
         "portfolio": base,
+        "protection": protection,
         "stress": stress,
         "compare": compare,
         "frontier": curve,

@@ -21,6 +21,7 @@ type Result = {
   compare: { key: string; name: string; note: string; lots: string[]; spent: number; gross_margin: number; value: number; unplaced_capital: number; pieces: number; worst_loss: number }[];
   frontier: { budget: number; value: number; spent: number; pieces: number }[];
   demand: Record<string, Demand[]>;
+  protection: { changed: boolean; worst_loss?: number; worst_before?: number; worst_after?: number; value_given_up?: number } | null;
   holdings: Holding[];
   in_stock: Record<string, string[]>;
   drift: Record<string, { gap: number; rising: string[]; fading: string[] }>;
@@ -33,11 +34,7 @@ type WhatIf = { feasible: boolean; reason?: string; already_in?: boolean; value_
 const usd = (n: number) => `$${Math.round(n).toLocaleString("en-US")}`;
 const usdK = (n: number) => (Math.abs(n) >= 1000 ? `$${(n / 1000).toFixed(n % 1000 === 0 ? 0 : 1)}k` : `$${Math.round(n)}`);
 const signed = (n: number) => `${n >= 0 ? "+" : "−"}${usd(Math.abs(n))}`;
-const MODES = [
-  { key: "value", label: "Max value", res: 0 },
-  { key: "balanced", label: "Balanced", res: 0.5 },
-  { key: "hardened", label: "Buyer-proof", res: 0.9 },
-];
+const PROTECT_WEIGHT = 0.9; // share of the objective on value left after the worst walkout, when protection is on
 const DEFAULTS: Settings = { fit_decay: 4, holding_penalty: 0.15, max_rank: 8, slots: 2, recency: 0.6, capacity_tolerance: 0.25, stretch_cost: 0.5, relative: 1 };
 const fill = (v: number, min: number, max: number) => ({ "--p": `${((v - min) / (max - min)) * 100}%` }) as CSSProperties;
 type Toast = { head: string; ms: number; added: string[]; removed: string[] };
@@ -51,7 +48,7 @@ export default function App() {
   const [err, setErr] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
   const [budget, setBudget] = useState(80000);
-  const [mode, setMode] = useState("value");
+  const [protect, setProtect] = useState(false);
   const [settings, setSettings] = useState<Settings>(DEFAULTS);
   const [showSettings, setShowSettings] = useState(false);
   const [signals, setSignals] = useState<Record<string, Signal[]>>({});
@@ -83,12 +80,12 @@ export default function App() {
   const body = useMemo(() => {
     const isBought = new Set(bought.map((x) => x.lot));
     return {
-      budget: available, ...settings, resilience: MODES.find((m) => m.key === mode)!.res, signals, passes,
+      budget: available, ...settings, resilience: protect ? PROTECT_WEIGHT : 0, signals, passes,
       radar: radarLots.map((l) => l.id),
       desk: radarLots.map((l) => l.id).filter((id) => !offDesk.has(id) && !isBought.has(id)),
       committed: bought.map((x) => ({ lot: x.lot, buyer: x.buyer })),
     };
-  }, [available, settings, mode, signals, passes, radarLots, offDesk, bought]);
+  }, [available, settings, protect, signals, passes, radarLots, offDesk, bought]);
 
   useEffect(() => {
     if (!book) return;
@@ -354,11 +351,19 @@ export default function App() {
             <button className="link push" onClick={() => setShowSettings((s) => !s)}>{showSettings ? "Hide assumptions" : "Assumptions"}</button>
           </div>
           <div className="desk-tools">
-            <div className="segctl" role="group" aria-label="Objective">
-              {MODES.map((m) => <button key={m.key} className={mode === m.key ? "on" : ""} aria-pressed={mode === m.key} onClick={() => setMode(m.key)}>{m.label}</button>)}
-            </div>
+            <label className="protect" title="Weighs the value left if your most important buyer walks and their pieces go to whoever else fits. It is a scoring choice, not a chance that anyone leaves.">
+              <input type="checkbox" checked={protect} onChange={(e) => setProtect(e.target.checked)} />
+              Protect against a buyer walking
+            </label>
             {editCount > 0 && <button className="link" onClick={() => { setSignals({}); setPasses([]); setBought([]); setOffDesk(new Set()); setRevealed(0); }}>Reset {editCount} {editCount > 1 ? "edits" : "edit"}</button>}
           </div>
+          {protect && (busy || res?.protection) && (
+            <div className="pad note protect-note">
+              {busy || !res?.protection ? "Comparing against the plan without protection…" : !res.protection.changed
+                ? "At this capital, protecting against a walkout changes nothing."
+                : <>{res.protection.value_given_up! > 0 ? <>Gives up {usd(res.protection.value_given_up!)} of fit-weighted value to cut</> : "Cuts"} the worst walkout loss from {usd(res.protection.worst_before!)} to {usd(res.protection.worst_after!)}, under this tool's assumptions.</>}
+            </div>
+          )}
           {showSettings && <Assumptions s={settings} set={setSettings} />}
           <div className="scroll">
             {bought.length > 0 && (
