@@ -844,7 +844,7 @@
  },
  {
   "id": "his000",
-  "role": "history",
+  "role": "holding",
   "lot_no": null,
   "name": "Trio of Pave Diamond Rings",
   "form": "Ring",
@@ -930,7 +930,7 @@
  },
  {
   "id": "his003",
-  "role": "history",
+  "role": "holding",
   "lot_no": null,
   "name": "Teal Sapphire Engagement Ring",
   "form": "Ring",
@@ -988,7 +988,7 @@
  },
  {
   "id": "his005",
-  "role": "history",
+  "role": "holding",
   "lot_no": null,
   "name": "White Gold Wedding Bands",
   "form": "Ring",
@@ -1071,7 +1071,7 @@
  },
  {
   "id": "his008",
-  "role": "history",
+  "role": "holding",
   "lot_no": null,
   "name": "Oval Emerald Cabochon Ring",
   "form": "Ring",
@@ -1125,7 +1125,7 @@
  },
  {
   "id": "his010",
-  "role": "history",
+  "role": "holding",
   "lot_no": null,
   "name": "Enameled Gold Pendant with Emerald, Late 1500s",
   "form": "Pendant",
@@ -1154,7 +1154,7 @@
  },
  {
   "id": "his011",
-  "role": "history",
+  "role": "holding",
   "lot_no": null,
   "name": "Antique Emerald Ring in Silver",
   "form": "Ring",
@@ -1182,7 +1182,7 @@
  },
  {
   "id": "his012",
-  "role": "history",
+  "role": "holding",
   "lot_no": null,
   "name": "Gold Sapphire Stacking Rings",
   "form": "Ring",
@@ -1210,7 +1210,7 @@
  },
  {
   "id": "his013",
-  "role": "history",
+  "role": "holding",
   "lot_no": null,
   "name": "Antique Sapphire Episcopal Ring",
   "form": "Ring",
@@ -1372,7 +1372,7 @@
  },
  {
   "id": "his019",
-  "role": "history",
+  "role": "holding",
   "lot_no": null,
   "name": "Molded Glass and Red Enamel Belt Buckle",
   "form": "Brooch",
@@ -1399,7 +1399,7 @@
  },
  {
   "id": "his020",
-  "role": "history",
+  "role": "holding",
   "lot_no": null,
   "name": "Enameled Gold Link Bracelet, 1850-70",
   "form": "Bracelet",
@@ -1427,7 +1427,7 @@
  },
  {
   "id": "his021",
-  "role": "history",
+  "role": "holding",
   "lot_no": null,
   "name": "Blue and White Enamel Bracelet with Pearls",
   "form": "Bracelet",
@@ -1457,7 +1457,7 @@
  },
  {
   "id": "his022",
-  "role": "history",
+  "role": "holding",
   "lot_no": null,
   "name": "Seed Pearl Parure, c. 1850",
   "form": "Necklace",
@@ -1568,7 +1568,7 @@
  },
  {
   "id": "his026",
-  "role": "history",
+  "role": "holding",
   "lot_no": null,
   "name": "Green Stone and Diamond Ring, c. 1870",
   "form": "Ring",
@@ -1684,7 +1684,7 @@
  },
  {
   "id": "his030",
-  "role": "history",
+  "role": "holding",
   "lot_no": null,
   "name": "Amethyst and Pearl Cross Necklace, c. 1905",
   "form": "Necklace",
@@ -1743,7 +1743,7 @@
  },
  {
   "id": "his032",
-  "role": "history",
+  "role": "holding",
   "lot_no": null,
   "name": "Enamel and Citrine Pendant Brooch, c. 1905",
   "form": "Brooch",
@@ -1772,7 +1772,7 @@
  },
  {
   "id": "his033",
-  "role": "history",
+  "role": "holding",
   "lot_no": null,
   "name": "Citrine and Blue Enamel Ring, c. 1910",
   "form": "Ring",
@@ -1801,7 +1801,7 @@
  },
  {
   "id": "his034",
-  "role": "history",
+  "role": "holding",
   "lot_no": null,
   "name": "Lily of the Valley Comb, c. 1900",
   "form": "Hair Ornament",
@@ -1914,7 +1914,7 @@
  },
  {
   "id": "his038",
-  "role": "history",
+  "role": "holding",
   "lot_no": null,
   "name": "Diamond and Enamel Cluster Ring, 1700s",
   "form": "Ring",
@@ -1944,7 +1944,7 @@
  },
  {
   "id": "his039",
-  "role": "history",
+  "role": "holding",
   "lot_no": null,
   "name": "Pelican Pendant with Rubies and Emeralds, c. 1600",
   "form": "Pendant",
@@ -2004,7 +2004,7 @@
  },
  {
   "id": "his041",
-  "role": "history",
+  "role": "holding",
   "lot_no": null,
   "name": "5 ct Princess Ruby Ring",
   "form": "Ring",
@@ -2032,7 +2032,7 @@
  },
  {
   "id": "his042",
-  "role": "history",
+  "role": "holding",
   "lot_no": null,
   "name": "Burmese Ruby in a Silver Ring",
   "form": "Ring",
@@ -2089,7 +2089,7 @@
  },
  {
   "id": "his044",
-  "role": "history",
+  "role": "holding",
   "lot_no": null,
   "name": "Pear Diamond Halo Pendant",
   "form": "Pendant",
@@ -2117,7 +2117,7 @@
  },
  {
   "id": "his045",
-  "role": "history",
+  "role": "holding",
   "lot_no": null,
   "name": "Pair of Alexandrites, Unset",
   "form": "Loose stone",
@@ -2221,7 +2221,7 @@
  },
  {
   "id": "his049",
-  "role": "history",
+  "role": "holding",
   "lot_no": null,
   "name": "Large Faceted Topaz",
   "form": "Loose stone",
@@ -2303,7 +2303,7 @@
  },
  {
   "id": "his052",
-  "role": "history",
+  "role": "holding",
   "lot_no": null,
   "name": "Gold Band with Channel Diamonds",
   "form": "Ring",
@@ -2331,7 +2331,7 @@
  },
  {
   "id": "his053",
-  "role": "history",
+  "role": "holding",
   "lot_no": null,
   "name": "Oxidized Wedding Bands",
   "form": "Ring",
@@ -2409,7 +2409,7 @@
  },
  {
   "id": "his056",
-  "role": "history",
+  "role": "holding",
   "lot_no": null,
   "name": "1970s Steel Watch, Red Dial",
   "form": "Watch",
@@ -2435,7 +2435,7 @@
  },
  {
   "id": "his057",
-  "role": "history",
+  "role": "holding",
   "lot_no": null,
   "name": "Mesh Strap Minimal Watch",
   "form": "Watch",
@@ -2461,7 +2461,7 @@
  },
  {
   "id": "his058",
-  "role": "history",
+  "role": "holding",
   "lot_no": null,
   "name": "Gold and Pearl Pocket Watch, 1813",
   "form": "Watch",
@@ -2492,7 +2492,7 @@
  },
  {
   "id": "his059",
-  "role": "history",
+  "role": "holding",
   "lot_no": null,
   "name": "Enameled Gilt Pocket Watch, Late 1700s",
   "form": "Watch",
@@ -2658,7 +2658,7 @@
  },
  {
   "id": "his065",
-  "role": "history",
+  "role": "holding",
   "lot_no": null,
   "name": "Silver Hoop Pendant with Old-Cut Diamonds",
   "form": "Pendant",
@@ -2799,7 +2799,7 @@
  },
  {
   "id": "his070",
-  "role": "history",
+  "role": "holding",
   "lot_no": null,
   "name": "Parti Sapphire and Diamond Rose Gold Ring",
   "form": "Ring",
@@ -2828,7 +2828,7 @@
  },
  {
   "id": "his071",
-  "role": "history",
+  "role": "holding",
   "lot_no": null,
   "name": "Yellow Sapphire and Diamond Engagement Ring",
   "form": "Ring",
@@ -2857,7 +2857,7 @@
  },
  {
   "id": "his072",
-  "role": "history",
+  "role": "holding",
   "lot_no": null,
   "name": "Pear Cut Parti Sapphire Solitaire",
   "form": "Ring",
@@ -2885,7 +2885,7 @@
  },
  {
   "id": "his073",
-  "role": "history",
+  "role": "holding",
   "lot_no": null,
   "name": "Pair of Plain Gold Engagement Bands",
   "form": "Ring",
@@ -2940,7 +2940,7 @@
  },
  {
   "id": "his075",
-  "role": "history",
+  "role": "holding",
   "lot_no": null,
   "name": "Plain 18k Domed Gold Ring",
   "form": "Ring",
@@ -2994,7 +2994,7 @@
  },
  {
   "id": "his077",
-  "role": "history",
+  "role": "holding",
   "lot_no": null,
   "name": "Open Gold Ring with Bezel Diamonds",
   "form": "Ring",
@@ -3022,7 +3022,7 @@
  },
  {
   "id": "his078",
-  "role": "history",
+  "role": "holding",
   "lot_no": null,
   "name": "Bezel-Set Moonstone Ring",
   "form": "Ring",
@@ -3107,7 +3107,7 @@
  },
  {
   "id": "his081",
-  "role": "history",
+  "role": "holding",
   "lot_no": null,
   "name": "Rough Diamond Necklace",
   "form": "Necklace",
@@ -3195,7 +3195,7 @@
  },
  {
   "id": "his084",
-  "role": "history",
+  "role": "holding",
   "lot_no": null,
   "name": "Antique Indian Gold Necklace and Earrings",
   "form": "Necklace",
@@ -3275,7 +3275,7 @@
  },
  {
   "id": "his087",
-  "role": "history",
+  "role": "holding",
   "lot_no": null,
   "name": "Long Openwork Link Chain",
   "form": "Chain",
@@ -3301,7 +3301,7 @@
  },
  {
   "id": "his088",
-  "role": "history",
+  "role": "holding",
   "lot_no": null,
   "name": "Gold Openwork Collar",
   "form": "Necklace",
@@ -3498,7 +3498,7 @@
  },
  {
   "id": "his095",
-  "role": "history",
+  "role": "holding",
   "lot_no": null,
   "name": "Pave Diamond Square Gold Ring",
   "form": "Ring",
@@ -3555,7 +3555,7 @@
  },
  {
   "id": "his097",
-  "role": "history",
+  "role": "holding",
   "lot_no": null,
   "name": "Engraved Gold Trophy Ring",
   "form": "Ring",

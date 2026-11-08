@@ -28,6 +28,10 @@ HOLDINGS = [p for p in PIECES.values() if p["role"] == "holding"]
 LOT_IDS = [p["id"] for p in LOTS]
 HOLD_IDS = [p["id"] for p in HOLDINGS]
 ALL_IDS = LOT_IDS + HOLD_IDS
+# Who has already looked at each held piece. Having viewed a piece lifts its rank for that collector,
+# so the UI shows this next to the rank instead of passing it off as independent demand.
+VIEWED_BY = {i: [c["id"] for c in COLLECTORS if any(e["type"] == "view" and e["id"] == i for e in c["events"])]
+             for i in HOLD_IDS}
 
 ranker = Ranker(ALL_IDS, BOOK / "rankings_snapshot.json")
 app = FastAPI(title="THE BOOK")
@@ -293,17 +297,15 @@ async def portfolio(req: Request):
         } for j, c in enumerate(COLLECTORS)), key=lambda x: x["rank"])
         demand[l] = rows
 
-    # holdings: read against the batch, is anyone still looking at them?
+    # inventory: ranked only against the dealer's own stock, so #3 means third of what they hold for this collector
+    stock = {c["id"]: within(raw[c["id"]]["full"], HOLD_IDS) for c in COLLECTORS}
     holdings = []
     for h in HOLDINGS:
-        rows = []
-        for c in COLLECTORS:
-            pos = within(raw[c["id"]]["full"], ALL_IDS)[h["id"]]
-            rows.append({"collector": c["id"], "rank": pos})
-        rows.sort(key=lambda x: x["rank"])
+        rows = sorted(({"collector": cid, "rank": ranks_[h["id"]]} for cid, ranks_ in stock.items()), key=lambda x: x["rank"])
         reach = sum(1 for x in rows if x["rank"] <= req.max_rank)
-        holdings.append({"id": h["id"], "best": rows[:3], "reach": reach,
+        holdings.append({"id": h["id"], "best": rows[:3], "reach": reach, "viewed_by": VIEWED_BY[h["id"]],
                          "status": "stale" if reach == 0 else "thin" if reach == 1 else "live"})
+    in_stock = {cid: sorted(HOLD_IDS, key=ranks_.__getitem__)[:8] for cid, ranks_ in stock.items()}
 
     drift = {}
     for c in COLLECTORS:
@@ -319,6 +321,7 @@ async def portfolio(req: Request):
         "frontier": curve,
         "demand": demand,
         "holdings": holdings,
+        "in_stock": in_stock,
         "drift": drift,
         "meta": {
             "source": "live" if "live" in sources else ("cache" if "cache" in sources else "snapshot"),
@@ -326,21 +329,6 @@ async def portfolio(req: Request):
             "calls": 2 * len(COLLECTORS),
         },
     }
-
-
-@app.get("/api/collector/{cid}/sourcing")
-async def sourcing(cid: str):
-    """What this collector would look at next across the wider catalog, beyond this batch."""
-    c = BY_ID.get(cid)
-    if not c:
-        raise HTTPException(404, "unknown collector")
-    seen = {e["id"] for e in c["events"] if "id" in e} | set(ALL_IDS)
-    try:
-        ids = await ranker.wider(c["events"], seen, limit=8)
-    except Exception:
-        ids = []
-    return {"pieces": [{"id": i, "name": PIECES[i]["name"], "image": PIECES[i]["image"], "form": PIECES[i]["form"]}
-                       for i in ids if i in PIECES]}
 
 
 @app.get("/api/health")

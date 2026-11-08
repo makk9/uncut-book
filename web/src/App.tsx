@@ -14,13 +14,15 @@ type Collector = {
 type Book = { lots: Piece[]; holdings: Piece[]; collectors: Collector[]; live: boolean };
 type Pick_ = { lot: string; ask: number; resale: number; buyer: string | null; rank: number | null; fit: number; value: number };
 type Demand = { collector: string; rank: number; rank_full: number; rank_orders: number; rank_tags: number; fit: number; affordable: boolean; over_by: number; stretch: number; vs_largest: number | null; passed: boolean };
+type Holding = { id: string; best: { collector: string; rank: number }[]; reach: number; viewed_by: string[]; status: "live" | "thin" | "stale" };
 type Result = {
   portfolio: { picks: Pick_[]; spent: number; budget: number; unspent: number; gross_margin: number; value: number; stretch_cost: number; unplaced_capital: number };
   stress: { collector: string; value: number; value_lost: number; unplaced_capital: number; unplaced: string[] }[];
   compare: { key: string; name: string; note: string; lots: string[]; spent: number; gross_margin: number; value: number; unplaced_capital: number; pieces: number; worst_loss: number }[];
   frontier: { budget: number; value: number; spent: number; pieces: number }[];
   demand: Record<string, Demand[]>;
-  holdings: { id: string; best: { collector: string; rank: number }[]; reach: number; status: string }[];
+  holdings: Holding[];
+  in_stock: Record<string, string[]>;
   drift: Record<string, { gap: number; rising: string[]; fading: string[] }>;
   meta: { source: string; rank_ms: number; solve_ms: number; calls: number };
 };
@@ -341,25 +343,7 @@ export default function App() {
                 </div>
               </div>
             )}
-            {res && (
-              <div className="section-top table-scroll">
-                <div className="head flat"><h3>Your current inventory, read against the same collectors</h3></div>
-                <table>
-                  <thead><tr><th>Piece</th><th>Cost basis</th><th>Collectors in range</th><th>Closest collector</th><th>Status</th></tr></thead>
-                  <tbody>
-                    {res.holdings.map((h) => (
-                      <tr key={h.id}>
-                        <td className="text">{lotBy[h.id]?.name}</td>
-                        <td>{usd(lotBy[h.id]?.ask ?? 0)}</td>
-                        <td>{h.reach}</td>
-                        <td className="text" style={{ textAlign: "right" }}>{colBy[h.best[0]?.collector]?.name}, #{h.best[0]?.rank}</td>
-                        <td className={h.status === "live" ? "em" : h.status === "thin" ? "am" : "red"}>{h.status === "stale" ? "Stale: move it" : h.status === "thin" ? "Thin: one collector" : "In demand"}</td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-            )}
+            {res && <Inventory holdings={res.holdings} lotBy={lotBy} colBy={colBy} maxRank={settings.max_rank} />}
           </div>
         </div>
 
@@ -694,15 +678,56 @@ function LotDrawer({ lot, res, colBy, lotBy, body, total, passes, togglePass, ma
   );
 }
 
+const STOCK_VIEWS = [["all", "All"], ["live", "In range"], ["thin", "Thin"], ["stale", "Stale"]] as const;
+
+function Inventory({ holdings, lotBy, colBy, maxRank }: {
+  holdings: Holding[]; lotBy: Record<string, Piece>; colBy: Record<string, Collector>; maxRank: number;
+}) {
+  const [show, setShow] = useState<(typeof STOCK_VIEWS)[number][0]>("all");
+  const count = (s: string) => (s === "all" ? holdings.length : holdings.filter((h) => h.status === s).length);
+  const rows = holdings.filter((h) => show === "all" || h.status === show)
+    .sort((a, b) => b.reach - a.reach || (lotBy[b.id]?.ask ?? 0) - (lotBy[a.id]?.ask ?? 0));
+  const firstName = (id: string) => colBy[id]?.name.split(" ")[0];
+  return (
+    <div className="section-top table-scroll">
+      <div className="head flat">
+        <h3>Your inventory</h3>
+        <span className="aside">{holdings.length} pieces, {usd(holdings.reduce((s, h) => s + (lotBy[h.id]?.ask ?? 0), 0))} at simulated cost</span>
+        <span className="segctl push">
+          {STOCK_VIEWS.map(([k, label]) => (
+            <button key={k} className={show === k ? "on" : ""} aria-pressed={show === k} onClick={() => setShow(k)}>{label} {count(k)}</button>
+          ))}
+        </span>
+      </div>
+      <div className="stock-scroll">
+        <table>
+          <thead><tr><th>Piece</th><th>Cost basis</th><th title={`Collectors who rank this within #${maxRank} of your stock`}>In range</th><th>Closest collector</th><th>Viewed by</th><th>Status</th></tr></thead>
+          <tbody>
+            {rows.map((h) => (
+              <tr key={h.id}>
+                <td className="text"><span className="stock-piece"><img src={lotBy[h.id]?.image} alt="" loading="lazy" />{lotBy[h.id]?.name}</span></td>
+                <td>{usd(lotBy[h.id]?.ask ?? 0)}</td>
+                <td>{h.reach}</td>
+                <td className="text" style={{ textAlign: "right" }}>{colBy[h.best[0]?.collector]?.name}, #{h.best[0]?.rank}</td>
+                <td className="text" style={{ textAlign: "right" }} title={h.viewed_by.map((c) => colBy[c]?.name).join(", ")}>
+                  {h.viewed_by.length === 0 ? <span className="muted">–</span> : <>{h.viewed_by.slice(0, 2).map(firstName).join(", ")}{h.viewed_by.length > 2 && <span className="muted"> +{h.viewed_by.length - 2}</span>}</>}
+                </td>
+                <td className={h.status === "live" ? "em" : h.status === "thin" ? "am" : "red"}>{h.status === "stale" ? "Stale" : h.status === "thin" ? "Thin: one collector" : "In range"}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+      <div className="pad note">Everything viewed but never bought is still yours. Ranked only against your own stock. A piece ranks higher for someone who has viewed it, so "Viewed by" is a lead, not independent demand. Inventory does not change the proposed buys. Pieces, costs and views are invented.</div>
+    </div>
+  );
+}
+
 function CollectorDrawer({ c, res, lotBy, signals, tolerance, onClose, addSearch }: {
   c: Collector; res: Result; lotBy: Record<string, Piece>; signals: Signal[]; tolerance: number; onClose: () => void; addSearch: (q: string) => void;
 }) {
   const [q, setQ] = useState("");
-  const [wider, setWider] = useState<{ id: string; name: string; image: string; form: string }[] | null>(null);
-  useEffect(() => {
-    setWider(null);
-    fetch(`/api/collector/${c.id}/sourcing`).then((r) => r.json()).then((d) => setWider(d.pieces)).catch(() => setWider([]));
-  }, [c.id]);
+  const viewed = (id: string) => res.holdings.find((h) => h.id === id)?.viewed_by.includes(c.id);
   const drift = res.drift[c.id];
   const label = (e: TimelineEvent) => (e.type === "search" ? "Asked" : e.type === "order" ? "Bought" : "Viewed");
   const submit = (text: string) => {
@@ -759,12 +784,10 @@ function CollectorDrawer({ c, res, lotBy, signals, tolerance, onClose, addSearch
           ))}
         </div>
         <div className="dsec">
-          <h3>Source for them: next in the wider catalog</h3>
-          {wider === null && <div className="muted">Ranking…</div>}
-          {wider?.length === 0 && <div className="muted">Needs a live BehaviorGPT connection.</div>}
-          {wider?.map((w) => (
-            <div className="event" key={w.id} style={{ gridTemplateColumns: "30px minmax(0,1fr)" }}>
-              <img src={w.image} alt="" /><span>{w.name}</span>
+          <h3>From your inventory, by their ranking</h3>
+          {res.in_stock[c.id]?.map((id) => (
+            <div className="event" key={id} style={{ gridTemplateColumns: "30px minmax(0,1fr)" }}>
+              <img src={lotBy[id]?.image} alt="" /><span>{lotBy[id]?.name}{viewed(id) && <span className="am"> · viewed</span>}</span>
             </div>
           ))}
         </div>

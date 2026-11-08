@@ -179,6 +179,10 @@ h2, h3 { margin: 0; font-family: var(--serif); font-weight: 600; }
 .lower td:last-child, .lower th:last-child { padding-right: 14px; }
 .section-top { margin-top: 2px; }
 .col-radar .head.flat { position: static; }
+.stock-scroll { max-height: 440px; overflow-y: auto; }
+.stock-scroll th { position: sticky; top: 0; background: var(--surface); z-index: 1; }
+.stock-piece { display: inline-flex; align-items: center; gap: 8px; }
+.stock-piece img { width: 26px; height: 26px; object-fit: cover; }
 
 /* tables */
 table { width: 100%; border-collapse: collapse; font-stretch: 92%; }

@@ -186,6 +186,11 @@ def main() -> None:
             "lifetime_spend": sum(spent), "orders": len(spent),
         })
 
+    # Nobody bought these, so the dealer still has them. Roles change only after the histories are
+    # drawn, so histories don't depend on this split, and ids and catalog rows stay the same.
+    for p in available.values():
+        p["role"] = "holding"
+
     def row(p):
         return {
             "id": p["id"], "name": f"{p['name']}. {p['description']}".strip(" ."),

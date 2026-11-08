@@ -85,11 +85,3 @@ class Ranker:
         (full, s1), (orders, s2) = await asyncio.gather(self._rank(full_rows), self._rank(order_rows))
         return {"full": full, "orders": orders, "source": "live" if "live" in (s1, s2) else s1}
 
-    async def wider(self, rows: list[dict], exclude: set[str], limit: int = 12) -> list[str]:
-        """What they would look at next across the whole catalog, for sourcing."""
-        if self.client is None:
-            return []
-        res = await self.client.complete(to_events(rows), limit=min(100, limit + len(exclude)),
-                                         register_event=False)
-        return [i.id for i in res.items if i.id not in exclude][:limit]
-

@@ -38,6 +38,7 @@ Verified by running it (some of this differs from the README):
 - Fit comes from rank with an explicit decay; value = fit x dealer's margin estimate, minus a holding penalty for missing fit. All knobs stay visible in the UI.
 - Resilience mode and the buyer-walks stress test measure single-collector dependence.
 - Comparison strategies (trophy, paper margin, tag matching) are scored under the same rules as THE BOOK, and the UI labels that scoring as THE BOOK's assumptions.
+- Dealer inventory is every piece nobody bought: the 6 curated holdings plus unsold history pieces. `build_book.py` assigns those roles after drawing histories, so ids stay `his###` and catalog rows don't change. Inventory is ranked only against itself and doesn't affect the solver.
 - Demo moment: log a signal ("called about sapphires"), re-rank live, portfolio changes.
 - `rankings_snapshot.json` is the fallback if the API fails during the demo. The UI must show live vs snapshot.
 

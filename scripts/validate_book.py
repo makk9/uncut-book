@@ -35,7 +35,7 @@ CS = json.loads((BOOK / "collectors.json").read_text())
 PHASES = {p[0]: p[4] for p in PERSONAS}
 LOTS = [p for p in P.values() if p["role"] == "lot"]
 IDS = [p["id"] for p in LOTS]
-HIST = [p for p in P.values() if p["role"] == "history"]
+HIST = [p for p in P.values() if p["id"].startswith("his")]  # the pool histories are drawn from, sold or not
 client = UnboxAIClient(market="us", timezone="America/New_York")
 failures = 0
 
