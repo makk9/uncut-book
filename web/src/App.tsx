@@ -186,7 +186,7 @@ export default function App() {
 
         <div className="col">
           <div className="head">
-            <span className="up">Incoming batch · {book.lots.length} lots</span>
+            <span className="up">Deal Radar · {book.lots.length} incoming lots</span>
             <span className="muted" style={{ fontSize: 11 }}>
               {focus ? `Numbers show ${colBy[focus]?.name}'s ranking` : "Green outline: in the portfolio"}
             </span>
@@ -261,7 +261,7 @@ export default function App() {
 
         <div className="col">
           <div className="head">
-            <span className="up">Proposed acquisition</span>
+            <span className="up">Capital Desk · proposed buys</span>
             <button className="link" onClick={() => setShowSettings((s) => !s)}>{showSettings ? "Hide assumptions" : "Assumptions"}</button>
           </div>
           <div className="pad row" style={{ justifyContent: "space-between", borderBottom: "1px solid var(--line)" }}>

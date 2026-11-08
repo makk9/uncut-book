@@ -1,6 +1,6 @@
 # THE BOOK
 
-Acquisition terminal for independent estate-jewelry dealers. Sundai hack: the team is the user and Claude, and it ships today.
+Jewelry trading and acquisition terminal for independent estate-jewelry dealers. Sundai hack that ships today.
 
 Demo sentence: "This dealer has $80,000 to spend. THE BOOK helps them figure out which stones are worth chasing, and who might want them."
 
@@ -21,6 +21,8 @@ Reference: https://portal.unboxai.com/llms.txt and the docs it links. Use them; 
 
 Verified by running it (some of this differs from the README):
 - `retail_catalog` is unknown; the shared catalog is `retail_catalog_500k`.
+- The `price` column does not affect rankings: stripping it left them almost unchanged (tested on 129 pieces). The README and format doc disagree; the format doc is right.
+- Glamorous multi-gem lots rank well for nearly everyone, so raw rank piles the book onto them. `relative` in `server/app.py` corrects this using ranks only. Don't remove it without re-checking `scripts/validate_book.py`.
 - Rank a batch with `filters={"id": [...]}`. `$in` returns 422. `limit` max is 100.
 - Scores sit around 1.18-1.43 regardless of collector.
 - Recency dominates: the same events reversed share only 3 of the top 20.
@@ -88,5 +90,5 @@ The server loads `data/book/` at import, so restart it after a rebuild. Docker's
 - Working deployed URL (off localhost)
 - Public GitHub repo
 - sundai.club/projects post with 30s video
-- Attribution to the team and Sundai
+- Attribution to Sundai
 - Live user testing at launch
