@@ -558,6 +558,124 @@
   }
  },
  {
+  "id": "lot020",
+  "role": "lot",
+  "lot_no": 21,
+  "name": "Pink Tourmaline and Diamond Pendant Brooch, c. 1900",
+  "form": "Brooch",
+  "era": "Edwardian",
+  "style": "important",
+  "stones": [
+   "Tourmaline",
+   "Diamond"
+  ],
+  "metals": [
+   "Platinum",
+   "Gold"
+  ],
+  "description": "Belle Epoque scrolling diamond frame around a pink tourmaline with a matching drop",
+  "ask": 21000,
+  "resale": 30500,
+  "image": "/img/lot020.jpg",
+  "image_url": "https://raw.githubusercontent.com/makk9/uncut-book/main/data/photos/m11.jpg",
+  "credit": {
+   "title": "Pendant Brooch (c. 1890–1910)",
+   "author": "Cleveland Museum of Art",
+   "license": "CC0",
+   "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
+   "source": "Cleveland Museum of Art Open Access",
+   "landing_url": "https://clevelandart.org/art/2009.359"
+  }
+ },
+ {
+  "id": "lot021",
+  "role": "lot",
+  "lot_no": 22,
+  "name": "Pearl and Diamond Spray Brooch, c. 1900",
+  "form": "Brooch",
+  "era": "Edwardian",
+  "style": "estate",
+  "stones": [
+   "Pearl",
+   "Diamond"
+  ],
+  "metals": [
+   "Platinum",
+   "Gold"
+  ],
+  "description": "Gold flower within a diamond crescent, hung with sprays of natural pearls",
+  "ask": 8800,
+  "resale": 13200,
+  "image": "/img/lot021.jpg",
+  "image_url": "https://raw.githubusercontent.com/makk9/uncut-book/main/data/photos/m5.jpg",
+  "credit": {
+   "title": "Brooch (c. 1890–1910)",
+   "author": "Cleveland Museum of Art",
+   "license": "CC0",
+   "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
+   "source": "Cleveland Museum of Art Open Access",
+   "landing_url": "https://clevelandart.org/art/2009.361"
+  }
+ },
+ {
+  "id": "lot022",
+  "role": "lot",
+  "lot_no": 23,
+  "name": "Plique-a-Jour Dragonfly Brooch, c. 1905",
+  "form": "Brooch",
+  "era": "Edwardian",
+  "style": "unusual",
+  "stones": [
+   "Enamel"
+  ],
+  "metals": [
+   "Gold"
+  ],
+  "description": "Art Nouveau dragonfly with translucent plique-a-jour and cloisonne enamel wings",
+  "ask": 6400,
+  "resale": 11000,
+  "image": "/img/lot022.jpg",
+  "image_url": "https://raw.githubusercontent.com/makk9/uncut-book/main/data/photos/m38.jpg",
+  "credit": {
+   "title": "Dragon Fly Brooch (c. 1900–1910)",
+   "author": "Cleveland Museum of Art",
+   "license": "CC0",
+   "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
+   "source": "Cleveland Museum of Art Open Access",
+   "landing_url": "https://clevelandart.org/art/1964.448"
+  }
+ },
+ {
+  "id": "lot023",
+  "role": "lot",
+  "lot_no": 24,
+  "name": "Diamond and Pearl Lavalier Necklace, c. 1910",
+  "form": "Necklace",
+  "era": "Edwardian",
+  "style": "estate",
+  "stones": [
+   "Diamond",
+   "Pearl"
+  ],
+  "metals": [
+   "Platinum",
+   "Gold"
+  ],
+  "description": "Fine diamond-set links with a long kite-shaped pendant",
+  "ask": 16000,
+  "resale": 23000,
+  "image": "/img/lot023.jpg",
+  "image_url": "https://raw.githubusercontent.com/makk9/uncut-book/main/data/photos/m4.jpg",
+  "credit": {
+   "title": "Necklace (c. 1900–20)",
+   "author": "Cleveland Museum of Art",
+   "license": "CC0",
+   "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
+   "source": "Cleveland Museum of Art Open Access",
+   "landing_url": "https://clevelandart.org/art/2009.362"
+  }
+ },
+ {
   "id": "inv000",
   "role": "holding",
   "lot_no": null,
@@ -728,7 +846,7 @@
   "id": "his000",
   "role": "history",
   "lot_no": null,
-  "name": "1.5 ct Round Solitaire",
+  "name": "Trio of Pave Diamond Rings",
   "form": "Ring",
   "era": "Contemporary",
   "style": "bridal",
@@ -736,222 +854,169 @@
    "Diamond"
   ],
   "metals": [
-   "Platinum"
+   "Gold"
   ],
-  "description": "Round brilliant on a slim platinum band",
-  "ask": 11000,
-  "resale": 14300.0,
-  "image": "/img/his000.svg",
-  "image_url": null,
-  "credit": null
+  "description": "Three yellow gold rings with pave diamond faces",
+  "ask": 9800,
+  "resale": 12700.0,
+  "image": "/img/his000.jpg",
+  "image_url": "https://raw.githubusercontent.com/makk9/uncut-book/main/data/photos/p080.jpg",
+  "credit": {
+   "title": "3 diamond rings",
+   "author": "Mauro Cateb",
+   "license": "CC BY-SA 3.0",
+   "license_url": "https://creativecommons.org/licenses/by-sa/3.0",
+   "source": "Wikimedia Commons",
+   "landing_url": "https://commons.wikimedia.org/wiki/File:3_diamond_rings.JPG"
+  }
  },
  {
   "id": "his001",
   "role": "history",
   "lot_no": null,
-  "name": "Cushion Diamond Halo Ring",
+  "name": "Cushion Sapphire and Diamond Engagement Ring",
   "form": "Ring",
   "era": "Contemporary",
   "style": "bridal",
   "stones": [
+   "Sapphire",
    "Diamond"
   ],
   "metals": [
    "Platinum"
   ],
-  "description": "Cushion center in a micro-pave halo",
-  "ask": 8500,
-  "resale": 11000.0,
-  "image": "/img/his001.svg",
-  "image_url": null,
-  "credit": null
+  "description": "Deep blue cushion sapphire with trillion diamond shoulders",
+  "ask": 11200,
+  "resale": 14600.0,
+  "image": "/img/his001.jpg",
+  "image_url": "https://raw.githubusercontent.com/makk9/uncut-book/main/data/photos/p098.jpg",
+  "credit": {
+   "title": "Bespoke-custom-made-cushion-sapphire-diamond-engagement-ring-platinum-Sydney-jeweller-Lizunova-Fine-Jewels-NSW-Australia",
+   "author": "Mliz2000",
+   "license": "CC BY 4.0",
+   "license_url": "https://creativecommons.org/licenses/by/4.0",
+   "source": "Wikimedia Commons",
+   "landing_url": "https://commons.wikimedia.org/wiki/File:Bespoke-custom-made-cushion-sapphire-diamond-engagement-ring-platinum-Sydney-jeweller-Lizunova-Fine-Jewels-NSW-Australia.jpg"
+  }
  },
  {
   "id": "his002",
   "role": "history",
   "lot_no": null,
-  "name": "2 ct Oval Diamond Ring",
+  "name": "Parti Sapphire Three-Stone Engagement Ring",
   "form": "Ring",
   "era": "Contemporary",
   "style": "bridal",
   "stones": [
+   "Sapphire",
    "Diamond"
   ],
   "metals": [
    "Gold"
   ],
-  "description": "Oval diamond on an 18k gold band",
-  "ask": 15000,
-  "resale": 19500.0,
-  "image": "/img/his002.svg",
-  "image_url": null,
-  "credit": null
+  "description": "Oval Australian sapphire between small diamonds on a gold band",
+  "ask": 7400,
+  "resale": 9600.0,
+  "image": "/img/his002.jpg",
+  "image_url": "https://raw.githubusercontent.com/makk9/uncut-book/main/data/photos/p099.jpg",
+  "credit": {
+   "title": "Bespoke-custom-made-Australian-sapphire-diamond-engagement-ring-Sydney-jeweller-Lizunova-Fine-Jewels",
+   "author": "Mliz2000",
+   "license": "CC BY 4.0",
+   "license_url": "https://creativecommons.org/licenses/by/4.0",
+   "source": "Wikimedia Commons",
+   "landing_url": "https://commons.wikimedia.org/wiki/File:Bespoke-custom-made-Australian-sapphire-diamond-engagement-ring-Sydney-jeweller-Lizunova-Fine-Jewels.jpg"
+  }
  },
  {
   "id": "his003",
   "role": "history",
   "lot_no": null,
-  "name": "Three-Stone Diamond Ring",
+  "name": "Teal Sapphire Engagement Ring",
   "form": "Ring",
   "era": "Contemporary",
   "style": "bridal",
   "stones": [
+   "Sapphire",
    "Diamond"
   ],
   "metals": [
-   "Platinum"
+   "Gold"
   ],
-  "description": "Round center with pear side stones",
-  "ask": 7200,
-  "resale": 9400.0,
-  "image": "/img/his003.svg",
-  "image_url": null,
-  "credit": null
+  "description": "Teal sapphire with kite-set diamonds on a slim gold band",
+  "ask": 6200,
+  "resale": 8100.0,
+  "image": "/img/his003.jpg",
+  "image_url": "https://raw.githubusercontent.com/makk9/uncut-book/main/data/photos/p103.jpg",
+  "credit": {
+   "title": "Bespoke-custom-made-Vera-teal-sapphire-kite-diamond-engagement-ring-Sydney-jeweller-Lizunova-Fine-Jewels-NSW-Australia",
+   "author": "Mliz2000",
+   "license": "CC BY 4.0",
+   "license_url": "https://creativecommons.org/licenses/by/4.0",
+   "source": "Wikimedia Commons",
+   "landing_url": "https://commons.wikimedia.org/wiki/File:Bespoke-custom-made-Vera-teal-sapphire-kite-diamond-engagement-ring-Sydney-jeweller-Lizunova-Fine-Jewels-NSW-Australia.jpg"
+  }
  },
  {
   "id": "his004",
   "role": "history",
   "lot_no": null,
-  "name": "14k Franco Chain",
-  "form": "Chain",
+  "name": "Pair of Green Sapphire Engagement Rings",
+  "form": "Ring",
   "era": "Contemporary",
-  "style": "street",
-  "stones": [],
+  "style": "bridal",
+  "stones": [
+   "Sapphire",
+   "Diamond"
+  ],
   "metals": [
    "Gold"
   ],
-  "description": "Solid yellow gold Franco link",
-  "ask": 6200,
-  "resale": 8100.0,
-  "image": "/img/his004.svg",
-  "image_url": null,
-  "credit": null
+  "description": "Two bespoke green-blue sapphire rings",
+  "ask": 8600,
+  "resale": 11200.0,
+  "image": "/img/his004.jpg",
+  "image_url": "https://raw.githubusercontent.com/makk9/uncut-book/main/data/photos/p102.jpg",
+  "credit": {
+   "title": "Bespoke-sapphire-engagement-rings-Sydney-jeweller-Lizunova-Fine-Jewels-NSW-Australia",
+   "author": "Mliz2000",
+   "license": "CC BY 4.0",
+   "license_url": "https://creativecommons.org/licenses/by/4.0",
+   "source": "Wikimedia Commons",
+   "landing_url": "https://commons.wikimedia.org/wiki/File:Bespoke-sapphire-engagement-rings-Sydney-jeweller-Lizunova-Fine-Jewels-NSW-Australia.jpg"
+  }
  },
  {
   "id": "his005",
   "role": "history",
   "lot_no": null,
-  "name": "18k Rope Chain",
-  "form": "Chain",
+  "name": "White Gold Wedding Bands",
+  "form": "Ring",
   "era": "Contemporary",
-  "style": "street",
+  "style": "bridal",
   "stones": [],
   "metals": [
    "Gold"
   ],
-  "description": "Heavy solid rope chain",
-  "ask": 7400,
-  "resale": 9600.0,
-  "image": "/img/his005.svg",
-  "image_url": null,
-  "credit": null
+  "description": "Matched white gold bands with a brushed finish",
+  "ask": 1900,
+  "resale": 2500.0,
+  "image": "/img/his005.jpg",
+  "image_url": "https://raw.githubusercontent.com/makk9/uncut-book/main/data/photos/p228.jpg",
+  "credit": {
+   "title": "3 unieke strakke witgouden trouwringen met elkaars vingerafdruk",
+   "author": "Jvdbragt15",
+   "license": "cc0",
+   "license_url": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+   "source": "Wikimedia Commons",
+   "landing_url": "https://commons.wikimedia.org/wiki/File:3_unieke_strakke_witgouden_trouwringen_met_elkaars_vingerafdruk.jpg"
+  }
  },
  {
   "id": "his006",
   "role": "history",
   "lot_no": null,
-  "name": "Gold Curb Link Chain",
-  "form": "Chain",
-  "era": "Contemporary",
-  "style": "street",
-  "stones": [],
-  "metals": [
-   "Gold"
-  ],
-  "description": "Wide flat curb chain, 14k",
-  "ask": 9000,
-  "resale": 11700.0,
-  "image": "/img/his006.svg",
-  "image_url": null,
-  "credit": null
- },
- {
-  "id": "his007",
-  "role": "history",
-  "lot_no": null,
-  "name": "Gold Medallion Pendant",
-  "form": "Pendant",
-  "era": "Contemporary",
-  "style": "street",
-  "stones": [],
-  "metals": [
-   "Gold"
-  ],
-  "description": "Large round medallion in 14k gold",
-  "ask": 2600,
-  "resale": 3400.0,
-  "image": "/img/his007.svg",
-  "image_url": null,
-  "credit": null
- },
- {
-  "id": "his008",
-  "role": "history",
-  "lot_no": null,
-  "name": "5 ct Diamond Line Bracelet",
-  "form": "Bracelet",
-  "era": "Contemporary",
-  "style": "line",
-  "stones": [
-   "Diamond"
-  ],
-  "metals": [
-   "Gold"
-  ],
-  "description": "Four-prong white gold tennis bracelet",
-  "ask": 6800,
-  "resale": 8800.0,
-  "image": "/img/his008.svg",
-  "image_url": null,
-  "credit": null
- },
- {
-  "id": "his009",
-  "role": "history",
-  "lot_no": null,
-  "name": "12 ct Diamond Line Necklace",
-  "form": "Necklace",
-  "era": "Contemporary",
-  "style": "line",
-  "stones": [
-   "Diamond"
-  ],
-  "metals": [
-   "Gold"
-  ],
-  "description": "Tennis necklace in 18k white gold",
-  "ask": 16000,
-  "resale": 20800.0,
-  "image": "/img/his009.svg",
-  "image_url": null,
-  "credit": null
- },
- {
-  "id": "his010",
-  "role": "history",
-  "lot_no": null,
-  "name": "Bezel Diamond Station Necklace",
-  "form": "Necklace",
-  "era": "Contemporary",
-  "style": "line",
-  "stones": [
-   "Diamond"
-  ],
-  "metals": [
-   "Gold"
-  ],
-  "description": "Bezel-set diamonds spaced on a fine chain",
-  "ask": 4200,
-  "resale": 5500.0,
-  "image": "/img/his010.svg",
-  "image_url": null,
-  "credit": null
- },
- {
-  "id": "his011",
-  "role": "history",
-  "lot_no": null,
-  "name": "Emerald Halo Ring",
+  "name": "Emerald and Diamond Ring",
   "form": "Ring",
   "era": "Contemporary",
   "style": "statement",
@@ -962,230 +1027,440 @@
   "metals": [
    "Gold"
   ],
-  "description": "Colombian emerald with a diamond halo",
+  "description": "Square emerald with diamond clusters on a yellow gold band",
   "ask": 8200,
   "resale": 10700.0,
-  "image": "/img/his011.svg",
-  "image_url": null,
-  "credit": null
+  "image": "/img/his006.jpg",
+  "image_url": "https://raw.githubusercontent.com/makk9/uncut-book/main/data/photos/p084.jpg",
+  "credit": {
+   "title": "Emerald and diamond ring",
+   "author": "gemteck1 from Seattle, Washington, USA",
+   "license": "CC BY 2.0",
+   "license_url": "https://creativecommons.org/licenses/by/2.0",
+   "source": "Wikimedia Commons",
+   "landing_url": "https://commons.wikimedia.org/wiki/File:Emerald_and_diamond_ring.jpg"
+  }
  },
  {
-  "id": "his012",
+  "id": "his007",
   "role": "history",
   "lot_no": null,
-  "name": "Emerald Drop Pendant",
-  "form": "Pendant",
+  "name": "Wide Emerald Mosaic Band",
+  "form": "Ring",
+  "era": "Contemporary",
+  "style": "statement",
+  "stones": [
+   "Emerald"
+  ],
+  "metals": [
+   "Gold"
+  ],
+  "description": "Broad gold band with a lattice of small emeralds",
+  "ask": 5400,
+  "resale": 7000.0,
+  "image": "/img/his007.jpg",
+  "image_url": "https://raw.githubusercontent.com/makk9/uncut-book/main/data/photos/p085.jpg",
+  "credit": {
+   "title": "Emerald ring photo by -Merce-",
+   "author": "-Merce- from Madrid, España",
+   "license": "CC BY-SA 2.0",
+   "license_url": "https://creativecommons.org/licenses/by-sa/2.0",
+   "source": "Wikimedia Commons",
+   "landing_url": "https://commons.wikimedia.org/wiki/File:Emerald_ring_photo_by_-Merce-.jpg"
+  }
+ },
+ {
+  "id": "his008",
+  "role": "history",
+  "lot_no": null,
+  "name": "Oval Emerald Cabochon Ring",
+  "form": "Ring",
   "era": "Contemporary",
   "style": "classic",
   "stones": [
    "Emerald"
   ],
+  "metals": [],
+  "description": "Smooth oval emerald cabochon in a plain bezel",
+  "ask": 3600,
+  "resale": 4700.0,
+  "image": "/img/his008.jpg",
+  "image_url": "https://raw.githubusercontent.com/makk9/uncut-book/main/data/photos/p082.jpg",
+  "credit": {
+   "title": "Closeup of an emerald ring in a finger",
+   "author": "Billjones94",
+   "license": "CC BY-SA 4.0",
+   "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+   "source": "Wikimedia Commons",
+   "landing_url": "https://commons.wikimedia.org/wiki/File:Closeup_of_an_emerald_ring_in_a_finger.jpg"
+  }
+ },
+ {
+  "id": "his009",
+  "role": "history",
+  "lot_no": null,
+  "name": "Gold Heart Brooch with Emeralds",
+  "form": "Brooch",
+  "era": "Antique",
+  "style": "important",
+  "stones": [
+   "Emerald"
+  ],
   "metals": [
    "Gold"
   ],
-  "description": "Pear emerald on a gold bail",
-  "ask": 5400,
-  "resale": 7000.0,
-  "image": "/img/his012.svg",
-  "image_url": null,
-  "credit": null
+  "description": "Domed gold heart pierced by a sword, set with emeralds",
+  "ask": 4400,
+  "resale": 5700.0,
+  "image": "/img/his009.jpg",
+  "image_url": "https://raw.githubusercontent.com/makk9/uncut-book/main/data/photos/p058.jpg",
+  "credit": {
+   "title": "Broche del Corazón de María",
+   "author": "Anfecaro",
+   "license": "cc0",
+   "license_url": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+   "source": "Wikimedia Commons",
+   "landing_url": "https://commons.wikimedia.org/wiki/File:Broche_del_Coraz%C3%B3n_de_Mar%C3%ADa.jpg"
+  }
+ },
+ {
+  "id": "his010",
+  "role": "history",
+  "lot_no": null,
+  "name": "Enameled Gold Pendant with Emerald, Late 1500s",
+  "form": "Pendant",
+  "era": "Renaissance",
+  "style": "important",
+  "stones": [
+   "Emerald",
+   "Pearl"
+  ],
+  "metals": [
+   "Gold"
+  ],
+  "description": "Architectural enameled gold pendant with an emerald and hanging pearls",
+  "ask": 12000,
+  "resale": 15600.0,
+  "image": "/img/his010.jpg",
+  "image_url": "https://raw.githubusercontent.com/makk9/uncut-book/main/data/photos/m8.jpg",
+  "credit": {
+   "title": "Pendant with Virgin and Child with Saints and Saint John the Evangelist (late 1500s)",
+   "author": "Cleveland Museum of Art",
+   "license": "CC0",
+   "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
+   "source": "Cleveland Museum of Art Open Access",
+   "landing_url": "https://clevelandart.org/art/1959.337"
+  }
+ },
+ {
+  "id": "his011",
+  "role": "history",
+  "lot_no": null,
+  "name": "Antique Emerald Ring in Silver",
+  "form": "Ring",
+  "era": "Georgian",
+  "style": "estate",
+  "stones": [
+   "Emerald"
+  ],
+  "metals": [
+   "Silver"
+  ],
+  "description": "Worn silver hoop with a square emerald, 1700s",
+  "ask": 1900,
+  "resale": 2500.0,
+  "image": "/img/his011.jpg",
+  "image_url": "https://raw.githubusercontent.com/makk9/uncut-book/main/data/photos/m27.jpg",
+  "credit": {
+   "title": "Ring (1700s)",
+   "author": "Cleveland Museum of Art",
+   "license": "CC0",
+   "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
+   "source": "Cleveland Museum of Art Open Access",
+   "landing_url": "https://clevelandart.org/art/1916.148"
+  }
+ },
+ {
+  "id": "his012",
+  "role": "history",
+  "lot_no": null,
+  "name": "Gold Sapphire Stacking Rings",
+  "form": "Ring",
+  "era": "Contemporary",
+  "style": "classic",
+  "stones": [
+   "Sapphire"
+  ],
+  "metals": [
+   "Gold"
+  ],
+  "description": "Three slim gold rings with pale sapphires",
+  "ask": 3200,
+  "resale": 4200.0,
+  "image": "/img/his012.jpg",
+  "image_url": "https://raw.githubusercontent.com/makk9/uncut-book/main/data/photos/p181.jpg",
+  "credit": {
+   "title": "Bagues saphirs Yves Gratas",
+   "author": "Camillebrds",
+   "license": "CC BY-SA 4.0",
+   "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+   "source": "Wikimedia Commons",
+   "landing_url": "https://commons.wikimedia.org/wiki/File:Bagues_saphirs_Yves_Gratas.jpg"
+  }
  },
  {
   "id": "his013",
   "role": "history",
   "lot_no": null,
-  "name": "Zambian Emerald Cushion Ring",
+  "name": "Antique Sapphire Episcopal Ring",
   "form": "Ring",
-  "era": "Contemporary",
-  "style": "statement",
+  "era": "Antique",
+  "style": "important",
   "stones": [
-   "Emerald"
+   "Sapphire"
   ],
   "metals": [
-   "Platinum"
+   "Gold"
   ],
-  "description": "Deep bluish-green Zambian emerald",
-  "ask": 11800,
-  "resale": 15300.0,
-  "image": "/img/his013.svg",
-  "image_url": null,
-  "credit": null
+  "description": "Large blue sapphire in an engraved gold ring",
+  "ask": 6400,
+  "resale": 8300.0,
+  "image": "/img/his013.jpg",
+  "image_url": "https://raw.githubusercontent.com/makk9/uncut-book/main/data/photos/p182.jpg",
+  "credit": {
+   "title": "Anneau Cardinalice aux armes de Léon XII",
+   "author": "Heleashard",
+   "license": "CC BY-SA 4.0",
+   "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+   "source": "Wikimedia Commons",
+   "landing_url": "https://commons.wikimedia.org/wiki/File:Anneau_Cardinalice_aux_armes_de_L%C3%A9on_XII.jpg"
+  }
  },
  {
   "id": "his014",
   "role": "history",
   "lot_no": null,
-  "name": "Cornflower Sapphire Halo Ring",
+  "name": "Star Sapphire Men's Ring",
   "form": "Ring",
   "era": "Contemporary",
-  "style": "statement",
+  "style": "mens",
   "stones": [
-   "Sapphire",
-   "Diamond"
+   "Sapphire"
   ],
   "metals": [
-   "Platinum"
+   "Gold"
   ],
-  "description": "Oval blue sapphire with a diamond halo",
-  "ask": 9600,
-  "resale": 12500.0,
-  "image": "/img/his014.svg",
-  "image_url": null,
-  "credit": null
+  "description": "Very large round star sapphire cabochon, worn",
+  "ask": 9800,
+  "resale": 12700.0,
+  "image": "/img/his014.jpg",
+  "image_url": "https://raw.githubusercontent.com/makk9/uncut-book/main/data/photos/p183.jpg",
+  "credit": {
+   "title": "68 Komma Sechs - Karat Sternsafir im Rundmogulschliff - Herrenringfassung - 750 Gelbgold - Russische Goldschmiedemeister - Handarbeit um 1990",
+   "author": "Lupus in Saxonia",
+   "license": "CC BY-SA 4.0",
+   "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+   "source": "Wikimedia Commons",
+   "landing_url": "https://commons.wikimedia.org/wiki/File:68_Komma_Sechs_-_Karat_Sternsafir_im_Rundmogulschliff_-_Herrenringfassung_-_750_Gelbgold_-_Russische_Goldschmiedemeister_-_Handarbeit_um_1990.jpg"
+  }
  },
  {
   "id": "his015",
   "role": "history",
   "lot_no": null,
-  "name": "Sapphire and Diamond Line Bracelet",
-  "form": "Bracelet",
-  "era": "Contemporary",
-  "style": "line",
+  "name": "Art Deco Diamond Pendant Watch",
+  "form": "Pendant",
+  "era": "Art Deco",
+  "style": "estate",
   "stones": [
-   "Sapphire",
    "Diamond"
   ],
   "metals": [
-   "Gold"
+   "Platinum"
   ],
-  "description": "Alternating blue sapphires and diamonds",
-  "ask": 7800,
-  "resale": 10100.0,
-  "image": "/img/his015.svg",
-  "image_url": null,
-  "credit": null
+  "description": "Long geometric diamond pendant with a concealed watch",
+  "ask": 14500,
+  "resale": 18800.0,
+  "image": "/img/his015.jpg",
+  "image_url": "https://raw.githubusercontent.com/makk9/uncut-book/main/data/photos/p019.jpg",
+  "credit": {
+   "title": "Pendant watch - Van Cleef and Arpels (38772069405)",
+   "author": "Tim Evanson from Cleveland Heights, Ohio, USA",
+   "license": "CC BY-SA 2.0",
+   "license_url": "https://creativecommons.org/licenses/by-sa/2.0",
+   "source": "Wikimedia Commons",
+   "landing_url": "https://commons.wikimedia.org/wiki/File:Pendant_watch_-_Van_Cleef_and_Arpels_(38772069405).jpg"
+  }
  },
  {
   "id": "his016",
   "role": "history",
   "lot_no": null,
-  "name": "3 ct Ceylon Sapphire, Loose",
-  "form": "Loose stone",
-  "era": "Contemporary",
-  "style": "investment",
+  "name": "Art Deco Enamel and Stone Buckle, 1925",
+  "form": "Brooch",
+  "era": "Art Deco",
+  "style": "estate",
   "stones": [
-   "Sapphire"
+   "Enamel"
   ],
   "metals": [],
-  "description": "Unset oval Ceylon blue sapphire",
-  "ask": 6400,
-  "resale": 8300.0,
-  "image": "/img/his016.svg",
-  "image_url": null,
-  "credit": null
+  "description": "Symmetrical scrolling buckle in lapis, coral and green enamel tones",
+  "ask": 3200,
+  "resale": 4200.0,
+  "image": "/img/his016.jpg",
+  "image_url": "https://raw.githubusercontent.com/makk9/uncut-book/main/data/photos/p016.jpg",
+  "credit": {
+   "title": "Art Deco buckle (1925)",
+   "author": "SiefkinDR",
+   "license": "CC BY-SA 4.0",
+   "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+   "source": "Wikimedia Commons",
+   "landing_url": "https://commons.wikimedia.org/wiki/File:Art_Deco_buckle_(1925).jpg"
+  }
  },
  {
   "id": "his017",
   "role": "history",
   "lot_no": null,
-  "name": "Art Deco Sapphire Bar Brooch",
-  "form": "Brooch",
+  "name": "Molded Glass Parakeets Necklace",
+  "form": "Necklace",
   "era": "Art Deco",
-  "style": "estate",
+  "style": "unusual",
   "stones": [
-   "Sapphire",
-   "Diamond"
+   "Glass"
   ],
-  "metals": [
-   "Platinum"
-  ],
-  "description": "Calibre sapphires and diamonds, about 1928",
-  "ask": 4800,
-  "resale": 6200.0,
-  "image": "/img/his017.svg",
-  "image_url": null,
-  "credit": null
+  "metals": [],
+  "description": "Frosted glass plaques on a cord, cast with parakeets",
+  "ask": 2400,
+  "resale": 3100.0,
+  "image": "/img/his017.jpg",
+  "image_url": "https://raw.githubusercontent.com/makk9/uncut-book/main/data/photos/p021.jpg",
+  "credit": {
+   "title": "\"Perruches\" (Parakeets) Necklace MET DP273133",
+   "author": "René Lalique",
+   "license": "cc0",
+   "license_url": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+   "source": "Wikimedia Commons",
+   "landing_url": "https://commons.wikimedia.org/wiki/File:%22Perruches%22_(Parakeets)_Necklace_MET_DP273133.jpg"
+  }
  },
  {
   "id": "his018",
   "role": "history",
   "lot_no": null,
-  "name": "Art Deco Diamond Line Bracelet",
-  "form": "Bracelet",
+  "name": "Art Deco Glass Pendants on Silk",
+  "form": "Pendant",
   "era": "Art Deco",
   "style": "estate",
   "stones": [
-   "Diamond"
+   "Glass"
   ],
-  "metals": [
-   "Platinum"
-  ],
-  "description": "Geometric platinum links, about 1930",
-  "ask": 15500,
-  "resale": 20200.0,
-  "image": "/img/his018.svg",
-  "image_url": null,
-  "credit": null
+  "metals": [],
+  "description": "Colored molded glass pendants on tasseled silk cords",
+  "ask": 1800,
+  "resale": 2300.0,
+  "image": "/img/his018.jpg",
+  "image_url": "https://raw.githubusercontent.com/makk9/uncut-book/main/data/photos/p017.jpg",
+  "credit": {
+   "title": "Art Deco glass pendants Rene Lalique",
+   "author": "SiefkinDR",
+   "license": "CC BY-SA 4.0",
+   "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+   "source": "Wikimedia Commons",
+   "landing_url": "https://commons.wikimedia.org/wiki/File:Art_Deco_glass_pendants_Rene_Lalique.jpg"
+  }
  },
  {
   "id": "his019",
   "role": "history",
   "lot_no": null,
-  "name": "Art Deco Dinner Ring",
-  "form": "Ring",
+  "name": "Molded Glass and Red Enamel Belt Buckle",
+  "form": "Brooch",
   "era": "Art Deco",
-  "style": "estate",
+  "style": "unusual",
   "stones": [
-   "Diamond"
+   "Glass",
+   "Enamel"
   ],
-  "metals": [
-   "Platinum"
-  ],
-  "description": "Pierced platinum plaque ring",
-  "ask": 7600,
-  "resale": 9900.0,
-  "image": "/img/his019.svg",
-  "image_url": null,
-  "credit": null
+  "metals": [],
+  "description": "Pale molded glass panel above a red and black enamel section",
+  "ask": 1600,
+  "resale": 2100.0,
+  "image": "/img/his019.jpg",
+  "image_url": "https://raw.githubusercontent.com/makk9/uncut-book/main/data/photos/p022.jpg",
+  "credit": {
+   "title": "Belt buckle MET 1983.113.7",
+   "author": "René Lalique",
+   "license": "cc0",
+   "license_url": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+   "source": "Wikimedia Commons",
+   "landing_url": "https://commons.wikimedia.org/wiki/File:Belt_buckle_MET_1983.113.7.jpg"
+  }
  },
  {
   "id": "his020",
   "role": "history",
   "lot_no": null,
-  "name": "Victorian Seed Pearl Locket",
-  "form": "Pendant",
+  "name": "Enameled Gold Link Bracelet, 1850-70",
+  "form": "Bracelet",
   "era": "Victorian",
   "style": "estate",
   "stones": [
-   "Pearl"
+   "Emerald"
   ],
   "metals": [
    "Gold"
   ],
-  "description": "Engraved gold locket with seed pearls",
-  "ask": 1200,
-  "resale": 1600.0,
-  "image": "/img/his020.svg",
-  "image_url": null,
-  "credit": null
+  "description": "Gold links with a central green stone",
+  "ask": 3400,
+  "resale": 4400.0,
+  "image": "/img/his020.jpg",
+  "image_url": "https://raw.githubusercontent.com/makk9/uncut-book/main/data/photos/p053.jpg",
+  "credit": {
+   "title": "Bracelet (Possibly German), 1850–70 (CH 18801005)",
+   "author": "Unknown artistUnknown artist",
+   "license": "public domain",
+   "license_url": "",
+   "source": "Wikimedia Commons",
+   "landing_url": "https://commons.wikimedia.org/wiki/File:Bracelet_(Possibly_German),_1850%E2%80%9370_(CH_18801005).jpg"
+  }
  },
  {
   "id": "his021",
   "role": "history",
   "lot_no": null,
-  "name": "Hardstone Cameo Pendant",
-  "form": "Pendant",
+  "name": "Blue and White Enamel Bracelet with Pearls",
+  "form": "Bracelet",
   "era": "Victorian",
   "style": "estate",
   "stones": [
-   "Cameo"
+   "Pearl",
+   "Diamond",
+   "Enamel"
   ],
   "metals": [
    "Gold"
   ],
-  "description": "Carved hardstone cameo in gold",
-  "ask": 900,
-  "resale": 1200.0,
-  "image": "/img/his021.svg",
-  "image_url": null,
-  "credit": null
+  "description": "Dark blue enamel panels with pearl and diamond flowers",
+  "ask": 5200,
+  "resale": 6800.0,
+  "image": "/img/his021.jpg",
+  "image_url": "https://raw.githubusercontent.com/makk9/uncut-book/main/data/photos/p052.jpg",
+  "credit": {
+   "title": "Blue and white bracelet with pearls and diamonds",
+   "author": "Unknown",
+   "license": "public domain",
+   "license_url": "",
+   "source": "Wikimedia Commons",
+   "landing_url": "https://commons.wikimedia.org/wiki/File:Blue_and_white_bracelet_with_pearls_and_diamonds.jpg"
+  }
  },
  {
   "id": "his022",
   "role": "history",
   "lot_no": null,
-  "name": "Victorian Mourning Brooch",
-  "form": "Brooch",
+  "name": "Seed Pearl Parure, c. 1850",
+  "form": "Necklace",
   "era": "Victorian",
   "style": "estate",
   "stones": [
@@ -1194,61 +1469,815 @@
   "metals": [
    "Gold"
   ],
-  "description": "Black enamel and seed pearl brooch",
-  "ask": 1100,
-  "resale": 1400.0,
-  "image": "/img/his022.svg",
-  "image_url": null,
-  "credit": null
+  "description": "Necklace, pendant and earrings worked in seed pearls on mother-of-pearl",
+  "ask": 3800,
+  "resale": 4900.0,
+  "image": "/img/his022.jpg",
+  "image_url": "https://raw.githubusercontent.com/makk9/uncut-book/main/data/photos/m22.jpg",
+  "credit": {
+   "title": "Parure: Necklace, Pendant, Earrings (c. 1850)",
+   "author": "Cleveland Museum of Art",
+   "license": "CC0",
+   "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
+   "source": "Cleveland Museum of Art Open Access",
+   "landing_url": "https://clevelandart.org/art/2001.156"
+  }
  },
  {
   "id": "his023",
   "role": "history",
   "lot_no": null,
-  "name": "Edwardian Diamond Lavalier",
-  "form": "Necklace",
-  "era": "Edwardian",
+  "name": "Seed Pearl Drop Earrings, c. 1850",
+  "form": "Earrings",
+  "era": "Victorian",
   "style": "estate",
   "stones": [
-   "Diamond",
    "Pearl"
   ],
-  "metals": [
-   "Platinum"
-  ],
-  "description": "Platinum and pearl drop lavalier",
-  "ask": 3800,
-  "resale": 4900.0,
-  "image": "/img/his023.svg",
-  "image_url": null,
-  "credit": null
+  "metals": [],
+  "description": "Long drops of seed pearl balls on mother-of-pearl",
+  "ask": 1500,
+  "resale": 2000.0,
+  "image": "/img/his023.jpg",
+  "image_url": "https://raw.githubusercontent.com/makk9/uncut-book/main/data/photos/m21.jpg",
+  "credit": {
+   "title": "Pair of Earrings (Parure) (c. 1850)",
+   "author": "Cleveland Museum of Art",
+   "license": "CC0",
+   "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
+   "source": "Cleveland Museum of Art Open Access",
+   "landing_url": "https://clevelandart.org/art/2001.156.3"
+  }
  },
  {
   "id": "his024",
   "role": "history",
   "lot_no": null,
-  "name": "Edwardian Diamond Ring",
+  "name": "Seed Pearl Cluster Ring, Late 1800s",
   "form": "Ring",
-  "era": "Edwardian",
+  "era": "Victorian",
   "style": "estate",
   "stones": [
-   "Diamond"
+   "Pearl"
   ],
   "metals": [
-   "Platinum"
+   "Gold"
   ],
-  "description": "Old European cut in a milgrain mount",
-  "ask": 5200,
-  "resale": 6800.0,
-  "image": "/img/his024.svg",
-  "image_url": null,
-  "credit": null
+  "description": "Wide gold band crowded with seed pearls",
+  "ask": 1400,
+  "resale": 1800.0,
+  "image": "/img/his024.jpg",
+  "image_url": "https://raw.githubusercontent.com/makk9/uncut-book/main/data/photos/m14.jpg",
+  "credit": {
+   "title": "Ring (late 1800s)",
+   "author": "Cleveland Museum of Art",
+   "license": "CC0",
+   "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
+   "source": "Cleveland Museum of Art Open Access",
+   "landing_url": "https://clevelandart.org/art/1916.222"
+  }
  },
  {
   "id": "his025",
   "role": "history",
   "lot_no": null,
-  "name": "Akoya Pearl Strand",
+  "name": "Garnet and Enamel Ring, c. 1860",
+  "form": "Ring",
+  "era": "Victorian",
+  "style": "estate",
+  "stones": [
+   "Garnet",
+   "Enamel"
+  ],
+  "metals": [
+   "Gold"
+  ],
+  "description": "Pierced gold band with enamel scrolls",
+  "ask": 1100,
+  "resale": 1400.0,
+  "image": "/img/his025.jpg",
+  "image_url": "https://raw.githubusercontent.com/makk9/uncut-book/main/data/photos/m52.jpg",
+  "credit": {
+   "title": "Ring (c. 1850–75)",
+   "author": "Cleveland Museum of Art",
+   "license": "CC0",
+   "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
+   "source": "Cleveland Museum of Art Open Access",
+   "landing_url": "https://clevelandart.org/art/1916.123"
+  }
+ },
+ {
+  "id": "his026",
+  "role": "history",
+  "lot_no": null,
+  "name": "Green Stone and Diamond Ring, c. 1870",
+  "form": "Ring",
+  "era": "Victorian",
+  "style": "unusual",
+  "stones": [
+   "Diamond"
+  ],
+  "metals": [
+   "Gold"
+  ],
+  "description": "Carved green stone head with diamond eyes in an engraved gold mount",
+  "ask": 2600,
+  "resale": 3400.0,
+  "image": "/img/his026.jpg",
+  "image_url": "https://raw.githubusercontent.com/makk9/uncut-book/main/data/photos/m20.jpg",
+  "credit": {
+   "title": "Ring (c. 1870)",
+   "author": "Cleveland Museum of Art",
+   "license": "CC0",
+   "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
+   "source": "Cleveland Museum of Art Open Access",
+   "landing_url": "https://clevelandart.org/art/1916.130"
+  }
+ },
+ {
+  "id": "his027",
+  "role": "history",
+  "lot_no": null,
+  "name": "Cloisonne Enamel Gold Locket, 1868-70",
+  "form": "Pendant",
+  "era": "Victorian",
+  "style": "estate",
+  "stones": [
+   "Enamel"
+  ],
+  "metals": [
+   "Gold"
+  ],
+  "description": "Yellow enamel locket with plants and an insect",
+  "ask": 1900,
+  "resale": 2500.0,
+  "image": "/img/his027.jpg",
+  "image_url": "https://raw.githubusercontent.com/makk9/uncut-book/main/data/photos/m53.jpg",
+  "credit": {
+   "title": "Locket (1868–70)",
+   "author": "Cleveland Museum of Art",
+   "license": "CC0",
+   "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
+   "source": "Cleveland Museum of Art Open Access",
+   "landing_url": "https://clevelandart.org/art/1979.11"
+  }
+ },
+ {
+  "id": "his028",
+  "role": "history",
+  "lot_no": null,
+  "name": "Enameled Figure Pendant, 1870-90",
+  "form": "Pendant",
+  "era": "Victorian",
+  "style": "important",
+  "stones": [
+   "Pearl",
+   "Enamel"
+  ],
+  "metals": [
+   "Gold"
+  ],
+  "description": "Two white enamel figures around a jeweled column",
+  "ask": 6200,
+  "resale": 8100.0,
+  "image": "/img/his028.jpg",
+  "image_url": "https://raw.githubusercontent.com/makk9/uncut-book/main/data/photos/m19.jpg",
+  "credit": {
+   "title": "Pendant (1870–1890)",
+   "author": "Cleveland Museum of Art",
+   "license": "CC0",
+   "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
+   "source": "Cleveland Museum of Art Open Access",
+   "landing_url": "https://clevelandart.org/art/1916.641"
+  }
+ },
+ {
+  "id": "his029",
+  "role": "history",
+  "lot_no": null,
+  "name": "Diamond and Pearl Pendant Watch, c. 1900",
+  "form": "Pendant",
+  "era": "Edwardian",
+  "style": "estate",
+  "stones": [
+   "Diamond",
+   "Pearl",
+   "Ruby"
+  ],
+  "metals": [
+   "Platinum",
+   "Gold"
+  ],
+  "description": "Pearl above a diamond and ruby ball that holds a watch",
+  "ask": 6800,
+  "resale": 8800.0,
+  "image": "/img/his029.jpg",
+  "image_url": "https://raw.githubusercontent.com/makk9/uncut-book/main/data/photos/m2.jpg",
+  "credit": {
+   "title": "Pendant Watch (c. 1890–1910)",
+   "author": "Cleveland Museum of Art",
+   "license": "CC0",
+   "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
+   "source": "Cleveland Museum of Art Open Access",
+   "landing_url": "https://clevelandart.org/art/2009.360"
+  }
+ },
+ {
+  "id": "his030",
+  "role": "history",
+  "lot_no": null,
+  "name": "Amethyst and Pearl Cross Necklace, c. 1905",
+  "form": "Necklace",
+  "era": "Edwardian",
+  "style": "estate",
+  "stones": [
+   "Amethyst",
+   "Pearl"
+  ],
+  "metals": [
+   "Silver"
+  ],
+  "description": "Enameled silver chain and cross set with amethysts",
+  "ask": 1900,
+  "resale": 2500.0,
+  "image": "/img/his030.jpg",
+  "image_url": "https://raw.githubusercontent.com/makk9/uncut-book/main/data/photos/m12.jpg",
+  "credit": {
+   "title": "Cross Pendant (c. 1905)",
+   "author": "Cleveland Museum of Art",
+   "license": "CC0",
+   "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
+   "source": "Cleveland Museum of Art Open Access",
+   "landing_url": "https://clevelandart.org/art/1996.290"
+  }
+ },
+ {
+  "id": "his031",
+  "role": "history",
+  "lot_no": null,
+  "name": "Aquamarine and Enamel Cloak Clasp, c. 1905",
+  "form": "Brooch",
+  "era": "Edwardian",
+  "style": "important",
+  "stones": [
+   "Aquamarine",
+   "Pearl",
+   "Enamel"
+  ],
+  "metals": [
+   "Gold"
+  ],
+  "description": "Two oyster enamel panels with aquamarines and half pearls",
+  "ask": 4800,
+  "resale": 6200.0,
+  "image": "/img/his031.jpg",
+  "image_url": "https://raw.githubusercontent.com/makk9/uncut-book/main/data/photos/m13.jpg",
+  "credit": {
+   "title": "Cloak Clasp (c.1903–8)",
+   "author": "Cleveland Museum of Art",
+   "license": "CC0",
+   "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
+   "source": "Cleveland Museum of Art Open Access",
+   "landing_url": "https://clevelandart.org/art/2022.110"
+  }
+ },
+ {
+  "id": "his032",
+  "role": "history",
+  "lot_no": null,
+  "name": "Enamel and Citrine Pendant Brooch, c. 1905",
+  "form": "Brooch",
+  "era": "Edwardian",
+  "style": "estate",
+  "stones": [
+   "Citrine",
+   "Enamel"
+  ],
+  "metals": [
+   "Gold"
+  ],
+  "description": "Green and orange enamel with hanging citrines",
+  "ask": 2200,
+  "resale": 2900.0,
+  "image": "/img/his032.jpg",
+  "image_url": "https://raw.githubusercontent.com/makk9/uncut-book/main/data/photos/m40.jpg",
+  "credit": {
+   "title": "Pendant Brooch (c. 1905)",
+   "author": "Cleveland Museum of Art",
+   "license": "CC0",
+   "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
+   "source": "Cleveland Museum of Art Open Access",
+   "landing_url": "https://clevelandart.org/art/2011.410"
+  }
+ },
+ {
+  "id": "his033",
+  "role": "history",
+  "lot_no": null,
+  "name": "Citrine and Blue Enamel Ring, c. 1910",
+  "form": "Ring",
+  "era": "Edwardian",
+  "style": "unusual",
+  "stones": [
+   "Citrine",
+   "Enamel"
+  ],
+  "metals": [
+   "Gold"
+  ],
+  "description": "Large yellow stone in a pointed blue enamel mount",
+  "ask": 2100,
+  "resale": 2700.0,
+  "image": "/img/his033.jpg",
+  "image_url": "https://raw.githubusercontent.com/makk9/uncut-book/main/data/photos/m39.jpg",
+  "credit": {
+   "title": "Ring (c. 1910)",
+   "author": "Cleveland Museum of Art",
+   "license": "CC0",
+   "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
+   "source": "Cleveland Museum of Art Open Access",
+   "landing_url": "https://clevelandart.org/art/2009.363"
+  }
+ },
+ {
+  "id": "his034",
+  "role": "history",
+  "lot_no": null,
+  "name": "Lily of the Valley Comb, c. 1900",
+  "form": "Hair Ornament",
+  "era": "Edwardian",
+  "style": "unusual",
+  "stones": [
+   "Pearl",
+   "Enamel"
+  ],
+  "metals": [
+   "Gold"
+  ],
+  "description": "Carved horn comb with enameled flowers",
+  "ask": 3600,
+  "resale": 4700.0,
+  "image": "/img/his034.jpg",
+  "image_url": "https://raw.githubusercontent.com/makk9/uncut-book/main/data/photos/m41.jpg",
+  "credit": {
+   "title": "Lily of the Valley Comb (c. 1900)",
+   "author": "Cleveland Museum of Art",
+   "license": "CC0",
+   "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
+   "source": "Cleveland Museum of Art Open Access",
+   "landing_url": "https://clevelandart.org/art/1981.49"
+  }
+ },
+ {
+  "id": "his035",
+  "role": "history",
+  "lot_no": null,
+  "name": "Arts and Crafts Diadem",
+  "form": "Tiara",
+  "era": "Edwardian",
+  "style": "important",
+  "stones": [
+   "Gemstones"
+  ],
+  "metals": [
+   "Gold"
+  ],
+  "description": "Gold headband with a central turquoise-toned stone and scrollwork",
+  "ask": 14000,
+  "resale": 18200.0,
+  "image": "/img/his035.jpg",
+  "image_url": "https://raw.githubusercontent.com/makk9/uncut-book/main/data/photos/p206.jpg",
+  "credit": {
+   "title": "\"Diana\" diadem by Henry Wilson",
+   "author": "Mx. Granger",
+   "license": "public domain",
+   "license_url": "",
+   "source": "Wikimedia Commons",
+   "landing_url": "https://commons.wikimedia.org/wiki/File:%22Diana%22_diadem_by_Henry_Wilson.jpg"
+  }
+ },
+ {
+  "id": "his036",
+  "role": "history",
+  "lot_no": null,
+  "name": "Berlin Ironwork Tiara",
+  "form": "Tiara",
+  "era": "Victorian",
+  "style": "important",
+  "stones": [],
+  "metals": [],
+  "description": "Delicate black cast iron tiara of pierced palmettes",
+  "ask": 9200,
+  "resale": 12000.0,
+  "image": "/img/his036.jpg",
+  "image_url": "https://raw.githubusercontent.com/makk9/uncut-book/main/data/photos/p202.jpg",
+  "credit": {
+   "title": "BERLIN IRONWORK TIARA (Hunt museum)",
+   "author": "{Artist / Designer /Maker :} Johann Conrad Philipp Geiss (attrib)",
+   "license": "cc0",
+   "license_url": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+   "source": "Wikimedia Commons",
+   "landing_url": "https://commons.wikimedia.org/wiki/File:BERLIN_IRONWORK_TIARA_(Hunt_museum).jpg"
+  }
+ },
+ {
+  "id": "his037",
+  "role": "history",
+  "lot_no": null,
+  "name": "Multi-Gem Cluster Ring, 1700s",
+  "form": "Ring",
+  "era": "Georgian",
+  "style": "statement",
+  "stones": [
+   "Ruby",
+   "Diamond",
+   "Emerald",
+   "Sapphire"
+  ],
+  "metals": [
+   "Gold",
+   "Silver"
+  ],
+  "description": "Silver cluster of colored stones on a gold band",
+  "ask": 3200,
+  "resale": 4200.0,
+  "image": "/img/his037.jpg",
+  "image_url": "https://raw.githubusercontent.com/makk9/uncut-book/main/data/photos/m0.jpg",
+  "credit": {
+   "title": "Ring (1700s)",
+   "author": "Cleveland Museum of Art",
+   "license": "CC0",
+   "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
+   "source": "Cleveland Museum of Art Open Access",
+   "landing_url": "https://clevelandart.org/art/1916.151"
+  }
+ },
+ {
+  "id": "his038",
+  "role": "history",
+  "lot_no": null,
+  "name": "Diamond and Enamel Cluster Ring, 1700s",
+  "form": "Ring",
+  "era": "Georgian",
+  "style": "estate",
+  "stones": [
+   "Diamond",
+   "Enamel"
+  ],
+  "metals": [
+   "Gold",
+   "Silver"
+  ],
+  "description": "Openwork silver and enamel cluster with diamonds",
+  "ask": 2800,
+  "resale": 3600.0,
+  "image": "/img/his038.jpg",
+  "image_url": "https://raw.githubusercontent.com/makk9/uncut-book/main/data/photos/m3.jpg",
+  "credit": {
+   "title": "Ring (1700s)",
+   "author": "Cleveland Museum of Art",
+   "license": "CC0",
+   "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
+   "source": "Cleveland Museum of Art Open Access",
+   "landing_url": "https://clevelandart.org/art/1916.150"
+  }
+ },
+ {
+  "id": "his039",
+  "role": "history",
+  "lot_no": null,
+  "name": "Pelican Pendant with Rubies and Emeralds, c. 1600",
+  "form": "Pendant",
+  "era": "Renaissance",
+  "style": "important",
+  "stones": [
+   "Ruby",
+   "Emerald",
+   "Diamond",
+   "Pearl"
+  ],
+  "metals": [
+   "Gold"
+  ],
+  "description": "Enameled gold pelican pendant hung with baroque pearls",
+  "ask": 28000,
+  "resale": 36400.0,
+  "image": "/img/his039.jpg",
+  "image_url": "https://raw.githubusercontent.com/makk9/uncut-book/main/data/photos/m1.jpg",
+  "credit": {
+   "title": "Pendant with Pelican (c. 1600)",
+   "author": "Cleveland Museum of Art",
+   "license": "CC0",
+   "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
+   "source": "Cleveland Museum of Art Open Access",
+   "landing_url": "https://clevelandart.org/art/1959.336"
+  }
+ },
+ {
+  "id": "his040",
+  "role": "history",
+  "lot_no": null,
+  "name": "Enameled Gold Pendant with Rubies, 1600",
+  "form": "Pendant",
+  "era": "Renaissance",
+  "style": "important",
+  "stones": [
+   "Ruby",
+   "Pearl"
+  ],
+  "metals": [
+   "Gold"
+  ],
+  "description": "Chained gold and enamel pendant with rubies and pearls",
+  "ask": 9400,
+  "resale": 12200.0,
+  "image": "/img/his040.jpg",
+  "image_url": "https://raw.githubusercontent.com/makk9/uncut-book/main/data/photos/m7.jpg",
+  "credit": {
+   "title": "Pendant (1600)",
+   "author": "Cleveland Museum of Art",
+   "license": "CC0",
+   "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
+   "source": "Cleveland Museum of Art Open Access",
+   "landing_url": "https://clevelandart.org/art/1971.1113"
+  }
+ },
+ {
+  "id": "his041",
+  "role": "history",
+  "lot_no": null,
+  "name": "5 ct Princess Ruby Ring",
+  "form": "Ring",
+  "era": "Contemporary",
+  "style": "statement",
+  "stones": [
+   "Ruby"
+  ],
+  "metals": [
+   "Silver"
+  ],
+  "description": "Square ruby on a double band set with small rubies",
+  "ask": 18500,
+  "resale": 24000.0,
+  "image": "/img/his041.jpg",
+  "image_url": "https://raw.githubusercontent.com/makk9/uncut-book/main/data/photos/p177.jpg",
+  "credit": {
+   "title": "5-carat ruby ring",
+   "author": "3BL Media",
+   "license": "CC BY 2.0",
+   "license_url": "https://creativecommons.org/licenses/by/2.0",
+   "source": "Wikimedia Commons",
+   "landing_url": "https://commons.wikimedia.org/wiki/File:5-carat_ruby_ring.jpg"
+  }
+ },
+ {
+  "id": "his042",
+  "role": "history",
+  "lot_no": null,
+  "name": "Burmese Ruby in a Silver Ring",
+  "form": "Ring",
+  "era": "Contemporary",
+  "style": "classic",
+  "stones": [
+   "Ruby"
+  ],
+  "metals": [
+   "Silver"
+  ],
+  "description": "Dark oval ruby in a plain silver ring",
+  "ask": 2600,
+  "resale": 3400.0,
+  "image": "/img/his042.jpg",
+  "image_url": "https://raw.githubusercontent.com/makk9/uncut-book/main/data/photos/p176.jpg",
+  "credit": {
+   "title": "Burmese Ruby in silver ring, in West Bengal, India, photographed on November 18, 2023 2",
+   "author": "Billjones94",
+   "license": "cc0",
+   "license_url": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+   "source": "Wikimedia Commons",
+   "landing_url": "https://commons.wikimedia.org/wiki/File:Burmese_Ruby_in_silver_ring,_in_West_Bengal,_India,_photographed_on_November_18,_2023_2.jpg"
+  }
+ },
+ {
+  "id": "his043",
+  "role": "history",
+  "lot_no": null,
+  "name": "Cognac Stone Cocktail Ring",
+  "form": "Ring",
+  "era": "Contemporary",
+  "style": "statement",
+  "stones": [
+   "Gemstones",
+   "Diamond"
+  ],
+  "metals": [
+   "Gold"
+  ],
+  "description": "Orange-brown cushion stone in a large square of black and brown diamonds",
+  "ask": 6600,
+  "resale": 8600.0,
+  "image": "/img/his043.jpg",
+  "image_url": "https://raw.githubusercontent.com/makk9/uncut-book/main/data/photos/p079.jpg",
+  "credit": {
+   "title": "20091115 IMG 9964 (4138613482)",
+   "author": "etee from Houston, TX, USofA",
+   "license": "CC BY-SA 2.0",
+   "license_url": "https://creativecommons.org/licenses/by-sa/2.0",
+   "source": "Wikimedia Commons",
+   "landing_url": "https://commons.wikimedia.org/wiki/File:20091115_IMG_9964_(4138613482).jpg"
+  }
+ },
+ {
+  "id": "his044",
+  "role": "history",
+  "lot_no": null,
+  "name": "Pear Diamond Halo Pendant",
+  "form": "Pendant",
+  "era": "Contemporary",
+  "style": "line",
+  "stones": [
+   "Diamond"
+  ],
+  "metals": [
+   "Gold"
+  ],
+  "description": "Large pear-shaped diamond pendant in a pave halo",
+  "ask": 5200,
+  "resale": 6800.0,
+  "image": "/img/his044.jpg",
+  "image_url": "https://raw.githubusercontent.com/makk9/uncut-book/main/data/photos/p150.jpg",
+  "credit": {
+   "title": "500px photo (40776904)",
+   "author": "Selvin",
+   "license": "CC BY 3.0",
+   "license_url": "https://creativecommons.org/licenses/by/3.0",
+   "source": "Wikimedia Commons",
+   "landing_url": "https://commons.wikimedia.org/wiki/File:500px_photo_(40776904).jpeg"
+  }
+ },
+ {
+  "id": "his045",
+  "role": "history",
+  "lot_no": null,
+  "name": "Pair of Alexandrites, Unset",
+  "form": "Loose stone",
+  "era": "Contemporary",
+  "style": "investment",
+  "stones": [
+   "Alexandrite"
+  ],
+  "metals": [],
+  "description": "Two faceted cushion alexandrites showing a color change",
+  "ask": 19000,
+  "resale": 24700.0,
+  "image": "/img/his045.jpg",
+  "image_url": "https://raw.githubusercontent.com/makk9/uncut-book/main/data/photos/p004.jpg",
+  "credit": {
+   "title": "Alexandrite 26.75cts",
+   "author": "Original uploader was User: at en.wikipedia",
+   "license": "CC BY-SA 3.0",
+   "license_url": "http://creativecommons.org/licenses/by-sa/3.0/",
+   "source": "Wikimedia Commons",
+   "landing_url": "https://commons.wikimedia.org/wiki/File:Alexandrite_26.75cts.jpg"
+  }
+ },
+ {
+  "id": "his046",
+  "role": "history",
+  "lot_no": null,
+  "name": "Old-Cut Diamond on a Display Pin",
+  "form": "Loose stone",
+  "era": "Antique",
+  "style": "investment",
+  "stones": [
+   "Diamond"
+  ],
+  "metals": [],
+  "description": "Flat old-cut pale diamond shown unset",
+  "ask": 12000,
+  "resale": 15600.0,
+  "image": "/img/his046.jpg",
+  "image_url": "https://raw.githubusercontent.com/makk9/uncut-book/main/data/photos/p048.jpg",
+  "credit": {
+   "title": "Periodo mogul, diamanti tagliati, da bijapur o golconda, xvii-xviii secolo, 05",
+   "author": "Francesco Bini",
+   "license": "CC BY-SA 4.0",
+   "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+   "source": "Wikimedia Commons",
+   "landing_url": "https://commons.wikimedia.org/wiki/File:Periodo_mogul,_diamanti_tagliati,_da_bijapur_o_golconda,_xvii-xviii_secolo,_05.jpg"
+  }
+ },
+ {
+  "id": "his047",
+  "role": "history",
+  "lot_no": null,
+  "name": "Oval Old-Cut Diamond, Unset",
+  "form": "Loose stone",
+  "era": "Antique",
+  "style": "investment",
+  "stones": [
+   "Diamond"
+  ],
+  "metals": [],
+  "description": "Pale yellow oval old-cut diamond",
+  "ask": 9200,
+  "resale": 12000.0,
+  "image": "/img/his047.jpg",
+  "image_url": "https://raw.githubusercontent.com/makk9/uncut-book/main/data/photos/p049.jpg",
+  "credit": {
+   "title": "Periodo mogul, diamanti tagliati, da bijapur o golconda, xvii-xviii secolo, 03",
+   "author": "Francesco Bini",
+   "license": "CC BY-SA 4.0",
+   "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+   "source": "Wikimedia Commons",
+   "landing_url": "https://commons.wikimedia.org/wiki/File:Periodo_mogul,_diamanti_tagliati,_da_bijapur_o_golconda,_xvii-xviii_secolo,_03.jpg"
+  }
+ },
+ {
+  "id": "his048",
+  "role": "history",
+  "lot_no": null,
+  "name": "Round Old-Cut Diamond, Unset",
+  "form": "Loose stone",
+  "era": "Antique",
+  "style": "investment",
+  "stones": [
+   "Diamond"
+  ],
+  "metals": [],
+  "description": "Round old-cut diamond with a soft outline",
+  "ask": 7800,
+  "resale": 10100.0,
+  "image": "/img/his048.jpg",
+  "image_url": "https://raw.githubusercontent.com/makk9/uncut-book/main/data/photos/p051.jpg",
+  "credit": {
+   "title": "Periodo mogul, diamanti tagliati, da bijapur o golconda, xvii-xviii secolo, 02",
+   "author": "Francesco Bini",
+   "license": "CC BY-SA 4.0",
+   "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+   "source": "Wikimedia Commons",
+   "landing_url": "https://commons.wikimedia.org/wiki/File:Periodo_mogul,_diamanti_tagliati,_da_bijapur_o_golconda,_xvii-xviii_secolo,_02.jpg"
+  }
+ },
+ {
+  "id": "his049",
+  "role": "history",
+  "lot_no": null,
+  "name": "Large Faceted Topaz",
+  "form": "Loose stone",
+  "era": "Contemporary",
+  "style": "investment",
+  "stones": [
+   "Topaz"
+  ],
+  "metals": [],
+  "description": "Very large cushion-cut pale blue topaz",
+  "ask": 8800,
+  "resale": 11400.0,
+  "image": "/img/his049.jpg",
+  "image_url": "https://raw.githubusercontent.com/makk9/uncut-book/main/data/photos/p207.jpg",
+  "credit": {
+   "title": "3,000 carat topaz (25747130898)",
+   "author": "Thomas Quine",
+   "license": "CC BY 2.0",
+   "license_url": "https://creativecommons.org/licenses/by/2.0",
+   "source": "Wikimedia Commons",
+   "landing_url": "https://commons.wikimedia.org/wiki/File:3,000_carat_topaz_(25747130898).jpg"
+  }
+ },
+ {
+  "id": "his050",
+  "role": "history",
+  "lot_no": null,
+  "name": "Pearl Drop Earrings, Three Pairs",
+  "form": "Earrings",
+  "era": "Contemporary",
+  "style": "minimal",
+  "stones": [
+   "Pearl"
+  ],
+  "metals": [
+   "Silver"
+  ],
+  "description": "Single cultured pearls on slim wires",
+  "ask": 1200,
+  "resale": 1600.0,
+  "image": "/img/his050.jpg",
+  "image_url": "https://raw.githubusercontent.com/makk9/uncut-book/main/data/photos/p157.jpg",
+  "credit": {
+   "title": "Choosing pearls",
+   "author": "Mauro Cateb",
+   "license": "CC BY-SA 3.0",
+   "license_url": "https://creativecommons.org/licenses/by-sa/3.0",
+   "source": "Wikimedia Commons",
+   "landing_url": "https://commons.wikimedia.org/wiki/File:Choosing_pearls.JPG"
+  }
+ },
+ {
+  "id": "his051",
+  "role": "history",
+  "lot_no": null,
+  "name": "Cultured Pearl Strands",
   "form": "Necklace",
   "era": "Contemporary",
   "style": "minimal",
@@ -1258,241 +2287,326 @@
   "metals": [
    "Gold"
   ],
-  "description": "Classic matched seven millimeter akoya",
-  "ask": 2400,
-  "resale": 3100.0,
-  "image": "/img/his025.svg",
-  "image_url": null,
-  "credit": null
+  "description": "Loose white pearl strands with a gold clasp",
+  "ask": 2100,
+  "resale": 2700.0,
+  "image": "/img/his051.jpg",
+  "image_url": "https://raw.githubusercontent.com/makk9/uncut-book/main/data/photos/p163.jpg",
+  "credit": {
+   "title": "22FF8570 RJ-4-",
+   "author": "Opalcutters23",
+   "license": "public domain",
+   "license_url": "",
+   "source": "Wikimedia Commons",
+   "landing_url": "https://commons.wikimedia.org/wiki/File:22FF8570_RJ-4-.jpg"
+  }
  },
  {
-  "id": "his026",
+  "id": "his052",
   "role": "history",
   "lot_no": null,
-  "name": "Pearl Drop Earrings",
-  "form": "Earrings",
+  "name": "Gold Band with Channel Diamonds",
+  "form": "Ring",
   "era": "Contemporary",
   "style": "minimal",
   "stones": [
-   "Pearl"
+   "Diamond"
   ],
   "metals": [
    "Gold"
   ],
-  "description": "Single pearl on a plain gold post",
-  "ask": 1300,
-  "resale": 1700.0,
-  "image": "/img/his026.svg",
-  "image_url": null,
-  "credit": null
+  "description": "Plain gold band with a row of small diamonds",
+  "ask": 2200,
+  "resale": 2900.0,
+  "image": "/img/his052.jpg",
+  "image_url": "https://raw.githubusercontent.com/makk9/uncut-book/main/data/photos/p223.jpg",
+  "credit": {
+   "title": "Aliança (6765852233)",
+   "author": "lubasi",
+   "license": "CC BY-SA 2.0",
+   "license_url": "https://creativecommons.org/licenses/by-sa/2.0",
+   "source": "Wikimedia Commons",
+   "landing_url": "https://commons.wikimedia.org/wiki/File:Alian%C3%A7a_(6765852233).jpg"
+  }
  },
  {
-  "id": "his027",
+  "id": "his053",
   "role": "history",
   "lot_no": null,
-  "name": "Fine Gold Hoop Earrings",
-  "form": "Earrings",
+  "name": "Oxidized Wedding Bands",
+  "form": "Ring",
+  "era": "Contemporary",
+  "style": "minimal",
+  "stones": [],
+  "metals": [
+   "Silver"
+  ],
+  "description": "Matte dark bands with tiny raised dots",
+  "ask": 1500,
+  "resale": 2000.0,
+  "image": "/img/his053.jpg",
+  "image_url": "https://raw.githubusercontent.com/makk9/uncut-book/main/data/photos/p225.jpg",
+  "credit": {
+   "title": "Alianca braille",
+   "author": "Luistravasso",
+   "license": "CC BY-SA 3.0",
+   "license_url": "https://creativecommons.org/licenses/by-sa/3.0",
+   "source": "Wikimedia Commons",
+   "landing_url": "https://commons.wikimedia.org/wiki/File:Alianca_braille.JPG"
+  }
+ },
+ {
+  "id": "his054",
+  "role": "history",
+  "lot_no": null,
+  "name": "Wide White Gold Band",
+  "form": "Ring",
   "era": "Contemporary",
   "style": "minimal",
   "stones": [],
   "metals": [
    "Gold"
   ],
-  "description": "Slim polished 18k gold hoops",
-  "ask": 1500,
-  "resale": 2000.0,
-  "image": "/img/his027.svg",
-  "image_url": null,
-  "credit": null
+  "description": "Brushed 18k white gold ring with a grooved edge",
+  "ask": 1700,
+  "resale": 2200.0,
+  "image": "/img/his054.jpg",
+  "image_url": "https://raw.githubusercontent.com/makk9/uncut-book/main/data/photos/p149.jpg",
+  "credit": {
+   "title": "750-white gold ring",
+   "author": "Mauro Cateb",
+   "license": "CC BY-SA 3.0",
+   "license_url": "https://creativecommons.org/licenses/by-sa/3.0",
+   "source": "Wikimedia Commons",
+   "landing_url": "https://commons.wikimedia.org/wiki/File:750-white_gold_ring.jpg"
+  }
  },
  {
-  "id": "his028",
+  "id": "his055",
   "role": "history",
   "lot_no": null,
-  "name": "Ruby Cocktail Ring",
-  "form": "Ring",
-  "era": "Contemporary",
-  "style": "statement",
-  "stones": [
-   "Ruby",
-   "Diamond"
-  ],
-  "metals": [
-   "Gold"
-  ],
-  "description": "Oval ruby with a bold diamond surround",
-  "ask": 8800,
-  "resale": 11400.0,
-  "image": "/img/his028.svg",
-  "image_url": null,
-  "credit": null
- },
- {
-  "id": "his029",
-  "role": "history",
-  "lot_no": null,
-  "name": "Fancy Yellow Diamond Cocktail Ring",
-  "form": "Ring",
-  "era": "Contemporary",
-  "style": "statement",
-  "stones": [
-   "Diamond"
-  ],
-  "metals": [
-   "Gold"
-  ],
-  "description": "Radiant cut fancy yellow center stone",
-  "ask": 17000,
-  "resale": 22100.0,
-  "image": "/img/his029.svg",
-  "image_url": null,
-  "credit": null
- },
- {
-  "id": "his030",
-  "role": "history",
-  "lot_no": null,
-  "name": "1.0 ct Round Diamond, Loose",
-  "form": "Loose stone",
-  "era": "Contemporary",
-  "style": "investment",
-  "stones": [
-   "Diamond"
-  ],
-  "metals": [],
-  "description": "Unset certified round brilliant",
-  "ask": 5200,
-  "resale": 6800.0,
-  "image": "/img/his030.svg",
-  "image_url": null,
-  "credit": null
- },
- {
-  "id": "his031",
-  "role": "history",
-  "lot_no": null,
-  "name": "2 ct Burmese Ruby, Loose",
-  "form": "Loose stone",
-  "era": "Contemporary",
-  "style": "investment",
-  "stones": [
-   "Ruby"
-  ],
-  "metals": [],
-  "description": "Unset unheated cushion ruby",
-  "ask": 9400,
-  "resale": 12200.0,
-  "image": "/img/his031.svg",
-  "image_url": null,
-  "credit": null
- },
- {
-  "id": "his032",
-  "role": "history",
-  "lot_no": null,
-  "name": "3 ct Emerald-Cut Diamond, Loose",
-  "form": "Loose stone",
-  "era": "Contemporary",
-  "style": "investment",
-  "stones": [
-   "Diamond"
-  ],
-  "metals": [],
-  "description": "Unset certified step-cut diamond",
-  "ask": 24000,
-  "resale": 31200.0,
-  "image": "/img/his032.svg",
-  "image_url": null,
-  "credit": null
- },
- {
-  "id": "his033",
-  "role": "history",
-  "lot_no": null,
-  "name": "Two-Tone Vintage Wristwatch",
+  "name": "1970s Steel Diver's Watch",
   "form": "Watch",
   "era": "Mid-Century",
   "style": "mens",
   "stones": [],
+  "metals": [
+   "Silver"
+  ],
+  "description": "Steel case with a rotating bezel and brown dial",
+  "ask": 900,
+  "resale": 1200.0,
+  "image": "/img/his055.jpg",
+  "image_url": "https://raw.githubusercontent.com/makk9/uncut-book/main/data/photos/p232.jpg",
+  "credit": {
+   "title": "1970s Watch Ancre Antishoc stainless steel back antmagnetic (51878890718)",
+   "author": "Joost J. Bakker  IJmuiden",
+   "license": "CC BY 2.0",
+   "license_url": "https://creativecommons.org/licenses/by/2.0",
+   "source": "Wikimedia Commons",
+   "landing_url": "https://commons.wikimedia.org/wiki/File:1970s_Watch_Ancre_Antishoc_stainless_steel_back_antmagnetic_(51878890718).jpg"
+  }
+ },
+ {
+  "id": "his056",
+  "role": "history",
+  "lot_no": null,
+  "name": "1970s Steel Watch, Red Dial",
+  "form": "Watch",
+  "era": "Mid-Century",
+  "style": "mens",
+  "stones": [],
+  "metals": [
+   "Silver"
+  ],
+  "description": "Steel case with a rotating bezel and a red dial",
+  "ask": 950,
+  "resale": 1200.0,
+  "image": "/img/his056.jpg",
+  "image_url": "https://raw.githubusercontent.com/makk9/uncut-book/main/data/photos/p233.jpg",
+  "credit": {
+   "title": "1970s Watch City shockproof stainless steel back antmagnetic (51877847102)",
+   "author": "Joost J. Bakker  IJmuiden",
+   "license": "CC BY 2.0",
+   "license_url": "https://creativecommons.org/licenses/by/2.0",
+   "source": "Wikimedia Commons",
+   "landing_url": "https://commons.wikimedia.org/wiki/File:1970s_Watch_City_shockproof_stainless_steel_back_antmagnetic_(51877847102).jpg"
+  }
+ },
+ {
+  "id": "his057",
+  "role": "history",
+  "lot_no": null,
+  "name": "Mesh Strap Minimal Watch",
+  "form": "Watch",
+  "era": "Contemporary",
+  "style": "mens",
+  "stones": [],
+  "metals": [
+   "Silver"
+  ],
+  "description": "Rose-toned case with a disc dial on a mesh strap",
+  "ask": 700,
+  "resale": 900.0,
+  "image": "/img/his057.jpg",
+  "image_url": "https://raw.githubusercontent.com/makk9/uncut-book/main/data/photos/p231.jpg",
+  "credit": {
+   "title": "10 Past wristwatch",
+   "author": "OlEnglish",
+   "license": "CC BY-SA 4.0",
+   "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+   "source": "Wikimedia Commons",
+   "landing_url": "https://commons.wikimedia.org/wiki/File:10_Past_wristwatch.jpg"
+  }
+ },
+ {
+  "id": "his058",
+  "role": "history",
+  "lot_no": null,
+  "name": "Gold and Pearl Pocket Watch, 1813",
+  "form": "Watch",
+  "era": "Georgian",
+  "style": "mens",
+  "stones": [
+   "Pearl",
+   "Diamond",
+   "Enamel"
+  ],
   "metals": [
    "Gold",
    "Silver"
   ],
-  "description": "1970s steel and gold automatic",
-  "ask": 4500,
-  "resale": 5800.0,
-  "image": "/img/his033.svg",
-  "image_url": null,
-  "credit": null
+  "description": "Engine-turned gold case rimmed with pearls",
+  "ask": 12000,
+  "resale": 15600.0,
+  "image": "/img/his058.jpg",
+  "image_url": "https://raw.githubusercontent.com/makk9/uncut-book/main/data/photos/m6.jpg",
+  "credit": {
+   "title": "Watch (1813)",
+   "author": "Cleveland Museum of Art",
+   "license": "CC0",
+   "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
+   "source": "Cleveland Museum of Art Open Access",
+   "landing_url": "https://clevelandart.org/art/1964.416"
+  }
  },
  {
-  "id": "his034",
+  "id": "his059",
   "role": "history",
   "lot_no": null,
-  "name": "18k Gold Chronograph",
+  "name": "Enameled Gilt Pocket Watch, Late 1700s",
   "form": "Watch",
-  "era": "Mid-Century",
+  "era": "Georgian",
+  "style": "mens",
+  "stones": [
+   "Enamel"
+  ],
+  "metals": [
+   "Gold"
+  ],
+  "description": "Open case with painted enamel scenes",
+  "ask": 5200,
+  "resale": 6800.0,
+  "image": "/img/his059.jpg",
+  "image_url": "https://raw.githubusercontent.com/makk9/uncut-book/main/data/photos/m54.jpg",
+  "credit": {
+   "title": "Watch (late 1700s - early 1800s)",
+   "author": "Cleveland Museum of Art",
+   "license": "CC0",
+   "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
+   "source": "Cleveland Museum of Art Open Access",
+   "landing_url": "https://clevelandart.org/art/1916.357"
+  }
+ },
+ {
+  "id": "his060",
+  "role": "history",
+  "lot_no": null,
+  "name": "Antique Seal Ring",
+  "form": "Ring",
+  "era": "Antique",
   "style": "mens",
   "stones": [],
   "metals": [
    "Gold"
   ],
-  "description": "Vintage gold cased chronograph on leather",
-  "ask": 7800,
-  "resale": 10100.0,
-  "image": "/img/his034.svg",
-  "image_url": null,
-  "credit": null
+  "description": "Heavy cast ring with an engraved heraldic face",
+  "ask": 3400,
+  "resale": 4400.0,
+  "image": "/img/his060.jpg",
+  "image_url": "https://raw.githubusercontent.com/makk9/uncut-book/main/data/photos/p186.jpg",
+  "credit": {
+   "title": "Anello del Priore",
+   "author": "DVBRAIN",
+   "license": "CC BY-SA 3.0",
+   "license_url": "https://creativecommons.org/licenses/by-sa/3.0",
+   "source": "Wikimedia Commons",
+   "landing_url": "https://commons.wikimedia.org/wiki/File:Anello_del_Priore.jpg"
+  }
  },
  {
-  "id": "his035",
+  "id": "his061",
   "role": "history",
   "lot_no": null,
-  "name": "Men's Diamond Pinky Ring",
+  "name": "Dendritic Agate Ring",
   "form": "Ring",
-  "era": "Contemporary",
-  "style": "mens",
-  "stones": [
-   "Diamond"
-  ],
-  "metals": [
-   "Gold"
-  ],
-  "description": "Heavy gold ring with a pave face",
-  "ask": 4200,
-  "resale": 5500.0,
-  "image": "/img/his035.svg",
-  "image_url": null,
-  "credit": null
- },
- {
-  "id": "his036",
-  "role": "history",
-  "lot_no": null,
-  "name": "Crystal Opal Pendant",
-  "form": "Pendant",
-  "era": "Contemporary",
+  "era": "Antique",
   "style": "unusual",
   "stones": [
-   "Opal"
+   "Agate"
   ],
   "metals": [
    "Gold"
   ],
-  "description": "Bright crystal opal in a gold bezel",
-  "ask": 2800,
-  "resale": 3600.0,
-  "image": "/img/his036.svg",
-  "image_url": null,
-  "credit": null
+  "description": "Pale agate with dark inclusions in a pearl-beaded surround",
+  "ask": 1700,
+  "resale": 2200.0,
+  "image": "/img/his061.jpg",
+  "image_url": "https://raw.githubusercontent.com/makk9/uncut-book/main/data/photos/p076.jpg",
+  "credit": {
+   "title": "Agate ring with dendritic inclusions, Jewel exhibition, Hermitage Amsterdam pic31 (cropped)",
+   "author": "Alf van Beem",
+   "license": "public domain",
+   "license_url": "",
+   "source": "Wikimedia Commons",
+   "landing_url": "https://commons.wikimedia.org/wiki/File:Agate_ring_with_dendritic_inclusions,_Jewel_exhibition,_Hermitage_Amsterdam_pic31_(cropped).JPG"
+  }
  },
  {
-  "id": "his037",
+  "id": "his062",
   "role": "history",
   "lot_no": null,
-  "name": "Natural Turquoise Ring",
-  "form": "Ring",
-  "era": "Mid-Century",
+  "name": "Silver Plaid Brooch with a Citrine",
+  "form": "Brooch",
+  "era": "Victorian",
+  "style": "unusual",
+  "stones": [
+   "Citrine"
+  ],
+  "metals": [
+   "Silver"
+  ],
+  "description": "Round engraved Scottish-style silver brooch",
+  "ask": 900,
+  "resale": 1200.0,
+  "image": "/img/his062.jpg",
+  "image_url": "https://raw.githubusercontent.com/makk9/uncut-book/main/data/photos/p209.jpg",
+  "credit": {
+   "title": "Brooch (AM 1957.67.7)",
+   "author": "Unknown authorUnknown author",
+   "license": "CC BY 4.0",
+   "license_url": "https://creativecommons.org/licenses/by/4.0",
+   "source": "Wikimedia Commons",
+   "landing_url": "https://commons.wikimedia.org/wiki/File:Brooch_(AM_1957.67.7).jpg"
+  }
+ },
+ {
+  "id": "his063",
+  "role": "history",
+  "lot_no": null,
+  "name": "Silver Filigree Chain with Turquoise Cross",
+  "form": "Chain",
+  "era": "Victorian",
   "style": "unusual",
   "stones": [
    "Turquoise"
@@ -1500,95 +2614,995 @@
   "metals": [
    "Silver"
   ],
-  "description": "Large natural turquoise in hammered silver",
-  "ask": 1400,
-  "resale": 1800.0,
-  "image": "/img/his037.svg",
-  "image_url": null,
-  "credit": null
+  "description": "Long fine silver chain with a filigree cross",
+  "ask": 1200,
+  "resale": 1600.0,
+  "image": "/img/his063.jpg",
+  "image_url": "https://raw.githubusercontent.com/makk9/uncut-book/main/data/photos/m36.jpg",
+  "credit": {
+   "title": "Chain and Cross (1811–1916)",
+   "author": "Cleveland Museum of Art",
+   "license": "CC0",
+   "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
+   "source": "Cleveland Museum of Art Open Access",
+   "landing_url": "https://clevelandart.org/art/1916.255"
+  }
  },
  {
-  "id": "his038",
+  "id": "his064",
   "role": "history",
   "lot_no": null,
-  "name": "Aquamarine Pendant",
-  "form": "Pendant",
-  "era": "Contemporary",
+  "name": "Painted Enamel Band",
+  "form": "Ring",
+  "era": "Victorian",
   "style": "unusual",
   "stones": [
-   "Aquamarine"
-  ],
-  "metals": [
-   "Gold"
-  ],
-  "description": "Emerald-cut aquamarine on a fine chain",
-  "ask": 3600,
-  "resale": 4700.0,
-  "image": "/img/his038.svg",
-  "image_url": null,
-  "credit": null
- },
- {
-  "id": "his039",
-  "role": "history",
-  "lot_no": null,
-  "name": "Diamond Bandeau Tiara",
-  "form": "Tiara",
-  "era": "Edwardian",
-  "style": "important",
-  "stones": [
-   "Diamond"
-  ],
-  "metals": [
-   "Platinum"
-  ],
-  "description": "Low platinum bandeau, about 1912",
-  "ask": 19000,
-  "resale": 24700.0,
-  "image": "/img/his039.svg",
-  "image_url": null,
-  "credit": null
- },
- {
-  "id": "his040",
-  "role": "history",
-  "lot_no": null,
-  "name": "Important Belle Epoque Bow Brooch",
-  "form": "Brooch",
-  "era": "Edwardian",
-  "style": "important",
-  "stones": [
-   "Diamond"
-  ],
-  "metals": [
-   "Platinum"
-  ],
-  "description": "Large ribbon bow in old cut diamonds",
-  "ask": 9200,
-  "resale": 12000.0,
-  "image": "/img/his040.svg",
-  "image_url": null,
-  "credit": null
- },
- {
-  "id": "his041",
-  "role": "history",
-  "lot_no": null,
-  "name": "Georgian Paste Brooch",
-  "form": "Brooch",
-  "era": "Victorian",
-  "style": "important",
-  "stones": [
-   "Gemstones"
+   "Enamel"
   ],
   "metals": [
    "Silver"
   ],
-  "description": "Foil-backed silver spray brooch",
-  "ask": 3400,
-  "resale": 4400.0,
-  "image": "/img/his041.svg",
-  "image_url": null,
-  "credit": null
+  "description": "Wide silver ring with painted blue and green flowers",
+  "ask": 800,
+  "resale": 1000.0,
+  "image": "/img/his064.jpg",
+  "image_url": "https://raw.githubusercontent.com/makk9/uncut-book/main/data/photos/m37.jpg",
+  "credit": {
+   "title": "Ring (1811–1916)",
+   "author": "Cleveland Museum of Art",
+   "license": "CC0",
+   "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
+   "source": "Cleveland Museum of Art Open Access",
+   "landing_url": "https://clevelandart.org/art/1916.227"
+  }
+ },
+ {
+  "id": "his065",
+  "role": "history",
+  "lot_no": null,
+  "name": "Silver Hoop Pendant with Old-Cut Diamonds",
+  "form": "Pendant",
+  "era": "Antique",
+  "style": "unusual",
+  "stones": [
+   "Diamond"
+  ],
+  "metals": [
+   "Silver"
+  ],
+  "description": "Open silver circle set with small old-cut diamonds",
+  "ask": 1600,
+  "resale": 2100.0,
+  "image": "/img/his065.jpg",
+  "image_url": "https://raw.githubusercontent.com/makk9/uncut-book/main/data/photos/p065.jpg",
+  "credit": {
+   "title": "A silver earring with 23 original small cut diamonds in Kolkata, India",
+   "author": "Billjones94",
+   "license": "CC BY-SA 4.0",
+   "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+   "source": "Wikimedia Commons",
+   "landing_url": "https://commons.wikimedia.org/wiki/File:A_silver_earring_with_23_original_small_cut_diamonds_in_Kolkata,_India.jpg"
+  }
+ },
+ {
+  "id": "his066",
+  "role": "history",
+  "lot_no": null,
+  "name": "Round Lab-Grown Diamond Halo Ring",
+  "form": "Ring",
+  "era": "Contemporary",
+  "style": "bridal",
+  "stones": [
+   "Diamond"
+  ],
+  "metals": [
+   "Platinum"
+  ],
+  "description": "Round center in a pave halo on a slim band",
+  "ask": 6400,
+  "resale": 8300.0,
+  "image": "/img/his066.jpg",
+  "image_url": "https://raw.githubusercontent.com/makk9/uncut-book/main/data/photos/k55.jpg",
+  "credit": {
+   "title": "Cultured Refined Diamond",
+   "author": "Culturedrefineddiamond",
+   "license": "CC BY-SA 4.0",
+   "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+   "source": "Wikimedia Commons",
+   "landing_url": "https://commons.wikimedia.org/wiki/File:Cultured_Refined_Diamond.jpg"
+  }
+ },
+ {
+  "id": "his067",
+  "role": "history",
+  "lot_no": null,
+  "name": "Blue Princess Cut Solitaire",
+  "form": "Ring",
+  "era": "Contemporary",
+  "style": "bridal",
+  "stones": [
+   "Diamond"
+  ],
+  "metals": [
+   "Platinum"
+  ],
+  "description": "Square blue stone in a simple four-prong mount",
+  "ask": 5400,
+  "resale": 7000.0,
+  "image": "/img/his067.jpg",
+  "image_url": "https://raw.githubusercontent.com/makk9/uncut-book/main/data/photos/k56.jpg",
+  "credit": {
+   "title": "Amity Diamond Special Angel-Ring Princess diamante",
+   "author": "Johannafeldman",
+   "license": "CC BY-SA 4.0",
+   "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+   "source": "Wikimedia Commons",
+   "landing_url": "https://commons.wikimedia.org/wiki/File:Amity_Diamond_Special_Angel-Ring_Princess_diamante.jpg"
+  }
+ },
+ {
+  "id": "his068",
+  "role": "history",
+  "lot_no": null,
+  "name": "Emerald-Cut Diamond and Alexandrite Engagement Ring",
+  "form": "Ring",
+  "era": "Contemporary",
+  "style": "bridal",
+  "stones": [
+   "Diamond",
+   "Alexandrite"
+  ],
+  "metals": [
+   "Gold"
+  ],
+  "description": "Step-cut diamond with round alexandrite side stones",
+  "ask": 13500,
+  "resale": 17600.0,
+  "image": "/img/his068.jpg",
+  "image_url": "https://raw.githubusercontent.com/makk9/uncut-book/main/data/photos/k57.jpg",
+  "credit": {
+   "title": "Carolina-bespoke custom made-diamond alexandrite engagement ring-Lizunova Fine Jewels-Sydney-jeweller Chifley Square",
+   "author": "YippeeD",
+   "license": "CC BY-SA 4.0",
+   "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+   "source": "Wikimedia Commons",
+   "landing_url": "https://commons.wikimedia.org/wiki/File:Carolina-bespoke_custom_made-diamond_alexandrite_engagement_ring-Lizunova_Fine_Jewels-Sydney-jeweller_Chifley_Square.jpg"
+  }
+ },
+ {
+  "id": "his069",
+  "role": "history",
+  "lot_no": null,
+  "name": "Group of Five Diamond Engagement Rings",
+  "form": "Ring",
+  "era": "Contemporary",
+  "style": "bridal",
+  "stones": [
+   "Diamond"
+  ],
+  "metals": [
+   "Platinum"
+  ],
+  "description": "White metal solitaires with pave shoulders",
+  "ask": 16000,
+  "resale": 20800.0,
+  "image": "/img/his069.jpg",
+  "image_url": "https://raw.githubusercontent.com/makk9/uncut-book/main/data/photos/k72.jpg",
+  "credit": {
+   "title": "Check Out These Up And Coming Trends For Engagemen (201755717)",
+   "author": "Jacobs The Jewellers",
+   "license": "CC BY 3.0",
+   "license_url": "https://creativecommons.org/licenses/by/3.0",
+   "source": "Wikimedia Commons",
+   "landing_url": "https://commons.wikimedia.org/wiki/File:Check_Out_These_Up_And_Coming_Trends_For_Engagemen_(201755717).jpeg"
+  }
+ },
+ {
+  "id": "his070",
+  "role": "history",
+  "lot_no": null,
+  "name": "Parti Sapphire and Diamond Rose Gold Ring",
+  "form": "Ring",
+  "era": "Contemporary",
+  "style": "bridal",
+  "stones": [
+   "Sapphire",
+   "Diamond"
+  ],
+  "metals": [
+   "Gold"
+  ],
+  "description": "Oval teal sapphire between diamond clusters",
+  "ask": 6800,
+  "resale": 8800.0,
+  "image": "/img/his070.jpg",
+  "image_url": "https://raw.githubusercontent.com/makk9/uncut-book/main/data/photos/k80.jpg",
+  "credit": {
+   "title": "Olivia-Australian parti sapphire rose gold diamond engagement ring-Lizunova Fine Jewels-Sydney-Jeweller-Chifley-Square",
+   "author": "YippeeD",
+   "license": "CC BY-SA 4.0",
+   "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+   "source": "Wikimedia Commons",
+   "landing_url": "https://commons.wikimedia.org/wiki/File:Olivia-Australian_parti_sapphire_rose_gold_diamond_engagement_ring-Lizunova_Fine_Jewels-Sydney-Jeweller-Chifley-Square.jpg"
+  }
+ },
+ {
+  "id": "his071",
+  "role": "history",
+  "lot_no": null,
+  "name": "Yellow Sapphire and Diamond Engagement Ring",
+  "form": "Ring",
+  "era": "Contemporary",
+  "style": "bridal",
+  "stones": [
+   "Sapphire",
+   "Diamond"
+  ],
+  "metals": [
+   "Gold"
+  ],
+  "description": "Square yellow sapphire with channel-set diamonds in 18k gold",
+  "ask": 4900,
+  "resale": 6400.0,
+  "image": "/img/his071.jpg",
+  "image_url": "https://raw.githubusercontent.com/makk9/uncut-book/main/data/photos/k90.jpg",
+  "credit": {
+   "title": "Engagement ring 18K yellow gold with yellow sapphire and diamonds",
+   "author": "Lorraine Hughes",
+   "license": "CC BY 2.0",
+   "license_url": "https://creativecommons.org/licenses/by/2.0",
+   "source": "Wikimedia Commons",
+   "landing_url": "https://commons.wikimedia.org/wiki/File:Engagement_ring_18K_yellow_gold_with_yellow_sapphire_and_diamonds.jpg"
+  }
+ },
+ {
+  "id": "his072",
+  "role": "history",
+  "lot_no": null,
+  "name": "Pear Cut Parti Sapphire Solitaire",
+  "form": "Ring",
+  "era": "Contemporary",
+  "style": "bridal",
+  "stones": [
+   "Sapphire"
+  ],
+  "metals": [
+   "Gold"
+  ],
+  "description": "Pear sapphire on a plain yellow gold band",
+  "ask": 4200,
+  "resale": 5500.0,
+  "image": "/img/his072.jpg",
+  "image_url": "https://raw.githubusercontent.com/makk9/uncut-book/main/data/photos/k93.jpg",
+  "credit": {
+   "title": "Lucia pear cut-195 carat-Australian parti sapphire-engagement gold ring-Lizunova Fine Jewels-Sydney-jeweller-Chifley-Square",
+   "author": "YippeeD",
+   "license": "CC BY-SA 4.0",
+   "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+   "source": "Wikimedia Commons",
+   "landing_url": "https://commons.wikimedia.org/wiki/File:Lucia_pear_cut-195_carat-Australian_parti_sapphire-engagement_gold_ring-Lizunova_Fine_Jewels-Sydney-jeweller-Chifley-Square.jpg"
+  }
+ },
+ {
+  "id": "his073",
+  "role": "history",
+  "lot_no": null,
+  "name": "Pair of Plain Gold Engagement Bands",
+  "form": "Ring",
+  "era": "Contemporary",
+  "style": "bridal",
+  "stones": [],
+  "metals": [
+   "Gold"
+  ],
+  "description": "Two grooved yellow gold bands",
+  "ask": 1200,
+  "resale": 1600.0,
+  "image": "/img/his073.jpg",
+  "image_url": "https://raw.githubusercontent.com/makk9/uncut-book/main/data/photos/k92.jpg",
+  "credit": {
+   "title": "Engagement rings 777",
+   "author": "Ernst Vikne",
+   "license": "CC BY-SA 2.0",
+   "license_url": "https://creativecommons.org/licenses/by-sa/2.0",
+   "source": "Wikimedia Commons",
+   "landing_url": "https://commons.wikimedia.org/wiki/File:Engagement_rings_777.jpg"
+  }
+ },
+ {
+  "id": "his074",
+  "role": "history",
+  "lot_no": null,
+  "name": "Bezel-Set Ruby and Diamond Eternity Band",
+  "form": "Ring",
+  "era": "Contemporary",
+  "style": "line",
+  "stones": [
+   "Ruby",
+   "Diamond"
+  ],
+  "metals": [
+   "Gold"
+  ],
+  "description": "Marquise rubies and round diamonds around a gold band",
+  "ask": 2800,
+  "resale": 3600.0,
+  "image": "/img/his074.jpg",
+  "image_url": "https://raw.githubusercontent.com/makk9/uncut-book/main/data/photos/k60.jpg",
+  "credit": {
+   "title": "Bezel set Ruby and Diamond Eternity Band",
+   "author": "CGJewelry",
+   "license": "CC BY-SA 4.0",
+   "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+   "source": "Wikimedia Commons",
+   "landing_url": "https://commons.wikimedia.org/wiki/File:Bezel_set_Ruby_and_Diamond_Eternity_Band.jpg"
+  }
+ },
+ {
+  "id": "his075",
+  "role": "history",
+  "lot_no": null,
+  "name": "Plain 18k Domed Gold Ring",
+  "form": "Ring",
+  "era": "Contemporary",
+  "style": "minimal",
+  "stones": [],
+  "metals": [
+   "Gold"
+  ],
+  "description": "Polished domed yellow gold band",
+  "ask": 1400,
+  "resale": 1800.0,
+  "image": "/img/his075.jpg",
+  "image_url": "https://raw.githubusercontent.com/makk9/uncut-book/main/data/photos/k81.jpg",
+  "credit": {
+   "title": "Plain 18K domed gold ring",
+   "author": "W.carter",
+   "license": "CC BY-SA 4.0",
+   "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+   "source": "Wikimedia Commons",
+   "landing_url": "https://commons.wikimedia.org/wiki/File:Plain_18K_domed_gold_ring.jpg"
+  }
+ },
+ {
+  "id": "his076",
+  "role": "history",
+  "lot_no": null,
+  "name": "Gold Ring with Scattered Diamonds",
+  "form": "Ring",
+  "era": "Contemporary",
+  "style": "minimal",
+  "stones": [
+   "Diamond"
+  ],
+  "metals": [
+   "Gold"
+  ],
+  "description": "Rose gold band set with tiny diamonds",
+  "ask": 1800,
+  "resale": 2300.0,
+  "image": "/img/his076.jpg",
+  "image_url": "https://raw.githubusercontent.com/makk9/uncut-book/main/data/photos/k158.jpg",
+  "credit": {
+   "title": "Ad Astra - gold ring with diamonds",
+   "author": "W.carter",
+   "license": "CC BY-SA 4.0",
+   "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+   "source": "Wikimedia Commons",
+   "landing_url": "https://commons.wikimedia.org/wiki/File:Ad_Astra_-_gold_ring_with_diamonds.jpg"
+  }
+ },
+ {
+  "id": "his077",
+  "role": "history",
+  "lot_no": null,
+  "name": "Open Gold Ring with Bezel Diamonds",
+  "form": "Ring",
+  "era": "Contemporary",
+  "style": "minimal",
+  "stones": [
+   "Diamond"
+  ],
+  "metals": [
+   "Gold"
+  ],
+  "description": "Airy yellow gold ring with small bezel-set diamonds",
+  "ask": 2400,
+  "resale": 3100.0,
+  "image": "/img/his077.jpg",
+  "image_url": "https://raw.githubusercontent.com/makk9/uncut-book/main/data/photos/k52.jpg",
+  "credit": {
+   "title": "Bague Ivresse diamants",
+   "author": "Lisagardenparty",
+   "license": "CC BY-SA 4.0",
+   "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+   "source": "Wikimedia Commons",
+   "landing_url": "https://commons.wikimedia.org/wiki/File:Bague_Ivresse_diamants.jpg"
+  }
+ },
+ {
+  "id": "his078",
+  "role": "history",
+  "lot_no": null,
+  "name": "Bezel-Set Moonstone Ring",
+  "form": "Ring",
+  "era": "Contemporary",
+  "style": "minimal",
+  "stones": [
+   "Moonstone"
+  ],
+  "metals": [
+   "Gold"
+  ],
+  "description": "Domed moonstone in a yellow gold bezel",
+  "ask": 1100,
+  "resale": 1400.0,
+  "image": "/img/his078.jpg",
+  "image_url": "https://raw.githubusercontent.com/makk9/uncut-book/main/data/photos/k165.jpg",
+  "credit": {
+   "title": "Bezel set Moonstone Ring in Yellow Gold",
+   "author": "CGJewelry",
+   "license": "CC BY-SA 4.0",
+   "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+   "source": "Wikimedia Commons",
+   "landing_url": "https://commons.wikimedia.org/wiki/File:Bezel_set_Moonstone_Ring_in_Yellow_Gold.jpg"
+  }
+ },
+ {
+  "id": "his079",
+  "role": "history",
+  "lot_no": null,
+  "name": "Fine Gold Necklace with Diamond Bar",
+  "form": "Necklace",
+  "era": "Contemporary",
+  "style": "minimal",
+  "stones": [
+   "Diamond"
+  ],
+  "metals": [
+   "Gold"
+  ],
+  "description": "Hair-thin gold chain with a small diamond cluster",
+  "ask": 1100,
+  "resale": 1400.0,
+  "image": "/img/his079.jpg",
+  "image_url": "https://raw.githubusercontent.com/makk9/uncut-book/main/data/photos/k140.jpg",
+  "credit": {
+   "title": "Catbird Snow Queen necklace",
+   "author": "Valereee",
+   "license": "CC0",
+   "license_url": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+   "source": "Wikimedia Commons",
+   "landing_url": "https://commons.wikimedia.org/wiki/File:Catbird_Snow_Queen_necklace.jpg"
+  }
+ },
+ {
+  "id": "his080",
+  "role": "history",
+  "lot_no": null,
+  "name": "Blue Sapphire and Diamond Necklace",
+  "form": "Necklace",
+  "era": "Contemporary",
+  "style": "statement",
+  "stones": [
+   "Sapphire",
+   "Diamond"
+  ],
+  "metals": [
+   "Platinum"
+  ],
+  "description": "Graduated clusters of blue sapphires framed in diamonds",
+  "ask": 24000,
+  "resale": 31200.0,
+  "image": "/img/his080.jpg",
+  "image_url": "https://raw.githubusercontent.com/makk9/uncut-book/main/data/photos/k47.jpg",
+  "credit": {
+   "title": "Blue Sapphire & Diamond Necklace",
+   "author": "prayitno",
+   "license": "CC BY 2.0",
+   "license_url": "https://creativecommons.org/licenses/by/2.0",
+   "source": "Wikimedia Commons",
+   "landing_url": "https://commons.wikimedia.org/wiki/File:Blue_Sapphire_%26_Diamond_Necklace.jpg"
+  }
+ },
+ {
+  "id": "his081",
+  "role": "history",
+  "lot_no": null,
+  "name": "Rough Diamond Necklace",
+  "form": "Necklace",
+  "era": "Contemporary",
+  "style": "unusual",
+  "stones": [
+   "Diamond"
+  ],
+  "metals": [
+   "Gold"
+  ],
+  "description": "Several strands of natural rough diamond beads",
+  "ask": 6800,
+  "resale": 8800.0,
+  "image": "/img/his081.jpg",
+  "image_url": "https://raw.githubusercontent.com/makk9/uncut-book/main/data/photos/k28.jpg",
+  "credit": {
+   "title": "Curled up necklace made of rough diamonds",
+   "author": "W.carter",
+   "license": "CC BY-SA 4.0",
+   "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+   "source": "Wikimedia Commons",
+   "landing_url": "https://commons.wikimedia.org/wiki/File:Curled_up_necklace_made_of_rough_diamonds.jpg"
+  }
+ },
+ {
+  "id": "his082",
+  "role": "history",
+  "lot_no": null,
+  "name": "Lapis Lazuli Necklace with Diamonds",
+  "form": "Necklace",
+  "era": "Contemporary",
+  "style": "unusual",
+  "stones": [
+   "Lapis",
+   "Diamond",
+   "Sapphire"
+  ],
+  "metals": [
+   "Gold"
+  ],
+  "description": "Lapis beads and a large lapis drop set with small stones",
+  "ask": 5200,
+  "resale": 6800.0,
+  "image": "/img/his082.jpg",
+  "image_url": "https://raw.githubusercontent.com/makk9/uncut-book/main/data/photos/k30.jpg",
+  "credit": {
+   "title": "Blues - lapis lazuli necklace with diamonds and sapphires",
+   "author": "W.carter",
+   "license": "CC BY-SA 4.0",
+   "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+   "source": "Wikimedia Commons",
+   "landing_url": "https://commons.wikimedia.org/wiki/File:Blues_-_lapis_lazuli_necklace_with_diamonds_and_sapphires.jpg"
+  }
+ },
+ {
+  "id": "his083",
+  "role": "history",
+  "lot_no": null,
+  "name": "Kundan Necklace with an Emerald Drop",
+  "form": "Necklace",
+  "era": "Antique",
+  "style": "important",
+  "stones": [
+   "Diamond",
+   "Emerald",
+   "Pearl"
+  ],
+  "metals": [
+   "Gold"
+  ],
+  "description": "Indian kundan collar in gold with pearls and an emerald drop",
+  "ask": 18000,
+  "resale": 23400.0,
+  "image": "/img/his083.jpg",
+  "image_url": "https://raw.githubusercontent.com/makk9/uncut-book/main/data/photos/k36.jpg",
+  "credit": {
+   "title": "British Museum The Islamic world Necklace Kundan India 21022019 7703",
+   "author": "Vassil",
+   "license": "CC0",
+   "license_url": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+   "source": "Wikimedia Commons",
+   "landing_url": "https://commons.wikimedia.org/wiki/File:British_Museum_The_Islamic_world_Necklace_Kundan_India_21022019_7703.jpg"
+  }
+ },
+ {
+  "id": "his084",
+  "role": "history",
+  "lot_no": null,
+  "name": "Antique Indian Gold Necklace and Earrings",
+  "form": "Necklace",
+  "era": "Victorian",
+  "style": "estate",
+  "stones": [],
+  "metals": [
+   "Gold"
+  ],
+  "description": "Layered panels of worked gold with matching earrings",
+  "ask": 9000,
+  "resale": 11700.0,
+  "image": "/img/his084.jpg",
+  "image_url": "https://raw.githubusercontent.com/makk9/uncut-book/main/data/photos/k122.jpg",
+  "credit": {
+   "title": "Dogra Rani Haar, Jammu Culture, late 19th century",
+   "author": "SpeakingArch",
+   "license": "CC BY-SA 4.0",
+   "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+   "source": "Wikimedia Commons",
+   "landing_url": "https://commons.wikimedia.org/wiki/File:Dogra_Rani_Haar,_Jammu_Culture,_late_19th_century.jpg"
+  }
+ },
+ {
+  "id": "his085",
+  "role": "history",
+  "lot_no": null,
+  "name": "Pair of Heavy 22k Gold Necklaces",
+  "form": "Necklace",
+  "era": "Contemporary",
+  "style": "street",
+  "stones": [],
+  "metals": [
+   "Gold"
+  ],
+  "description": "Dense high-karat gold collars shown on displays",
+  "ask": 12800,
+  "resale": 16600.0,
+  "image": "/img/his085.jpg",
+  "image_url": "https://raw.githubusercontent.com/makk9/uncut-book/main/data/photos/k138.jpg",
+  "credit": {
+   "title": "Collares",
+   "author": "E4024",
+   "license": "CC BY-SA 3.0",
+   "license_url": "https://creativecommons.org/licenses/by-sa/3.0",
+   "source": "Wikimedia Commons",
+   "landing_url": "https://commons.wikimedia.org/wiki/File:Collares.jpg"
+  }
+ },
+ {
+  "id": "his086",
+  "role": "history",
+  "lot_no": null,
+  "name": "Twisted Gold Rope Necklace",
+  "form": "Chain",
+  "era": "Contemporary",
+  "style": "street",
+  "stones": [
+   "Diamond"
+  ],
+  "metals": [
+   "Gold"
+  ],
+  "description": "Soft gold rope with a pave diamond station",
+  "ask": 9200,
+  "resale": 12000.0,
+  "image": "/img/his086.jpg",
+  "image_url": "https://raw.githubusercontent.com/makk9/uncut-book/main/data/photos/k124.jpg",
+  "credit": {
+   "title": "Collier Prinzesse mit Ronde Sternennacht auf weiß",
+   "author": "Wellendorff",
+   "license": "CC BY-SA 3.0",
+   "license_url": "https://creativecommons.org/licenses/by-sa/3.0",
+   "source": "Wikimedia Commons",
+   "landing_url": "https://commons.wikimedia.org/wiki/File:Collier_Prinzesse_mit_Ronde_Sternennacht_auf_wei%C3%9F.jpg"
+  }
+ },
+ {
+  "id": "his087",
+  "role": "history",
+  "lot_no": null,
+  "name": "Long Openwork Link Chain",
+  "form": "Chain",
+  "era": "Edwardian",
+  "style": "estate",
+  "stones": [],
+  "metals": [
+   "Silver"
+  ],
+  "description": "Dark metal chain of pierced openwork links",
+  "ask": 2400,
+  "resale": 3100.0,
+  "image": "/img/his087.jpg",
+  "image_url": "https://raw.githubusercontent.com/makk9/uncut-book/main/data/photos/k39.jpg",
+  "credit": {
+   "title": "Chain MET sf45.28.5",
+   "author": "René Lalique",
+   "license": "CC0",
+   "license_url": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+   "source": "Wikimedia Commons",
+   "landing_url": "https://commons.wikimedia.org/wiki/File:Chain_MET_sf45.28.5.jpg"
+  }
+ },
+ {
+  "id": "his088",
+  "role": "history",
+  "lot_no": null,
+  "name": "Gold Openwork Collar",
+  "form": "Necklace",
+  "era": "Edwardian",
+  "style": "important",
+  "stones": [],
+  "metals": [
+   "Gold"
+  ],
+  "description": "Rigid collar of intertwined gold stems",
+  "ask": 5200,
+  "resale": 6800.0,
+  "image": "/img/his088.jpg",
+  "image_url": "https://raw.githubusercontent.com/makk9/uncut-book/main/data/photos/k135.jpg",
+  "credit": {
+   "title": "Collaret MET DP154606",
+   "author": "René Lalique",
+   "license": "CC0",
+   "license_url": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+   "source": "Wikimedia Commons",
+   "landing_url": "https://commons.wikimedia.org/wiki/File:Collaret_MET_DP154606.jpg"
+  }
+ },
+ {
+  "id": "his089",
+  "role": "history",
+  "lot_no": null,
+  "name": "Art Deco Link Bracelet, 1925",
+  "form": "Bracelet",
+  "era": "Art Deco",
+  "style": "estate",
+  "stones": [
+   "Gemstones"
+  ],
+  "metals": [
+   "Gold"
+  ],
+  "description": "Rectangular worked gold panels divided by small stones",
+  "ask": 7800,
+  "resale": 10100.0,
+  "image": "/img/his089.jpg",
+  "image_url": "https://raw.githubusercontent.com/makk9/uncut-book/main/data/photos/k106.jpg",
+  "credit": {
+   "title": "Art Deco bracelet (1925) Museum of Decorative Arts",
+   "author": "SiefkinDR",
+   "license": "CC BY-SA 4.0",
+   "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+   "source": "Wikimedia Commons",
+   "landing_url": "https://commons.wikimedia.org/wiki/File:Art_Deco_bracelet_(1925)_Museum_of_Decorative_Arts.jpg"
+  }
+ },
+ {
+  "id": "his090",
+  "role": "history",
+  "lot_no": null,
+  "name": "White Gold and Diamond Drop Earrings",
+  "form": "Earrings",
+  "era": "Contemporary",
+  "style": "statement",
+  "stones": [
+   "Diamond"
+  ],
+  "metals": [
+   "Gold"
+  ],
+  "description": "Long drops of large round and pear diamonds",
+  "ask": 7400,
+  "resale": 9600.0,
+  "image": "/img/his090.jpg",
+  "image_url": "https://raw.githubusercontent.com/makk9/uncut-book/main/data/photos/k9.jpg",
+  "credit": {
+   "title": "White gold and diamonds earrings",
+   "author": "Mauro Cateb",
+   "license": "CC BY-SA 3.0",
+   "license_url": "https://creativecommons.org/licenses/by-sa/3.0",
+   "source": "Wikimedia Commons",
+   "landing_url": "https://commons.wikimedia.org/wiki/File:White_gold_and_diamonds_earrings.JPG"
+  }
+ },
+ {
+  "id": "his091",
+  "role": "history",
+  "lot_no": null,
+  "name": "White Gold Bezel Drop Earrings",
+  "form": "Earrings",
+  "era": "Contemporary",
+  "style": "minimal",
+  "stones": [
+   "Diamond"
+  ],
+  "metals": [
+   "Gold"
+  ],
+  "description": "Small bezel-set stones on white gold wires",
+  "ask": 1100,
+  "resale": 1400.0,
+  "image": "/img/his091.jpg",
+  "image_url": "https://raw.githubusercontent.com/makk9/uncut-book/main/data/photos/k17.jpg",
+  "credit": {
+   "title": "White gold earrings",
+   "author": "Mauro Cateb",
+   "license": "CC BY-SA 3.0",
+   "license_url": "https://creativecommons.org/licenses/by-sa/3.0",
+   "source": "Wikimedia Commons",
+   "landing_url": "https://commons.wikimedia.org/wiki/File:White_gold_earrings.jpg"
+  }
+ },
+ {
+  "id": "his092",
+  "role": "history",
+  "lot_no": null,
+  "name": "Emerald and Diamond Star Earrings",
+  "form": "Earrings",
+  "era": "Contemporary",
+  "style": "statement",
+  "stones": [
+   "Emerald",
+   "Diamond"
+  ],
+  "metals": [
+   "Gold"
+  ],
+  "description": "Diamond stars above pear emerald drops",
+  "ask": 7200,
+  "resale": 9400.0,
+  "image": "/img/his092.jpg",
+  "image_url": "https://raw.githubusercontent.com/makk9/uncut-book/main/data/photos/k24.jpg",
+  "credit": {
+   "title": "Emerald diamond earrings",
+   "author": "Eurico Zimbres",
+   "license": "CC BY-SA 2.5",
+   "license_url": "https://creativecommons.org/licenses/by-sa/2.5",
+   "source": "Wikimedia Commons",
+   "landing_url": "https://commons.wikimedia.org/wiki/File:Emerald_diamond_earrings.jpg"
+  }
+ },
+ {
+  "id": "his093",
+  "role": "history",
+  "lot_no": null,
+  "name": "Pearl and Diamond Tassel Earrings",
+  "form": "Earrings",
+  "era": "Contemporary",
+  "style": "statement",
+  "stones": [
+   "Pearl",
+   "Diamond"
+  ],
+  "metals": [
+   "Gold"
+  ],
+  "description": "White pearls above articulated diamond tassels",
+  "ask": 11000,
+  "resale": 14300.0,
+  "image": "/img/his093.jpg",
+  "image_url": "https://raw.githubusercontent.com/makk9/uncut-book/main/data/photos/k25.jpg",
+  "credit": {
+   "title": "JE18722-$16,600-ENCHANTMENT",
+   "author": "Sarah J Y Wong",
+   "license": "CC BY-SA 4.0",
+   "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+   "source": "Wikimedia Commons",
+   "landing_url": "https://commons.wikimedia.org/wiki/File:JE18722-$16,600-ENCHANTMENT.png"
+  }
+ },
+ {
+  "id": "his094",
+  "role": "history",
+  "lot_no": null,
+  "name": "Carved Jade Basket Earrings",
+  "form": "Earrings",
+  "era": "Contemporary",
+  "style": "unusual",
+  "stones": [
+   "Jade",
+   "Diamond"
+  ],
+  "metals": [
+   "Gold"
+  ],
+  "description": "Green carved jade in diamond hoops with a jade drop",
+  "ask": 8200,
+  "resale": 10700.0,
+  "image": "/img/his094.jpg",
+  "image_url": "https://raw.githubusercontent.com/makk9/uncut-book/main/data/photos/k20.jpg",
+  "credit": {
+   "title": "Endearing Bliss",
+   "author": "Sarah J Y Wong",
+   "license": "CC BY-SA 4.0",
+   "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+   "source": "Wikimedia Commons",
+   "landing_url": "https://commons.wikimedia.org/wiki/File:Endearing_Bliss.jpg"
+  }
+ },
+ {
+  "id": "his095",
+  "role": "history",
+  "lot_no": null,
+  "name": "Pave Diamond Square Gold Ring",
+  "form": "Ring",
+  "era": "Contemporary",
+  "style": "mens",
+  "stones": [
+   "Diamond"
+  ],
+  "metals": [
+   "Gold"
+  ],
+  "description": "Heavy square-faced yellow gold ring with a pave top",
+  "ask": 5600,
+  "resale": 7300.0,
+  "image": "/img/his095.jpg",
+  "image_url": "https://raw.githubusercontent.com/makk9/uncut-book/main/data/photos/k68.jpg",
+  "credit": {
+   "title": "Brilliants and gold ring",
+   "author": "Mauro Cateb",
+   "license": "CC BY-SA 3.0",
+   "license_url": "https://creativecommons.org/licenses/by-sa/3.0",
+   "source": "Wikimedia Commons",
+   "landing_url": "https://commons.wikimedia.org/wiki/File:Brilliants_and_gold_ring.jpg"
+  }
+ },
+ {
+  "id": "his096",
+  "role": "history",
+  "lot_no": null,
+  "name": "Black Onyx and Diamond Gold Ring",
+  "form": "Ring",
+  "era": "Contemporary",
+  "style": "mens",
+  "stones": [
+   "Onyx",
+   "Diamond"
+  ],
+  "metals": [
+   "Gold"
+  ],
+  "description": "Diagonal black onyx panel in a broad gold band",
+  "ask": 2300,
+  "resale": 3000.0,
+  "image": "/img/his096.jpg",
+  "image_url": "https://raw.githubusercontent.com/makk9/uncut-book/main/data/photos/k69.jpg",
+  "credit": {
+   "title": "Black onyx and diamonds ring",
+   "author": "Mark Somma",
+   "license": "CC BY 2.0",
+   "license_url": "https://creativecommons.org/licenses/by/2.0",
+   "source": "Wikimedia Commons",
+   "landing_url": "https://commons.wikimedia.org/wiki/File:Black_onyx_and_diamonds_ring.jpg"
+  }
+ },
+ {
+  "id": "his097",
+  "role": "history",
+  "lot_no": null,
+  "name": "Engraved Gold Trophy Ring",
+  "form": "Ring",
+  "era": "Contemporary",
+  "style": "mens",
+  "stones": [],
+  "metals": [
+   "Gold"
+  ],
+  "description": "Heavy yellow gold award ring",
+  "ask": 1200,
+  "resale": 1600.0,
+  "image": "/img/his097.jpg",
+  "image_url": "https://raw.githubusercontent.com/makk9/uncut-book/main/data/photos/k157.jpg",
+  "credit": {
+   "title": "Bowling trophy 300 game winner 20181106 064933 02",
+   "author": "CaptJayRuffins",
+   "license": "CC BY-SA 4.0",
+   "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+   "source": "Wikimedia Commons",
+   "landing_url": "https://commons.wikimedia.org/wiki/File:Bowling_trophy_300_game_winner_20181106_064933_02.jpg"
+  }
+ },
+ {
+  "id": "his098",
+  "role": "history",
+  "lot_no": null,
+  "name": "Group of Cut and Rough Diamonds",
+  "form": "Loose stone",
+  "era": "Contemporary",
+  "style": "investment",
+  "stones": [
+   "Diamond"
+  ],
+  "metals": [],
+  "description": "Several unset diamonds, rough and faceted",
+  "ask": 22000,
+  "resale": 28600.0,
+  "image": "/img/his098.jpg",
+  "image_url": "https://raw.githubusercontent.com/makk9/uncut-book/main/data/photos/k61.jpg",
+  "credit": {
+   "title": "Colorado Diamond Crystal, Freedom Diamond, Uncle Sam Diamond, Canary Diamond",
+   "author": "Smithsonian Institution",
+   "license": "Public domain",
+   "license_url": "",
+   "source": "Wikimedia Commons",
+   "landing_url": "https://commons.wikimedia.org/wiki/File:Colorado_Diamond_Crystal,_Freedom_Diamond,_Uncle_Sam_Diamond,_Canary_Diamond.jpg"
+  }
  }
 ]

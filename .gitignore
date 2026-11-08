@@ -8,3 +8,4 @@ data/raw/
 .untracked/
 .DS_Store
 data/catalog/
+.idea/

@@ -40,6 +40,8 @@ PERSONAS = [
       ({"stone:Sapphire": 7, "style:statement": 2, "form:Ring": 2, "form:Loose stone": 2}, 4, ["sapphire ring", "blue sapphire"])]),
     ("julian", "Julian Hale", "Upper East Side, NY", "Estate purist. Art Deco platinum first, and will pay for period and condition.",
      [({"era:Art Deco": 8, "metal:Platinum": 3, "style:estate": 4, "stone:Diamond": 2}, 9, ["art deco ring", "art deco brooch", "platinum filigree"])]),
+    ("priya", "Priya Menon", "Edison, NJ", "High-karat gold and pearls for family occasions, with some ruby.",
+     [({"metal:Gold": 5, "stone:Pearl": 4, "stone:Ruby": 3, "form:Necklace": 3, "form:Earrings": 2}, 8, ["gold necklace", "pearl set", "ruby earrings"])]),
     ("theo", "Theo Laurent", "Palm Beach, FL", "Wants the room to notice. Cocktail rings and big center stones, gets bored quickly.",
      [({"style:statement": 8, "form:Ring": 4, "stone:Ruby": 2, "stone:Sapphire": 2, "stone:Emerald": 2}, 8, ["cocktail ring", "large statement ring"])]),
     ("naomi", "Naomi Katz", "Brooklyn, NY", "Careful buyer on a modest budget. Victorian brooches, cameos and lockets.",
@@ -56,6 +58,8 @@ PERSONAS = [
     ("daniel", "Daniel Cho", "Fort Lee, NJ", "Bought loose diamonds for years. Has lately been asking about period settings to put them in.",
      [({"form:Loose stone": 7, "stone:Diamond": 6, "style:investment": 3}, 6, ["loose diamond", "certified diamond"]),
       ({"era:Art Deco": 6, "era:Edwardian": 4, "style:estate": 4, "stone:Diamond": 3}, 4, ["art deco setting", "edwardian ring"])]),
+    ("lena", "Lena Novak", "Chicago, IL", "Earrings, nearly exclusively. Diamonds for evening, gold for day.",
+     [({"form:Earrings": 9, "stone:Diamond": 3, "metal:Gold": 2}, 8, ["diamond earrings", "chandelier earrings", "gold earrings"])]),
     ("margot", "Margot Ellery", "Boston, MA", "Museum-minded. Tiaras, important brooches and pieces with a story, at her own pace.",
      [({"form:Tiara": 8, "form:Brooch": 5, "era:Edwardian": 3, "era:Victorian": 3, "style:important": 6}, 8, ["tiara", "important antique brooch"])]),
 ]
@@ -122,7 +126,7 @@ def main() -> None:
                 "name": row["name"], "form": row["form"], "era": row["era"], "style": row["style"],
                 "stones": row.get("stones", []), "metals": row.get("metals", []),
                 "description": row.get("description", ""),
-                "ask": ask, "resale": row.get("resale", round(ask * 1.3, -2)),
+                "ask": ask, "resale": row.get("resale") or round(ask * 1.3, -2),
                 "image": f"/img/{pid}.svg", "image_url": None, "credit": None,
             }
             if row.get("photo"):
@@ -184,7 +188,7 @@ def main() -> None:
     (BOOK / "collectors.json").write_text(json.dumps(collectors, indent=1, ensure_ascii=False))
 
     lines = ["# Photo credits", "",
-             "These photos stand in for fictional lots. Lot names, asks and resale figures are invented and say nothing about the pictured objects or their owners. Copies here are resized. Other pieces use placeholder art made for this project.", "",
+             "These photos stand in for fictional lots. Lot names, asks and resale figures are invented and say nothing about the pictured objects or their owners. Copies here are resized.", "",
              "| File | Source title | Author | License | Source |", "|---|---|---|---|---|"]
     for pid, c in sorted(credits.items()):
         title, author = (c["title"].replace("|", " "), c["author"].replace("|", " ").replace("\n", " "))
@@ -198,4 +202,5 @@ def main() -> None:
         print(f"  {c['name']:18} events {len(c['events']):3} orders {c['orders']:2} spend {c['lifetime_spend']:>9,.0f} capacity {c['capacity']:>9,.0f}")
 
 
-main()
+if __name__ == "__main__":
+    main()

@@ -25,6 +25,7 @@ class Params:
     max_rank: int = 8             # a collector is only a candidate buyer down to this rank
     slots: int = 2                # lots earmarked per collector in one cycle
     resilience: float = 0.0       # 0 = maximize value, 1 = maximize worst single-buyer loss
+    capacity_tolerance: float = 0.10  # capacity is a rough estimate, so allow this much over it
 
 
 @dataclass
@@ -34,6 +35,11 @@ class Problem:
     ranks: np.ndarray             # lots x collectors, 1 = top of that collector's batch ranking
     blocked: set[tuple[str, str]] = field(default_factory=set)  # (lot, collector) passes
     forced: set[str] = field(default_factory=set)  # what-if: buy these whatever the solver prefers
+
+
+def limit(c: dict, q: Params) -> float:
+    """The most this collector can be placed against, tolerance included."""
+    return c["capacity"] * (1 + q.capacity_tolerance)
 
 
 def fit_from_rank(ranks: np.ndarray, decay: float) -> np.ndarray:
@@ -52,7 +58,7 @@ def _eligible(p: Problem, q: Params) -> list[tuple[int, int]]:
     pairs = []
     for i, lot in enumerate(p.lots):
         for j, c in enumerate(p.collectors):
-            if p.ranks[i, j] > q.max_rank or lot["resale"] > c["capacity"]:
+            if p.ranks[i, j] > q.max_rank or lot["resale"] > limit(c, q):
                 continue
             if (lot["id"], c["id"]) in p.blocked:
                 continue
@@ -91,7 +97,7 @@ def solve(p: Problem, q: Params) -> dict:
     for j, c in enumerate(p.collectors):  # no collector is promised more than they can absorb
         idx = [k for k, (_, b) in enumerate(pairs) if b == j]
         if idx:
-            add([(n + k, resale[pairs[k][0]]) for k in idx], -np.inf, c["capacity"])
+            add([(n + k, resale[pairs[k][0]]) for k in idx], -np.inf, limit(c, q))
             add([(n + k, 1.0) for k in idx], -np.inf, q.slots)
 
     c_obj = np.zeros(nvars)
@@ -113,7 +119,7 @@ def solve(p: Problem, q: Params) -> dict:
                     continue
                 idx = [k for k, (_, b) in enumerate(pairs) if b == j]
                 if idx:
-                    add([(at(k), resale[pairs[k][0]]) for k in idx], -np.inf, c["capacity"])
+                    add([(at(k), resale[pairs[k][0]]) for k in idx], -np.inf, limit(c, q))
                     add([(at(k), 1.0) for k in idx], -np.inf, q.slots)
             add([(zi, 1.0)] + [(at(k), -v[a, b]) for k, (a, b) in enumerate(pairs) if b != s]
                 + [(i, q.holding_penalty * ask[i]) for i in range(n)], -np.inf, 0)
@@ -153,7 +159,7 @@ def place(p: Problem, q: Params, chosen: list[int], drop: int | None = None) -> 
         idx = [k for k, (_, b) in enumerate(pairs) if b == j]
         if idx:
             rows += [r] * len(idx); cols += idx; vals += [resale[pairs[k][0]] for k in idx]
-            hi.append(c["capacity"]); r += 1
+            hi.append(limit(c, q)); r += 1
             rows += [r] * len(idx); cols += idx; vals += [1.0] * len(idx); hi.append(q.slots); r += 1
     # value here is relative to leaving a lot unplaced, so a bad buyer is never forced
     ask = [l["ask"] for l in p.lots]

@@ -46,6 +46,7 @@ class Request(BaseModel):
     max_rank: int = Field(default=8, ge=1, le=24)
     slots: int = Field(default=2, ge=1, le=6)
     resilience: float = Field(default=0.0, ge=0, le=1)
+    capacity_tolerance: float = Field(default=0.10, ge=0, le=0.5)
     recency: float = Field(default=0.6, ge=0, le=1)
     signals: dict[str, list[Signal]] = Field(default_factory=dict)
     passes: list[tuple[str, str]] = Field(default_factory=list)
@@ -142,7 +143,8 @@ async def build(req: Request):
     blocked = {tuple(x) for x in req.passes}
     problem = opt.Problem(lots, buyers, ranks, blocked)
     q = opt.Params(budget=req.budget, fit_decay=req.fit_decay, holding_penalty=req.holding_penalty,
-                   max_rank=req.max_rank, slots=req.slots, resilience=req.resilience)
+                   max_rank=req.max_rank, slots=req.slots, resilience=req.resilience,
+                   capacity_tolerance=req.capacity_tolerance)
     return raw, sources, rank_ms, lens, tags, ranks, tag_ranks, lots, buyers, blocked, problem, q
 
 
@@ -151,7 +153,7 @@ FRONTIER_CACHE: dict[bytes, list] = {}
 
 def cached_frontier(problem, q, blocked) -> list[dict]:
     """The curve does not depend on the budget being looked at, so a slider drag reuses it."""
-    key = (problem.ranks.tobytes() + repr((q.fit_decay, q.holding_penalty, q.max_rank, q.slots,
+    key = (problem.ranks.tobytes() + repr((q.fit_decay, q.holding_penalty, q.max_rank, q.slots, q.capacity_tolerance,
                                            sorted(blocked))).encode())
     if key not in FRONTIER_CACHE:
         if len(FRONTIER_CACHE) > 256:
@@ -228,7 +230,9 @@ async def portfolio(req: Request):
             "rank_orders": lens[c["id"]]["orders"][l],
             "rank_tags": tags[c["id"]][l],
             "fit": round(float(fit[i, j]), 3),
-            "affordable": LOTS[i]["resale"] <= c["capacity"],
+            "affordable": LOTS[i]["resale"] <= opt.limit(c, q),
+            "over_by": round(max(0.0, LOTS[i]["resale"] - opt.limit(c, q))),
+            "stretch": round(max(0.0, LOTS[i]["resale"] - c["capacity"])) if LOTS[i]["resale"] <= opt.limit(c, q) else 0,
             "passed": (l, c["id"]) in blocked,
         } for j, c in enumerate(COLLECTORS)), key=lambda x: x["rank"])
         demand[l] = rows

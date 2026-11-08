@@ -317,6 +317,76 @@
    "resale": 10200,
    "description": "Pear aquamarines hanging from pave diamond discs",
    "photo": "p064"
+  },
+  {
+   "name": "Pink Tourmaline and Diamond Pendant Brooch, c. 1900",
+   "form": "Brooch",
+   "era": "Edwardian",
+   "style": "important",
+   "stones": [
+    "Tourmaline",
+    "Diamond"
+   ],
+   "metals": [
+    "Platinum",
+    "Gold"
+   ],
+   "ask": 21000,
+   "resale": 30500,
+   "description": "Belle Epoque scrolling diamond frame around a pink tourmaline with a matching drop",
+   "photo": "m11"
+  },
+  {
+   "name": "Pearl and Diamond Spray Brooch, c. 1900",
+   "form": "Brooch",
+   "era": "Edwardian",
+   "style": "estate",
+   "stones": [
+    "Pearl",
+    "Diamond"
+   ],
+   "metals": [
+    "Platinum",
+    "Gold"
+   ],
+   "ask": 8800,
+   "resale": 13200,
+   "description": "Gold flower within a diamond crescent, hung with sprays of natural pearls",
+   "photo": "m5"
+  },
+  {
+   "name": "Plique-a-Jour Dragonfly Brooch, c. 1905",
+   "form": "Brooch",
+   "era": "Edwardian",
+   "style": "unusual",
+   "stones": [
+    "Enamel"
+   ],
+   "metals": [
+    "Gold"
+   ],
+   "ask": 6400,
+   "resale": 11000,
+   "description": "Art Nouveau dragonfly with translucent plique-a-jour and cloisonne enamel wings",
+   "photo": "m38"
+  },
+  {
+   "name": "Diamond and Pearl Lavalier Necklace, c. 1910",
+   "form": "Necklace",
+   "era": "Edwardian",
+   "style": "estate",
+   "stones": [
+    "Diamond",
+    "Pearl"
+   ],
+   "metals": [
+    "Platinum",
+    "Gold"
+   ],
+   "ask": 16000,
+   "resale": 23000,
+   "description": "Fine diamond-set links with a long kite-shaped pendant",
+   "photo": "m4"
   }
  ],
  "holding": [
@@ -418,35 +488,7 @@
  ],
  "history": [
   {
-   "name": "1.5 ct Round Solitaire",
-   "form": "Ring",
-   "era": "Contemporary",
-   "style": "bridal",
-   "stones": [
-    "Diamond"
-   ],
-   "metals": [
-    "Platinum"
-   ],
-   "ask": 11000,
-   "description": "Round brilliant on a slim platinum band"
-  },
-  {
-   "name": "Cushion Diamond Halo Ring",
-   "form": "Ring",
-   "era": "Contemporary",
-   "style": "bridal",
-   "stones": [
-    "Diamond"
-   ],
-   "metals": [
-    "Platinum"
-   ],
-   "ask": 8500,
-   "description": "Cushion center in a micro-pave halo"
-  },
-  {
-   "name": "2 ct Oval Diamond Ring",
+   "name": "Trio of Pave Diamond Rings",
    "form": "Ring",
    "era": "Contemporary",
    "style": "bridal",
@@ -456,115 +498,95 @@
    "metals": [
     "Gold"
    ],
-   "ask": 15000,
-   "description": "Oval diamond on an 18k gold band"
+   "ask": 9800,
+   "resale": null,
+   "description": "Three yellow gold rings with pave diamond faces",
+   "photo": "p080"
   },
   {
-   "name": "Three-Stone Diamond Ring",
+   "name": "Cushion Sapphire and Diamond Engagement Ring",
    "form": "Ring",
    "era": "Contemporary",
    "style": "bridal",
    "stones": [
+    "Sapphire",
     "Diamond"
    ],
    "metals": [
     "Platinum"
    ],
-   "ask": 7200,
-   "description": "Round center with pear side stones"
+   "ask": 11200,
+   "resale": null,
+   "description": "Deep blue cushion sapphire with trillion diamond shoulders",
+   "photo": "p098"
   },
   {
-   "name": "14k Franco Chain",
-   "form": "Chain",
+   "name": "Parti Sapphire Three-Stone Engagement Ring",
+   "form": "Ring",
    "era": "Contemporary",
-   "style": "street",
-   "stones": [],
-   "metals": [
-    "Gold"
+   "style": "bridal",
+   "stones": [
+    "Sapphire",
+    "Diamond"
    ],
-   "ask": 6200,
-   "description": "Solid yellow gold Franco link"
-  },
-  {
-   "name": "18k Rope Chain",
-   "form": "Chain",
-   "era": "Contemporary",
-   "style": "street",
-   "stones": [],
    "metals": [
     "Gold"
    ],
    "ask": 7400,
-   "description": "Heavy solid rope chain"
+   "resale": null,
+   "description": "Oval Australian sapphire between small diamonds on a gold band",
+   "photo": "p099"
   },
   {
-   "name": "Gold Curb Link Chain",
-   "form": "Chain",
+   "name": "Teal Sapphire Engagement Ring",
+   "form": "Ring",
    "era": "Contemporary",
-   "style": "street",
+   "style": "bridal",
+   "stones": [
+    "Sapphire",
+    "Diamond"
+   ],
+   "metals": [
+    "Gold"
+   ],
+   "ask": 6200,
+   "resale": null,
+   "description": "Teal sapphire with kite-set diamonds on a slim gold band",
+   "photo": "p103"
+  },
+  {
+   "name": "Pair of Green Sapphire Engagement Rings",
+   "form": "Ring",
+   "era": "Contemporary",
+   "style": "bridal",
+   "stones": [
+    "Sapphire",
+    "Diamond"
+   ],
+   "metals": [
+    "Gold"
+   ],
+   "ask": 8600,
+   "resale": null,
+   "description": "Two bespoke green-blue sapphire rings",
+   "photo": "p102"
+  },
+  {
+   "name": "White Gold Wedding Bands",
+   "form": "Ring",
+   "era": "Contemporary",
+   "style": "bridal",
    "stones": [],
    "metals": [
     "Gold"
    ],
-   "ask": 9000,
-   "description": "Wide flat curb chain, 14k"
+   "ask": 1900,
+   "resale": null,
+   "description": "Matched white gold bands with a brushed finish",
+   "photo": "p228"
   },
   {
-   "name": "Gold Medallion Pendant",
-   "form": "Pendant",
-   "era": "Contemporary",
-   "style": "street",
-   "stones": [],
-   "metals": [
-    "Gold"
-   ],
-   "ask": 2600,
-   "description": "Large round medallion in 14k gold"
-  },
-  {
-   "name": "5 ct Diamond Line Bracelet",
-   "form": "Bracelet",
-   "era": "Contemporary",
-   "style": "line",
-   "stones": [
-    "Diamond"
-   ],
-   "metals": [
-    "Gold"
-   ],
-   "ask": 6800,
-   "description": "Four-prong white gold tennis bracelet"
-  },
-  {
-   "name": "12 ct Diamond Line Necklace",
-   "form": "Necklace",
-   "era": "Contemporary",
-   "style": "line",
-   "stones": [
-    "Diamond"
-   ],
-   "metals": [
-    "Gold"
-   ],
-   "ask": 16000,
-   "description": "Tennis necklace in 18k white gold"
-  },
-  {
-   "name": "Bezel Diamond Station Necklace",
-   "form": "Necklace",
-   "era": "Contemporary",
-   "style": "line",
-   "stones": [
-    "Diamond"
-   ],
-   "metals": [
-    "Gold"
-   ],
-   "ask": 4200,
-   "description": "Bezel-set diamonds spaced on a fine chain"
-  },
-  {
-   "name": "Emerald Halo Ring",
+   "name": "Emerald and Diamond Ring",
    "form": "Ring",
    "era": "Contemporary",
    "style": "statement",
@@ -576,13 +598,15 @@
     "Gold"
    ],
    "ask": 8200,
-   "description": "Colombian emerald with a diamond halo"
+   "resale": null,
+   "description": "Square emerald with diamond clusters on a yellow gold band",
+   "photo": "p084"
   },
   {
-   "name": "Emerald Drop Pendant",
-   "form": "Pendant",
+   "name": "Wide Emerald Mosaic Band",
+   "form": "Ring",
    "era": "Contemporary",
-   "style": "classic",
+   "style": "statement",
    "stones": [
     "Emerald"
    ],
@@ -590,96 +614,124 @@
     "Gold"
    ],
    "ask": 5400,
-   "description": "Pear emerald on a gold bail"
+   "resale": null,
+   "description": "Broad gold band with a lattice of small emeralds",
+   "photo": "p085"
   },
   {
-   "name": "Zambian Emerald Cushion Ring",
+   "name": "Oval Emerald Cabochon Ring",
    "form": "Ring",
    "era": "Contemporary",
-   "style": "statement",
+   "style": "classic",
+   "stones": [
+    "Emerald"
+   ],
+   "metals": [],
+   "ask": 3600,
+   "resale": null,
+   "description": "Smooth oval emerald cabochon in a plain bezel",
+   "photo": "p082"
+  },
+  {
+   "name": "Gold Heart Brooch with Emeralds",
+   "form": "Brooch",
+   "era": "Antique",
+   "style": "important",
    "stones": [
     "Emerald"
    ],
    "metals": [
-    "Platinum"
+    "Gold"
    ],
-   "ask": 11800,
-   "description": "Deep bluish-green Zambian emerald"
+   "ask": 4400,
+   "resale": null,
+   "description": "Domed gold heart pierced by a sword, set with emeralds",
+   "photo": "p058"
   },
   {
-   "name": "Cornflower Sapphire Halo Ring",
-   "form": "Ring",
-   "era": "Contemporary",
-   "style": "statement",
+   "name": "Enameled Gold Pendant with Emerald, Late 1500s",
+   "form": "Pendant",
+   "era": "Renaissance",
+   "style": "important",
    "stones": [
-    "Sapphire",
-    "Diamond"
-   ],
-   "metals": [
-    "Platinum"
-   ],
-   "ask": 9600,
-   "description": "Oval blue sapphire with a diamond halo"
-  },
-  {
-   "name": "Sapphire and Diamond Line Bracelet",
-   "form": "Bracelet",
-   "era": "Contemporary",
-   "style": "line",
-   "stones": [
-    "Sapphire",
-    "Diamond"
+    "Emerald",
+    "Pearl"
    ],
    "metals": [
     "Gold"
    ],
-   "ask": 7800,
-   "description": "Alternating blue sapphires and diamonds"
+   "ask": 12000,
+   "resale": null,
+   "description": "Architectural enameled gold pendant with an emerald and hanging pearls",
+   "photo": "m8"
   },
   {
-   "name": "3 ct Ceylon Sapphire, Loose",
-   "form": "Loose stone",
+   "name": "Antique Emerald Ring in Silver",
+   "form": "Ring",
+   "era": "Georgian",
+   "style": "estate",
+   "stones": [
+    "Emerald"
+   ],
+   "metals": [
+    "Silver"
+   ],
+   "ask": 1900,
+   "resale": null,
+   "description": "Worn silver hoop with a square emerald, 1700s",
+   "photo": "m27"
+  },
+  {
+   "name": "Gold Sapphire Stacking Rings",
+   "form": "Ring",
    "era": "Contemporary",
-   "style": "investment",
+   "style": "classic",
    "stones": [
     "Sapphire"
    ],
-   "metals": [],
-   "ask": 6400,
-   "description": "Unset oval Ceylon blue sapphire"
-  },
-  {
-   "name": "Art Deco Sapphire Bar Brooch",
-   "form": "Brooch",
-   "era": "Art Deco",
-   "style": "estate",
-   "stones": [
-    "Sapphire",
-    "Diamond"
-   ],
    "metals": [
-    "Platinum"
+    "Gold"
    ],
-   "ask": 4800,
-   "description": "Calibre sapphires and diamonds, about 1928"
+   "ask": 3200,
+   "resale": null,
+   "description": "Three slim gold rings with pale sapphires",
+   "photo": "p181"
   },
   {
-   "name": "Art Deco Diamond Line Bracelet",
-   "form": "Bracelet",
-   "era": "Art Deco",
-   "style": "estate",
-   "stones": [
-    "Diamond"
-   ],
-   "metals": [
-    "Platinum"
-   ],
-   "ask": 15500,
-   "description": "Geometric platinum links, about 1930"
-  },
-  {
-   "name": "Art Deco Dinner Ring",
+   "name": "Antique Sapphire Episcopal Ring",
    "form": "Ring",
+   "era": "Antique",
+   "style": "important",
+   "stones": [
+    "Sapphire"
+   ],
+   "metals": [
+    "Gold"
+   ],
+   "ask": 6400,
+   "resale": null,
+   "description": "Large blue sapphire in an engraved gold ring",
+   "photo": "p182"
+  },
+  {
+   "name": "Star Sapphire Men's Ring",
+   "form": "Ring",
+   "era": "Contemporary",
+   "style": "mens",
+   "stones": [
+    "Sapphire"
+   ],
+   "metals": [
+    "Gold"
+   ],
+   "ask": 9800,
+   "resale": null,
+   "description": "Very large round star sapphire cabochon, worn",
+   "photo": "p183"
+  },
+  {
+   "name": "Art Deco Diamond Pendant Watch",
+   "form": "Pendant",
    "era": "Art Deco",
    "style": "estate",
    "stones": [
@@ -688,82 +740,574 @@
    "metals": [
     "Platinum"
    ],
-   "ask": 7600,
-   "description": "Pierced platinum plaque ring"
+   "ask": 14500,
+   "resale": null,
+   "description": "Long geometric diamond pendant with a concealed watch",
+   "photo": "p019"
   },
   {
-   "name": "Victorian Seed Pearl Locket",
-   "form": "Pendant",
-   "era": "Victorian",
-   "style": "estate",
-   "stones": [
-    "Pearl"
-   ],
-   "metals": [
-    "Gold"
-   ],
-   "ask": 1200,
-   "description": "Engraved gold locket with seed pearls"
-  },
-  {
-   "name": "Hardstone Cameo Pendant",
-   "form": "Pendant",
-   "era": "Victorian",
-   "style": "estate",
-   "stones": [
-    "Cameo"
-   ],
-   "metals": [
-    "Gold"
-   ],
-   "ask": 900,
-   "description": "Carved hardstone cameo in gold"
-  },
-  {
-   "name": "Victorian Mourning Brooch",
+   "name": "Art Deco Enamel and Stone Buckle, 1925",
    "form": "Brooch",
+   "era": "Art Deco",
+   "style": "estate",
+   "stones": [
+    "Enamel"
+   ],
+   "metals": [],
+   "ask": 3200,
+   "resale": null,
+   "description": "Symmetrical scrolling buckle in lapis, coral and green enamel tones",
+   "photo": "p016"
+  },
+  {
+   "name": "Molded Glass Parakeets Necklace",
+   "form": "Necklace",
+   "era": "Art Deco",
+   "style": "unusual",
+   "stones": [
+    "Glass"
+   ],
+   "metals": [],
+   "ask": 2400,
+   "resale": null,
+   "description": "Frosted glass plaques on a cord, cast with parakeets",
+   "photo": "p021"
+  },
+  {
+   "name": "Art Deco Glass Pendants on Silk",
+   "form": "Pendant",
+   "era": "Art Deco",
+   "style": "estate",
+   "stones": [
+    "Glass"
+   ],
+   "metals": [],
+   "ask": 1800,
+   "resale": null,
+   "description": "Colored molded glass pendants on tasseled silk cords",
+   "photo": "p017"
+  },
+  {
+   "name": "Molded Glass and Red Enamel Belt Buckle",
+   "form": "Brooch",
+   "era": "Art Deco",
+   "style": "unusual",
+   "stones": [
+    "Glass",
+    "Enamel"
+   ],
+   "metals": [],
+   "ask": 1600,
+   "resale": null,
+   "description": "Pale molded glass panel above a red and black enamel section",
+   "photo": "p022"
+  },
+  {
+   "name": "Enameled Gold Link Bracelet, 1850-70",
+   "form": "Bracelet",
+   "era": "Victorian",
+   "style": "estate",
+   "stones": [
+    "Emerald"
+   ],
+   "metals": [
+    "Gold"
+   ],
+   "ask": 3400,
+   "resale": null,
+   "description": "Gold links with a central green stone",
+   "photo": "p053"
+  },
+  {
+   "name": "Blue and White Enamel Bracelet with Pearls",
+   "form": "Bracelet",
+   "era": "Victorian",
+   "style": "estate",
+   "stones": [
+    "Pearl",
+    "Diamond",
+    "Enamel"
+   ],
+   "metals": [
+    "Gold"
+   ],
+   "ask": 5200,
+   "resale": null,
+   "description": "Dark blue enamel panels with pearl and diamond flowers",
+   "photo": "p052"
+  },
+  {
+   "name": "Seed Pearl Parure, c. 1850",
+   "form": "Necklace",
    "era": "Victorian",
    "style": "estate",
    "stones": [
     "Pearl"
+   ],
+   "metals": [
+    "Gold"
+   ],
+   "ask": 3800,
+   "resale": null,
+   "description": "Necklace, pendant and earrings worked in seed pearls on mother-of-pearl",
+   "photo": "m22"
+  },
+  {
+   "name": "Seed Pearl Drop Earrings, c. 1850",
+   "form": "Earrings",
+   "era": "Victorian",
+   "style": "estate",
+   "stones": [
+    "Pearl"
+   ],
+   "metals": [],
+   "ask": 1500,
+   "resale": null,
+   "description": "Long drops of seed pearl balls on mother-of-pearl",
+   "photo": "m21"
+  },
+  {
+   "name": "Seed Pearl Cluster Ring, Late 1800s",
+   "form": "Ring",
+   "era": "Victorian",
+   "style": "estate",
+   "stones": [
+    "Pearl"
+   ],
+   "metals": [
+    "Gold"
+   ],
+   "ask": 1400,
+   "resale": null,
+   "description": "Wide gold band crowded with seed pearls",
+   "photo": "m14"
+  },
+  {
+   "name": "Garnet and Enamel Ring, c. 1860",
+   "form": "Ring",
+   "era": "Victorian",
+   "style": "estate",
+   "stones": [
+    "Garnet",
+    "Enamel"
    ],
    "metals": [
     "Gold"
    ],
    "ask": 1100,
-   "description": "Black enamel and seed pearl brooch"
+   "resale": null,
+   "description": "Pierced gold band with enamel scrolls",
+   "photo": "m52"
   },
   {
-   "name": "Edwardian Diamond Lavalier",
-   "form": "Necklace",
+   "name": "Green Stone and Diamond Ring, c. 1870",
+   "form": "Ring",
+   "era": "Victorian",
+   "style": "unusual",
+   "stones": [
+    "Diamond"
+   ],
+   "metals": [
+    "Gold"
+   ],
+   "ask": 2600,
+   "resale": null,
+   "description": "Carved green stone head with diamond eyes in an engraved gold mount",
+   "photo": "m20"
+  },
+  {
+   "name": "Cloisonne Enamel Gold Locket, 1868-70",
+   "form": "Pendant",
+   "era": "Victorian",
+   "style": "estate",
+   "stones": [
+    "Enamel"
+   ],
+   "metals": [
+    "Gold"
+   ],
+   "ask": 1900,
+   "resale": null,
+   "description": "Yellow enamel locket with plants and an insect",
+   "photo": "m53"
+  },
+  {
+   "name": "Enameled Figure Pendant, 1870-90",
+   "form": "Pendant",
+   "era": "Victorian",
+   "style": "important",
+   "stones": [
+    "Pearl",
+    "Enamel"
+   ],
+   "metals": [
+    "Gold"
+   ],
+   "ask": 6200,
+   "resale": null,
+   "description": "Two white enamel figures around a jeweled column",
+   "photo": "m19"
+  },
+  {
+   "name": "Diamond and Pearl Pendant Watch, c. 1900",
+   "form": "Pendant",
    "era": "Edwardian",
    "style": "estate",
    "stones": [
     "Diamond",
+    "Pearl",
+    "Ruby"
+   ],
+   "metals": [
+    "Platinum",
+    "Gold"
+   ],
+   "ask": 6800,
+   "resale": null,
+   "description": "Pearl above a diamond and ruby ball that holds a watch",
+   "photo": "m2"
+  },
+  {
+   "name": "Amethyst and Pearl Cross Necklace, c. 1905",
+   "form": "Necklace",
+   "era": "Edwardian",
+   "style": "estate",
+   "stones": [
+    "Amethyst",
     "Pearl"
    ],
    "metals": [
-    "Platinum"
+    "Silver"
    ],
-   "ask": 3800,
-   "description": "Platinum and pearl drop lavalier"
+   "ask": 1900,
+   "resale": null,
+   "description": "Enameled silver chain and cross set with amethysts",
+   "photo": "m12"
   },
   {
-   "name": "Edwardian Diamond Ring",
-   "form": "Ring",
+   "name": "Aquamarine and Enamel Cloak Clasp, c. 1905",
+   "form": "Brooch",
+   "era": "Edwardian",
+   "style": "important",
+   "stones": [
+    "Aquamarine",
+    "Pearl",
+    "Enamel"
+   ],
+   "metals": [
+    "Gold"
+   ],
+   "ask": 4800,
+   "resale": null,
+   "description": "Two oyster enamel panels with aquamarines and half pearls",
+   "photo": "m13"
+  },
+  {
+   "name": "Enamel and Citrine Pendant Brooch, c. 1905",
+   "form": "Brooch",
    "era": "Edwardian",
    "style": "estate",
+   "stones": [
+    "Citrine",
+    "Enamel"
+   ],
+   "metals": [
+    "Gold"
+   ],
+   "ask": 2200,
+   "resale": null,
+   "description": "Green and orange enamel with hanging citrines",
+   "photo": "m40"
+  },
+  {
+   "name": "Citrine and Blue Enamel Ring, c. 1910",
+   "form": "Ring",
+   "era": "Edwardian",
+   "style": "unusual",
+   "stones": [
+    "Citrine",
+    "Enamel"
+   ],
+   "metals": [
+    "Gold"
+   ],
+   "ask": 2100,
+   "resale": null,
+   "description": "Large yellow stone in a pointed blue enamel mount",
+   "photo": "m39"
+  },
+  {
+   "name": "Lily of the Valley Comb, c. 1900",
+   "form": "Hair Ornament",
+   "era": "Edwardian",
+   "style": "unusual",
+   "stones": [
+    "Pearl",
+    "Enamel"
+   ],
+   "metals": [
+    "Gold"
+   ],
+   "ask": 3600,
+   "resale": null,
+   "description": "Carved horn comb with enameled flowers",
+   "photo": "m41"
+  },
+  {
+   "name": "Arts and Crafts Diadem",
+   "form": "Tiara",
+   "era": "Edwardian",
+   "style": "important",
+   "stones": [
+    "Gemstones"
+   ],
+   "metals": [
+    "Gold"
+   ],
+   "ask": 14000,
+   "resale": null,
+   "description": "Gold headband with a central turquoise-toned stone and scrollwork",
+   "photo": "p206"
+  },
+  {
+   "name": "Berlin Ironwork Tiara",
+   "form": "Tiara",
+   "era": "Victorian",
+   "style": "important",
+   "stones": [],
+   "metals": [],
+   "ask": 9200,
+   "resale": null,
+   "description": "Delicate black cast iron tiara of pierced palmettes",
+   "photo": "p202"
+  },
+  {
+   "name": "Multi-Gem Cluster Ring, 1700s",
+   "form": "Ring",
+   "era": "Georgian",
+   "style": "statement",
+   "stones": [
+    "Ruby",
+    "Diamond",
+    "Emerald",
+    "Sapphire"
+   ],
+   "metals": [
+    "Gold",
+    "Silver"
+   ],
+   "ask": 3200,
+   "resale": null,
+   "description": "Silver cluster of colored stones on a gold band",
+   "photo": "m0"
+  },
+  {
+   "name": "Diamond and Enamel Cluster Ring, 1700s",
+   "form": "Ring",
+   "era": "Georgian",
+   "style": "estate",
+   "stones": [
+    "Diamond",
+    "Enamel"
+   ],
+   "metals": [
+    "Gold",
+    "Silver"
+   ],
+   "ask": 2800,
+   "resale": null,
+   "description": "Openwork silver and enamel cluster with diamonds",
+   "photo": "m3"
+  },
+  {
+   "name": "Pelican Pendant with Rubies and Emeralds, c. 1600",
+   "form": "Pendant",
+   "era": "Renaissance",
+   "style": "important",
+   "stones": [
+    "Ruby",
+    "Emerald",
+    "Diamond",
+    "Pearl"
+   ],
+   "metals": [
+    "Gold"
+   ],
+   "ask": 28000,
+   "resale": null,
+   "description": "Enameled gold pelican pendant hung with baroque pearls",
+   "photo": "m1"
+  },
+  {
+   "name": "Enameled Gold Pendant with Rubies, 1600",
+   "form": "Pendant",
+   "era": "Renaissance",
+   "style": "important",
+   "stones": [
+    "Ruby",
+    "Pearl"
+   ],
+   "metals": [
+    "Gold"
+   ],
+   "ask": 9400,
+   "resale": null,
+   "description": "Chained gold and enamel pendant with rubies and pearls",
+   "photo": "m7"
+  },
+  {
+   "name": "5 ct Princess Ruby Ring",
+   "form": "Ring",
+   "era": "Contemporary",
+   "style": "statement",
+   "stones": [
+    "Ruby"
+   ],
+   "metals": [
+    "Silver"
+   ],
+   "ask": 18500,
+   "resale": null,
+   "description": "Square ruby on a double band set with small rubies",
+   "photo": "p177"
+  },
+  {
+   "name": "Burmese Ruby in a Silver Ring",
+   "form": "Ring",
+   "era": "Contemporary",
+   "style": "classic",
+   "stones": [
+    "Ruby"
+   ],
+   "metals": [
+    "Silver"
+   ],
+   "ask": 2600,
+   "resale": null,
+   "description": "Dark oval ruby in a plain silver ring",
+   "photo": "p176"
+  },
+  {
+   "name": "Cognac Stone Cocktail Ring",
+   "form": "Ring",
+   "era": "Contemporary",
+   "style": "statement",
+   "stones": [
+    "Gemstones",
+    "Diamond"
+   ],
+   "metals": [
+    "Gold"
+   ],
+   "ask": 6600,
+   "resale": null,
+   "description": "Orange-brown cushion stone in a large square of black and brown diamonds",
+   "photo": "p079"
+  },
+  {
+   "name": "Pear Diamond Halo Pendant",
+   "form": "Pendant",
+   "era": "Contemporary",
+   "style": "line",
    "stones": [
     "Diamond"
    ],
    "metals": [
-    "Platinum"
+    "Gold"
    ],
    "ask": 5200,
-   "description": "Old European cut in a milgrain mount"
+   "resale": null,
+   "description": "Large pear-shaped diamond pendant in a pave halo",
+   "photo": "p150"
   },
   {
-   "name": "Akoya Pearl Strand",
+   "name": "Pair of Alexandrites, Unset",
+   "form": "Loose stone",
+   "era": "Contemporary",
+   "style": "investment",
+   "stones": [
+    "Alexandrite"
+   ],
+   "metals": [],
+   "ask": 19000,
+   "resale": null,
+   "description": "Two faceted cushion alexandrites showing a color change",
+   "photo": "p004"
+  },
+  {
+   "name": "Old-Cut Diamond on a Display Pin",
+   "form": "Loose stone",
+   "era": "Antique",
+   "style": "investment",
+   "stones": [
+    "Diamond"
+   ],
+   "metals": [],
+   "ask": 12000,
+   "resale": null,
+   "description": "Flat old-cut pale diamond shown unset",
+   "photo": "p048"
+  },
+  {
+   "name": "Oval Old-Cut Diamond, Unset",
+   "form": "Loose stone",
+   "era": "Antique",
+   "style": "investment",
+   "stones": [
+    "Diamond"
+   ],
+   "metals": [],
+   "ask": 9200,
+   "resale": null,
+   "description": "Pale yellow oval old-cut diamond",
+   "photo": "p049"
+  },
+  {
+   "name": "Round Old-Cut Diamond, Unset",
+   "form": "Loose stone",
+   "era": "Antique",
+   "style": "investment",
+   "stones": [
+    "Diamond"
+   ],
+   "metals": [],
+   "ask": 7800,
+   "resale": null,
+   "description": "Round old-cut diamond with a soft outline",
+   "photo": "p051"
+  },
+  {
+   "name": "Large Faceted Topaz",
+   "form": "Loose stone",
+   "era": "Contemporary",
+   "style": "investment",
+   "stones": [
+    "Topaz"
+   ],
+   "metals": [],
+   "ask": 8800,
+   "resale": null,
+   "description": "Very large cushion-cut pale blue topaz",
+   "photo": "p207"
+  },
+  {
+   "name": "Pearl Drop Earrings, Three Pairs",
+   "form": "Earrings",
+   "era": "Contemporary",
+   "style": "minimal",
+   "stones": [
+    "Pearl"
+   ],
+   "metals": [
+    "Silver"
+   ],
+   "ask": 1200,
+   "resale": null,
+   "description": "Single cultured pearls on slim wires",
+   "photo": "p157"
+  },
+  {
+   "name": "Cultured Pearl Strands",
    "form": "Necklace",
    "era": "Contemporary",
    "style": "minimal",
@@ -773,157 +1317,182 @@
    "metals": [
     "Gold"
    ],
-   "ask": 2400,
-   "description": "Classic matched seven millimeter akoya"
+   "ask": 2100,
+   "resale": null,
+   "description": "Loose white pearl strands with a gold clasp",
+   "photo": "p163"
   },
   {
-   "name": "Pearl Drop Earrings",
-   "form": "Earrings",
+   "name": "Gold Band with Channel Diamonds",
+   "form": "Ring",
    "era": "Contemporary",
    "style": "minimal",
    "stones": [
-    "Pearl"
+    "Diamond"
    ],
    "metals": [
     "Gold"
    ],
-   "ask": 1300,
-   "description": "Single pearl on a plain gold post"
+   "ask": 2200,
+   "resale": null,
+   "description": "Plain gold band with a row of small diamonds",
+   "photo": "p223"
   },
   {
-   "name": "Fine Gold Hoop Earrings",
-   "form": "Earrings",
+   "name": "Oxidized Wedding Bands",
+   "form": "Ring",
+   "era": "Contemporary",
+   "style": "minimal",
+   "stones": [],
+   "metals": [
+    "Silver"
+   ],
+   "ask": 1500,
+   "resale": null,
+   "description": "Matte dark bands with tiny raised dots",
+   "photo": "p225"
+  },
+  {
+   "name": "Wide White Gold Band",
+   "form": "Ring",
    "era": "Contemporary",
    "style": "minimal",
    "stones": [],
    "metals": [
     "Gold"
    ],
-   "ask": 1500,
-   "description": "Slim polished 18k gold hoops"
+   "ask": 1700,
+   "resale": null,
+   "description": "Brushed 18k white gold ring with a grooved edge",
+   "photo": "p149"
   },
   {
-   "name": "Ruby Cocktail Ring",
-   "form": "Ring",
-   "era": "Contemporary",
-   "style": "statement",
-   "stones": [
-    "Ruby",
-    "Diamond"
-   ],
-   "metals": [
-    "Gold"
-   ],
-   "ask": 8800,
-   "description": "Oval ruby with a bold diamond surround"
-  },
-  {
-   "name": "Fancy Yellow Diamond Cocktail Ring",
-   "form": "Ring",
-   "era": "Contemporary",
-   "style": "statement",
-   "stones": [
-    "Diamond"
-   ],
-   "metals": [
-    "Gold"
-   ],
-   "ask": 17000,
-   "description": "Radiant cut fancy yellow center stone"
-  },
-  {
-   "name": "1.0 ct Round Diamond, Loose",
-   "form": "Loose stone",
-   "era": "Contemporary",
-   "style": "investment",
-   "stones": [
-    "Diamond"
-   ],
-   "metals": [],
-   "ask": 5200,
-   "description": "Unset certified round brilliant"
-  },
-  {
-   "name": "2 ct Burmese Ruby, Loose",
-   "form": "Loose stone",
-   "era": "Contemporary",
-   "style": "investment",
-   "stones": [
-    "Ruby"
-   ],
-   "metals": [],
-   "ask": 9400,
-   "description": "Unset unheated cushion ruby"
-  },
-  {
-   "name": "3 ct Emerald-Cut Diamond, Loose",
-   "form": "Loose stone",
-   "era": "Contemporary",
-   "style": "investment",
-   "stones": [
-    "Diamond"
-   ],
-   "metals": [],
-   "ask": 24000,
-   "description": "Unset certified step-cut diamond"
-  },
-  {
-   "name": "Two-Tone Vintage Wristwatch",
+   "name": "1970s Steel Diver's Watch",
    "form": "Watch",
    "era": "Mid-Century",
    "style": "mens",
    "stones": [],
+   "metals": [
+    "Silver"
+   ],
+   "ask": 900,
+   "resale": null,
+   "description": "Steel case with a rotating bezel and brown dial",
+   "photo": "p232"
+  },
+  {
+   "name": "1970s Steel Watch, Red Dial",
+   "form": "Watch",
+   "era": "Mid-Century",
+   "style": "mens",
+   "stones": [],
+   "metals": [
+    "Silver"
+   ],
+   "ask": 950,
+   "resale": null,
+   "description": "Steel case with a rotating bezel and a red dial",
+   "photo": "p233"
+  },
+  {
+   "name": "Mesh Strap Minimal Watch",
+   "form": "Watch",
+   "era": "Contemporary",
+   "style": "mens",
+   "stones": [],
+   "metals": [
+    "Silver"
+   ],
+   "ask": 700,
+   "resale": null,
+   "description": "Rose-toned case with a disc dial on a mesh strap",
+   "photo": "p231"
+  },
+  {
+   "name": "Gold and Pearl Pocket Watch, 1813",
+   "form": "Watch",
+   "era": "Georgian",
+   "style": "mens",
+   "stones": [
+    "Pearl",
+    "Diamond",
+    "Enamel"
+   ],
    "metals": [
     "Gold",
     "Silver"
    ],
-   "ask": 4500,
-   "description": "1970s steel and gold automatic"
+   "ask": 12000,
+   "resale": null,
+   "description": "Engine-turned gold case rimmed with pearls",
+   "photo": "m6"
   },
   {
-   "name": "18k Gold Chronograph",
+   "name": "Enameled Gilt Pocket Watch, Late 1700s",
    "form": "Watch",
-   "era": "Mid-Century",
+   "era": "Georgian",
+   "style": "mens",
+   "stones": [
+    "Enamel"
+   ],
+   "metals": [
+    "Gold"
+   ],
+   "ask": 5200,
+   "resale": null,
+   "description": "Open case with painted enamel scenes",
+   "photo": "m54"
+  },
+  {
+   "name": "Antique Seal Ring",
+   "form": "Ring",
+   "era": "Antique",
    "style": "mens",
    "stones": [],
    "metals": [
     "Gold"
    ],
-   "ask": 7800,
-   "description": "Vintage gold cased chronograph on leather"
+   "ask": 3400,
+   "resale": null,
+   "description": "Heavy cast ring with an engraved heraldic face",
+   "photo": "p186"
   },
   {
-   "name": "Men's Diamond Pinky Ring",
+   "name": "Dendritic Agate Ring",
    "form": "Ring",
-   "era": "Contemporary",
-   "style": "mens",
-   "stones": [
-    "Diamond"
-   ],
-   "metals": [
-    "Gold"
-   ],
-   "ask": 4200,
-   "description": "Heavy gold ring with a pave face"
-  },
-  {
-   "name": "Crystal Opal Pendant",
-   "form": "Pendant",
-   "era": "Contemporary",
+   "era": "Antique",
    "style": "unusual",
    "stones": [
-    "Opal"
+    "Agate"
    ],
    "metals": [
     "Gold"
    ],
-   "ask": 2800,
-   "description": "Bright crystal opal in a gold bezel"
+   "ask": 1700,
+   "resale": null,
+   "description": "Pale agate with dark inclusions in a pearl-beaded surround",
+   "photo": "p076"
   },
   {
-   "name": "Natural Turquoise Ring",
-   "form": "Ring",
-   "era": "Mid-Century",
+   "name": "Silver Plaid Brooch with a Citrine",
+   "form": "Brooch",
+   "era": "Victorian",
+   "style": "unusual",
+   "stones": [
+    "Citrine"
+   ],
+   "metals": [
+    "Silver"
+   ],
+   "ask": 900,
+   "resale": null,
+   "description": "Round engraved Scottish-style silver brooch",
+   "photo": "p209"
+  },
+  {
+   "name": "Silver Filigree Chain with Turquoise Cross",
+   "form": "Chain",
+   "era": "Victorian",
    "style": "unusual",
    "stones": [
     "Turquoise"
@@ -931,64 +1500,567 @@
    "metals": [
     "Silver"
    ],
-   "ask": 1400,
-   "description": "Large natural turquoise in hammered silver"
+   "ask": 1200,
+   "resale": null,
+   "description": "Long fine silver chain with a filigree cross",
+   "photo": "m36"
   },
   {
-   "name": "Aquamarine Pendant",
-   "form": "Pendant",
-   "era": "Contemporary",
+   "name": "Painted Enamel Band",
+   "form": "Ring",
+   "era": "Victorian",
    "style": "unusual",
    "stones": [
-    "Aquamarine"
-   ],
-   "metals": [
-    "Gold"
-   ],
-   "ask": 3600,
-   "description": "Emerald-cut aquamarine on a fine chain"
-  },
-  {
-   "name": "Diamond Bandeau Tiara",
-   "form": "Tiara",
-   "era": "Edwardian",
-   "style": "important",
-   "stones": [
-    "Diamond"
-   ],
-   "metals": [
-    "Platinum"
-   ],
-   "ask": 19000,
-   "description": "Low platinum bandeau, about 1912"
-  },
-  {
-   "name": "Important Belle Epoque Bow Brooch",
-   "form": "Brooch",
-   "era": "Edwardian",
-   "style": "important",
-   "stones": [
-    "Diamond"
-   ],
-   "metals": [
-    "Platinum"
-   ],
-   "ask": 9200,
-   "description": "Large ribbon bow in old cut diamonds"
-  },
-  {
-   "name": "Georgian Paste Brooch",
-   "form": "Brooch",
-   "era": "Victorian",
-   "style": "important",
-   "stones": [
-    "Gemstones"
+    "Enamel"
    ],
    "metals": [
     "Silver"
    ],
-   "ask": 3400,
-   "description": "Foil-backed silver spray brooch"
+   "ask": 800,
+   "resale": null,
+   "description": "Wide silver ring with painted blue and green flowers",
+   "photo": "m37"
+  },
+  {
+   "name": "Silver Hoop Pendant with Old-Cut Diamonds",
+   "form": "Pendant",
+   "era": "Antique",
+   "style": "unusual",
+   "stones": [
+    "Diamond"
+   ],
+   "metals": [
+    "Silver"
+   ],
+   "ask": 1600,
+   "resale": null,
+   "description": "Open silver circle set with small old-cut diamonds",
+   "photo": "p065"
+  },
+  {
+   "name": "Round Lab-Grown Diamond Halo Ring",
+   "form": "Ring",
+   "era": "Contemporary",
+   "style": "bridal",
+   "stones": [
+    "Diamond"
+   ],
+   "metals": [
+    "Platinum"
+   ],
+   "ask": 6400,
+   "resale": null,
+   "description": "Round center in a pave halo on a slim band",
+   "photo": "k55"
+  },
+  {
+   "name": "Blue Princess Cut Solitaire",
+   "form": "Ring",
+   "era": "Contemporary",
+   "style": "bridal",
+   "stones": [
+    "Diamond"
+   ],
+   "metals": [
+    "Platinum"
+   ],
+   "ask": 5400,
+   "resale": null,
+   "description": "Square blue stone in a simple four-prong mount",
+   "photo": "k56"
+  },
+  {
+   "name": "Emerald-Cut Diamond and Alexandrite Engagement Ring",
+   "form": "Ring",
+   "era": "Contemporary",
+   "style": "bridal",
+   "stones": [
+    "Diamond",
+    "Alexandrite"
+   ],
+   "metals": [
+    "Gold"
+   ],
+   "ask": 13500,
+   "resale": null,
+   "description": "Step-cut diamond with round alexandrite side stones",
+   "photo": "k57"
+  },
+  {
+   "name": "Group of Five Diamond Engagement Rings",
+   "form": "Ring",
+   "era": "Contemporary",
+   "style": "bridal",
+   "stones": [
+    "Diamond"
+   ],
+   "metals": [
+    "Platinum"
+   ],
+   "ask": 16000,
+   "resale": null,
+   "description": "White metal solitaires with pave shoulders",
+   "photo": "k72"
+  },
+  {
+   "name": "Parti Sapphire and Diamond Rose Gold Ring",
+   "form": "Ring",
+   "era": "Contemporary",
+   "style": "bridal",
+   "stones": [
+    "Sapphire",
+    "Diamond"
+   ],
+   "metals": [
+    "Gold"
+   ],
+   "ask": 6800,
+   "resale": null,
+   "description": "Oval teal sapphire between diamond clusters",
+   "photo": "k80"
+  },
+  {
+   "name": "Yellow Sapphire and Diamond Engagement Ring",
+   "form": "Ring",
+   "era": "Contemporary",
+   "style": "bridal",
+   "stones": [
+    "Sapphire",
+    "Diamond"
+   ],
+   "metals": [
+    "Gold"
+   ],
+   "ask": 4900,
+   "resale": null,
+   "description": "Square yellow sapphire with channel-set diamonds in 18k gold",
+   "photo": "k90"
+  },
+  {
+   "name": "Pear Cut Parti Sapphire Solitaire",
+   "form": "Ring",
+   "era": "Contemporary",
+   "style": "bridal",
+   "stones": [
+    "Sapphire"
+   ],
+   "metals": [
+    "Gold"
+   ],
+   "ask": 4200,
+   "resale": null,
+   "description": "Pear sapphire on a plain yellow gold band",
+   "photo": "k93"
+  },
+  {
+   "name": "Pair of Plain Gold Engagement Bands",
+   "form": "Ring",
+   "era": "Contemporary",
+   "style": "bridal",
+   "stones": [],
+   "metals": [
+    "Gold"
+   ],
+   "ask": 1200,
+   "resale": null,
+   "description": "Two grooved yellow gold bands",
+   "photo": "k92"
+  },
+  {
+   "name": "Bezel-Set Ruby and Diamond Eternity Band",
+   "form": "Ring",
+   "era": "Contemporary",
+   "style": "line",
+   "stones": [
+    "Ruby",
+    "Diamond"
+   ],
+   "metals": [
+    "Gold"
+   ],
+   "ask": 2800,
+   "resale": null,
+   "description": "Marquise rubies and round diamonds around a gold band",
+   "photo": "k60"
+  },
+  {
+   "name": "Plain 18k Domed Gold Ring",
+   "form": "Ring",
+   "era": "Contemporary",
+   "style": "minimal",
+   "stones": [],
+   "metals": [
+    "Gold"
+   ],
+   "ask": 1400,
+   "resale": null,
+   "description": "Polished domed yellow gold band",
+   "photo": "k81"
+  },
+  {
+   "name": "Gold Ring with Scattered Diamonds",
+   "form": "Ring",
+   "era": "Contemporary",
+   "style": "minimal",
+   "stones": [
+    "Diamond"
+   ],
+   "metals": [
+    "Gold"
+   ],
+   "ask": 1800,
+   "resale": null,
+   "description": "Rose gold band set with tiny diamonds",
+   "photo": "k158"
+  },
+  {
+   "name": "Open Gold Ring with Bezel Diamonds",
+   "form": "Ring",
+   "era": "Contemporary",
+   "style": "minimal",
+   "stones": [
+    "Diamond"
+   ],
+   "metals": [
+    "Gold"
+   ],
+   "ask": 2400,
+   "resale": null,
+   "description": "Airy yellow gold ring with small bezel-set diamonds",
+   "photo": "k52"
+  },
+  {
+   "name": "Bezel-Set Moonstone Ring",
+   "form": "Ring",
+   "era": "Contemporary",
+   "style": "minimal",
+   "stones": [
+    "Moonstone"
+   ],
+   "metals": [
+    "Gold"
+   ],
+   "ask": 1100,
+   "resale": null,
+   "description": "Domed moonstone in a yellow gold bezel",
+   "photo": "k165"
+  },
+  {
+   "name": "Fine Gold Necklace with Diamond Bar",
+   "form": "Necklace",
+   "era": "Contemporary",
+   "style": "minimal",
+   "stones": [
+    "Diamond"
+   ],
+   "metals": [
+    "Gold"
+   ],
+   "ask": 1100,
+   "resale": null,
+   "description": "Hair-thin gold chain with a small diamond cluster",
+   "photo": "k140"
+  },
+  {
+   "name": "Blue Sapphire and Diamond Necklace",
+   "form": "Necklace",
+   "era": "Contemporary",
+   "style": "statement",
+   "stones": [
+    "Sapphire",
+    "Diamond"
+   ],
+   "metals": [
+    "Platinum"
+   ],
+   "ask": 24000,
+   "resale": null,
+   "description": "Graduated clusters of blue sapphires framed in diamonds",
+   "photo": "k47"
+  },
+  {
+   "name": "Rough Diamond Necklace",
+   "form": "Necklace",
+   "era": "Contemporary",
+   "style": "unusual",
+   "stones": [
+    "Diamond"
+   ],
+   "metals": [
+    "Gold"
+   ],
+   "ask": 6800,
+   "resale": null,
+   "description": "Several strands of natural rough diamond beads",
+   "photo": "k28"
+  },
+  {
+   "name": "Lapis Lazuli Necklace with Diamonds",
+   "form": "Necklace",
+   "era": "Contemporary",
+   "style": "unusual",
+   "stones": [
+    "Lapis",
+    "Diamond",
+    "Sapphire"
+   ],
+   "metals": [
+    "Gold"
+   ],
+   "ask": 5200,
+   "resale": null,
+   "description": "Lapis beads and a large lapis drop set with small stones",
+   "photo": "k30"
+  },
+  {
+   "name": "Kundan Necklace with an Emerald Drop",
+   "form": "Necklace",
+   "era": "Antique",
+   "style": "important",
+   "stones": [
+    "Diamond",
+    "Emerald",
+    "Pearl"
+   ],
+   "metals": [
+    "Gold"
+   ],
+   "ask": 18000,
+   "resale": null,
+   "description": "Indian kundan collar in gold with pearls and an emerald drop",
+   "photo": "k36"
+  },
+  {
+   "name": "Antique Indian Gold Necklace and Earrings",
+   "form": "Necklace",
+   "era": "Victorian",
+   "style": "estate",
+   "stones": [],
+   "metals": [
+    "Gold"
+   ],
+   "ask": 9000,
+   "resale": null,
+   "description": "Layered panels of worked gold with matching earrings",
+   "photo": "k122"
+  },
+  {
+   "name": "Pair of Heavy 22k Gold Necklaces",
+   "form": "Necklace",
+   "era": "Contemporary",
+   "style": "street",
+   "stones": [],
+   "metals": [
+    "Gold"
+   ],
+   "ask": 12800,
+   "resale": null,
+   "description": "Dense high-karat gold collars shown on displays",
+   "photo": "k138"
+  },
+  {
+   "name": "Twisted Gold Rope Necklace",
+   "form": "Chain",
+   "era": "Contemporary",
+   "style": "street",
+   "stones": [
+    "Diamond"
+   ],
+   "metals": [
+    "Gold"
+   ],
+   "ask": 9200,
+   "resale": null,
+   "description": "Soft gold rope with a pave diamond station",
+   "photo": "k124"
+  },
+  {
+   "name": "Long Openwork Link Chain",
+   "form": "Chain",
+   "era": "Edwardian",
+   "style": "estate",
+   "stones": [],
+   "metals": [
+    "Silver"
+   ],
+   "ask": 2400,
+   "resale": null,
+   "description": "Dark metal chain of pierced openwork links",
+   "photo": "k39"
+  },
+  {
+   "name": "Gold Openwork Collar",
+   "form": "Necklace",
+   "era": "Edwardian",
+   "style": "important",
+   "stones": [],
+   "metals": [
+    "Gold"
+   ],
+   "ask": 5200,
+   "resale": null,
+   "description": "Rigid collar of intertwined gold stems",
+   "photo": "k135"
+  },
+  {
+   "name": "Art Deco Link Bracelet, 1925",
+   "form": "Bracelet",
+   "era": "Art Deco",
+   "style": "estate",
+   "stones": [
+    "Gemstones"
+   ],
+   "metals": [
+    "Gold"
+   ],
+   "ask": 7800,
+   "resale": null,
+   "description": "Rectangular worked gold panels divided by small stones",
+   "photo": "k106"
+  },
+  {
+   "name": "White Gold and Diamond Drop Earrings",
+   "form": "Earrings",
+   "era": "Contemporary",
+   "style": "statement",
+   "stones": [
+    "Diamond"
+   ],
+   "metals": [
+    "Gold"
+   ],
+   "ask": 7400,
+   "resale": null,
+   "description": "Long drops of large round and pear diamonds",
+   "photo": "k9"
+  },
+  {
+   "name": "White Gold Bezel Drop Earrings",
+   "form": "Earrings",
+   "era": "Contemporary",
+   "style": "minimal",
+   "stones": [
+    "Diamond"
+   ],
+   "metals": [
+    "Gold"
+   ],
+   "ask": 1100,
+   "resale": null,
+   "description": "Small bezel-set stones on white gold wires",
+   "photo": "k17"
+  },
+  {
+   "name": "Emerald and Diamond Star Earrings",
+   "form": "Earrings",
+   "era": "Contemporary",
+   "style": "statement",
+   "stones": [
+    "Emerald",
+    "Diamond"
+   ],
+   "metals": [
+    "Gold"
+   ],
+   "ask": 7200,
+   "resale": null,
+   "description": "Diamond stars above pear emerald drops",
+   "photo": "k24"
+  },
+  {
+   "name": "Pearl and Diamond Tassel Earrings",
+   "form": "Earrings",
+   "era": "Contemporary",
+   "style": "statement",
+   "stones": [
+    "Pearl",
+    "Diamond"
+   ],
+   "metals": [
+    "Gold"
+   ],
+   "ask": 11000,
+   "resale": null,
+   "description": "White pearls above articulated diamond tassels",
+   "photo": "k25"
+  },
+  {
+   "name": "Carved Jade Basket Earrings",
+   "form": "Earrings",
+   "era": "Contemporary",
+   "style": "unusual",
+   "stones": [
+    "Jade",
+    "Diamond"
+   ],
+   "metals": [
+    "Gold"
+   ],
+   "ask": 8200,
+   "resale": null,
+   "description": "Green carved jade in diamond hoops with a jade drop",
+   "photo": "k20"
+  },
+  {
+   "name": "Pave Diamond Square Gold Ring",
+   "form": "Ring",
+   "era": "Contemporary",
+   "style": "mens",
+   "stones": [
+    "Diamond"
+   ],
+   "metals": [
+    "Gold"
+   ],
+   "ask": 5600,
+   "resale": null,
+   "description": "Heavy square-faced yellow gold ring with a pave top",
+   "photo": "k68"
+  },
+  {
+   "name": "Black Onyx and Diamond Gold Ring",
+   "form": "Ring",
+   "era": "Contemporary",
+   "style": "mens",
+   "stones": [
+    "Onyx",
+    "Diamond"
+   ],
+   "metals": [
+    "Gold"
+   ],
+   "ask": 2300,
+   "resale": null,
+   "description": "Diagonal black onyx panel in a broad gold band",
+   "photo": "k69"
+  },
+  {
+   "name": "Engraved Gold Trophy Ring",
+   "form": "Ring",
+   "era": "Contemporary",
+   "style": "mens",
+   "stones": [],
+   "metals": [
+    "Gold"
+   ],
+   "ask": 1200,
+   "resale": null,
+   "description": "Heavy yellow gold award ring",
+   "photo": "k157"
+  },
+  {
+   "name": "Group of Cut and Rough Diamonds",
+   "form": "Loose stone",
+   "era": "Contemporary",
+   "style": "investment",
+   "stones": [
+    "Diamond"
+   ],
+   "metals": [],
+   "ask": 22000,
+   "resale": null,
+   "description": "Several unset diamonds, rough and faceted",
+   "photo": "k61"
   }
  ]
 }

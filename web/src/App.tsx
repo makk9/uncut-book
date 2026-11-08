@@ -12,7 +12,7 @@ type Collector = {
 };
 type Book = { lots: Piece[]; holdings: Piece[]; collectors: Collector[]; live: boolean };
 type Pick_ = { lot: string; ask: number; resale: number; buyer: string | null; rank: number | null; fit: number; value: number };
-type Demand = { collector: string; rank: number; rank_full: number; rank_orders: number; rank_tags: number; fit: number; affordable: boolean; passed: boolean };
+type Demand = { collector: string; rank: number; rank_full: number; rank_orders: number; rank_tags: number; fit: number; affordable: boolean; over_by: number; stretch: number; passed: boolean };
 type Result = {
   portfolio: { picks: Pick_[]; spent: number; budget: number; unspent: number; gross_margin: number; value: number; unplaced_capital: number };
   stress: { collector: string; value: number; value_lost: number; unplaced_capital: number; unplaced: string[] }[];
@@ -24,7 +24,7 @@ type Result = {
   meta: { source: string; rank_ms: number; solve_ms: number; calls: number };
 };
 type Signal = { type: "search" | "view"; q?: string; id?: string };
-type Settings = { fit_decay: number; holding_penalty: number; max_rank: number; slots: number; recency: number };
+type Settings = { fit_decay: number; holding_penalty: number; max_rank: number; slots: number; recency: number; capacity_tolerance: number };
 type WhatIf = { feasible: boolean; reason?: string; already_in?: boolean; value_delta?: number; margin_delta?: number; displaced?: string[]; added?: string[]; buyer?: string | null; rank?: number | null };
 
 const usd = (n: number) => `$${Math.round(n).toLocaleString("en-US")}`;
@@ -35,7 +35,7 @@ const MODES = [
   { key: "balanced", label: "Balanced", res: 0.5 },
   { key: "hardened", label: "Buyer-proof", res: 0.9 },
 ];
-const DEFAULTS: Settings = { fit_decay: 4, holding_penalty: 0.15, max_rank: 8, slots: 2, recency: 0.6 };
+const DEFAULTS: Settings = { fit_decay: 4, holding_penalty: 0.15, max_rank: 8, slots: 2, recency: 0.6, capacity_tolerance: 0.1 };
 
 export default function App() {
   const [book, setBook] = useState<Book | null>(null);
@@ -127,6 +127,7 @@ export default function App() {
   const trophyAsk = Math.max(...book.lots.map((l) => l.ask));
   const signalCount = Object.values(signals).reduce((a, b) => a + b.length, 0);
   const placedTo = (cid: string) => (p?.picks ?? []).filter((x) => x.buyer === cid);
+  const stretchOf = (lot: string, cid: string) => res?.demand[lot]?.find((r) => r.collector === cid)?.stretch ?? 0;
 
   return (
     <div className="app">
@@ -282,7 +283,7 @@ export default function App() {
                 <img src={lotBy[x.lot]?.image} alt="" />
                 <div style={{ minWidth: 0 }}>
                   <div className="n">{lotBy[x.lot]?.name}</div>
-                  <div className="b">{x.buyer ? <>Call <span className="em">{colBy[x.buyer]?.name}</span> · ranks it #{x.rank} of {book.lots.length}</> : <span className="am">No buyer placed</span>}</div>
+                  <div className="b">{x.buyer ? <>Call <span className="em">{colBy[x.buyer]?.name}</span> · ranks it #{x.rank} of {book.lots.length}{stretchOf(x.lot, x.buyer) > 0 && <span className="am"> · {usd(stretchOf(x.lot, x.buyer))} over capacity</span>}</> : <span className="am">No buyer placed</span>}</div>
                 </div>
                 <div className="r">{usd(x.ask)}<div className="muted">→ {usd(x.resale)}</div></div>
               </button>
@@ -317,7 +318,7 @@ export default function App() {
           maxRank={settings.max_rank} onClose={() => setLotOpen(null)} logView={(cid) => addSignal(cid, { type: "view", id: lotOpen }, `looked at ${lotBy[lotOpen].name}`)} />
       )}
       {collectorOpen && colBy[collectorOpen] && res && (
-        <CollectorDrawer c={colBy[collectorOpen]} res={res} lotBy={lotBy} signals={signals[collectorOpen] ?? []}
+        <CollectorDrawer c={colBy[collectorOpen]} res={res} lotBy={lotBy} signals={signals[collectorOpen] ?? []} tolerance={settings.capacity_tolerance}
           onClose={() => setCollectorOpen(null)}
           addSearch={(q) => addSignal(collectorOpen, { type: "search", q }, `asked about “${q}”`)} />
       )}
@@ -349,6 +350,7 @@ function Assumptions({ s, set }: { s: Settings; set: (x: Settings) => void }) {
       {Row("fit_decay", "Fit falls off by rank", 1, 12, 0.5, (n) => `${n}`)}
       {Row("max_rank", "Candidate buyer down to rank", 1, 24, 1, (n) => `#${n}`)}
       {Row("slots", "Pieces per collector", 1, 5, 1, (n) => `${n}`)}
+      {Row("capacity_tolerance", "Allow over computed capacity", 0, 0.25, 0.01, (n) => `${Math.round(n * 100)}%`)}
       {Row("holding_penalty", "Holding penalty on ask", 0, 0.5, 0.01, (n) => `${Math.round(n * 100)}%`)}
     </div>
   );
@@ -442,10 +444,13 @@ function LotDrawer({ lot, res, colBy, lotBy, body, total, passes, togglePass, ma
   };
   const eligible = rows.filter((r) => r.rank <= maxRank && r.affordable && !r.passed);
   const placed = new Set(res.portfolio.picks.map((x) => x.buyer));
+  const nearest = rows.filter((r) => r.rank <= maxRank && !r.affordable && !r.passed).sort((a, b) => a.over_by - b.over_by)[0];
   const reason = pick
     ? pick.buyer ? `Placed with ${colBy[pick.buyer]?.name}, who ranks it #${pick.rank} of ${total}.` : "Bought, but no buyer could be placed."
     : eligible.length === 0
-      ? `No collector who ranks this within #${maxRank} has the capacity for ${usd(lot.resale)}.`
+      ? nearest
+        ? `No collector who ranks this within #${maxRank} has the capacity for ${usd(lot.resale)}. Closest: ${colBy[nearest.collector]?.name}, over by ${usd(nearest.over_by)}.`
+        : `No collector ranks this within #${maxRank}.`
       : eligible.every((r) => placed.has(r.collector))
         ? `Everyone in range for it (${eligible.slice(0, 3).map((r) => colBy[r.collector]?.name).join(", ")}) already has a piece placed.`
         : "Collectors are in range, but this budget earns more fit-weighted value elsewhere. Force it in to see the cost.";
@@ -488,7 +493,7 @@ function LotDrawer({ lot, res, colBy, lotBy, body, total, passes, togglePass, ma
                 const passed = passes.some(([l, c]) => l === lot.id && c === r.collector);
                 return (
                   <tr key={r.collector} className={`${pick?.buyer === r.collector ? "hl" : ""} ${passed ? "dim" : ""}`}>
-                    <td className="text">{colBy[r.collector]?.name}{!r.affordable && <span className="muted"> · over capacity</span>}</td>
+                    <td className="text">{colBy[r.collector]?.name}{!r.affordable && <span className="muted"> · over by {usd(r.over_by)}</span>}{r.stretch > 0 && <span className="am"> · {usd(r.stretch)} into tolerance</span>}</td>
                     <td>#{r.rank}</td><td>#{r.rank_full}</td><td>#{r.rank_orders}</td>
                     <td className={Math.abs(r.rank_tags - r.rank_full) >= 8 ? "am" : ""}>#{r.rank_tags}</td>
                     <td><span className="row" style={{ justifyContent: "flex-end" }}>
@@ -513,8 +518,8 @@ function LotDrawer({ lot, res, colBy, lotBy, body, total, passes, togglePass, ma
   );
 }
 
-function CollectorDrawer({ c, res, lotBy, signals, onClose, addSearch }: {
-  c: Collector; res: Result; lotBy: Record<string, Piece>; signals: Signal[]; onClose: () => void; addSearch: (q: string) => void;
+function CollectorDrawer({ c, res, lotBy, signals, tolerance, onClose, addSearch }: {
+  c: Collector; res: Result; lotBy: Record<string, Piece>; signals: Signal[]; tolerance: number; onClose: () => void; addSearch: (q: string) => void;
 }) {
   const [q, setQ] = useState("");
   const [wider, setWider] = useState<{ id: string; name: string; image: string; form: string }[] | null>(null);
@@ -542,7 +547,7 @@ function CollectorDrawer({ c, res, lotBy, signals, onClose, addSearch }: {
             <div><div className="up muted">Past spend</div><div className="big">{usdK(c.lifetime_spend)}</div></div>
             <div><div className="up muted">Purchases</div><div className="big">{c.orders}</div></div>
           </div>
-          <div className="note" style={{ marginTop: 6 }}>{c.capacity_note}</div>
+          <div className="note" style={{ marginTop: 6 }}>{c.capacity_note} With the current {Math.round(tolerance * 100)}% tolerance, the limit used is {usd(c.capacity * (1 + tolerance))}.</div>
         </div>
         <div className="dsec">
           <span className="up">Log a signal from today</span>

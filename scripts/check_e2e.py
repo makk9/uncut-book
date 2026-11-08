@@ -44,7 +44,7 @@ for budget in (20_000, 40_000, 80_000, 120_000, 200_000):
     for x in p["picks"]:
         by[x["buyer"]].append(x)
     check(all(len(v) <= 2 for v in by.values()), "no collector over 2 pieces")
-    check(all(sum(x["resale"] for x in v) <= COLLECTORS[c]["capacity"] for c, v in by.items()), "no collector over capacity")
+    check(all(sum(x["resale"] for x in v) <= COLLECTORS[c]["capacity"] * 1.1 + 1e-6 for c, v in by.items()), "no collector over capacity plus 10% tolerance")
     check(len({x["lot"] for x in p["picks"]}) == len(p["picks"]), "each lot bought once")
     check(all(x["rank"] <= 8 for x in p["picks"]), "every buyer ranks their lot within the cutoff")
     check(all(next(r for r in d["demand"][x["lot"]] if r["collector"] == x["buyer"])["rank"] == x["rank"] for x in p["picks"]),
@@ -120,6 +120,22 @@ for label, res in (("Max value", 0), ("Balanced", 0.5), ("Buyer-proof", 0.9)):
     r = solve(budget=80_000, resilience=res)
     c = next(x for x in r["compare"] if x["key"] == "book")
     print(f"    {label:12} pieces {c['pieces']:2} value ${c['value']:>8,.0f} one-buyer loss ${c['worst_loss']:>7,.0f} solve {r['meta']['solve_ms']}ms")
+
+print("\n[8] capacity tolerance")
+for tol in (0.0, 0.05, 0.10, 0.25):
+    r = solve(budget=80_000, capacity_tolerance=tol)
+    p = r["portfolio"]
+    by = defaultdict(float)
+    for x in p["picks"]:
+        by[x["buyer"]] += x["resale"]
+    worst = max((v / COLLECTORS[c]["capacity"] - 1 for c, v in by.items()), default=0)
+    stretched = [x for x in p["picks"] if next(d for d in r["demand"][x["lot"]] if d["collector"] == x["buyer"])["stretch"] > 0]
+    print(f"    {tol:.0%}: {len(p['picks'])} pieces, spent ${p['spent']:,.0f}, value ${p['value']:,.0f}, most over stated capacity {worst:+.1%}, lots relying on tolerance {len(stretched)}")
+    check(worst <= tol + 1e-6, f"placed within the {tol:.0%} limit")
+    check(all(d["over_by"] == 0 for x in p["picks"] for d in r["demand"][x["lot"]] if d["collector"] == x["buyer"]), "no placed pair is reported as over the limit")
+    if tol == 0:
+        check(not stretched, "with no tolerance nothing relies on it")
+print(f"    trophy still has no buyer at 25%: {not any(True for d in solve(budget=80_000, capacity_tolerance=0.25)['demand'][max((l for l in PIECES.values() if l['role'] == 'lot'), key=lambda l: l['ask'])['id']] if d['affordable'])}")
 
 print("\nFAILURES:", failures)
 sys.exit(1 if failures else 0)
