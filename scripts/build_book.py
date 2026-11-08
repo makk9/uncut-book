@@ -8,6 +8,7 @@ rankings the app shows later are the model's, not this script's.
 import hashlib
 import json
 import random
+import shutil
 from pathlib import Path
 
 import pyarrow as pa
@@ -22,6 +23,8 @@ STONE_COLOR = {
     "Opal": "#9bd6c8", "Tourmaline": "#2fc3bb", "Aquamarine": "#7fc8e0", "Amethyst": "#8a5fc7",
     "Turquoise": "#3bb6b0", "Cameo": "#d8a98c", "Gemstones": "#b5a3c9",
 }
+PHOTOS = ROOT / "data" / "photos"
+REPO_RAW = "https://raw.githubusercontent.com/makk9/uncut-book/main/data/photos"
 METAL_COLOR = {"Gold": "#d9a93f", "Platinum": "#b9c1c4", "Silver": "#a7adb0"}
 rng = random.Random(11)
 
@@ -103,6 +106,7 @@ def placeholder_svg(p: dict) -> str:
 
 def main() -> None:
     curated = json.loads((BOOK / "curated.json").read_text())
+    credits = json.loads((PHOTOS / "credits.json").read_text())
     IMAGES.mkdir(parents=True, exist_ok=True)
     for old in list(IMAGES.glob("*.svg")) + list(IMAGES.glob("*.jpg")):
         old.unlink()
@@ -121,7 +125,14 @@ def main() -> None:
                 "ask": ask, "resale": row.get("resale", round(ask * 1.3, -2)),
                 "image": f"/img/{pid}.svg", "image_url": None, "credit": None,
             }
-            (IMAGES / f"{pid}.svg").write_text(placeholder_svg(piece))
+            if row.get("photo"):
+                # image_url must stay fetchable by Unbox's servers: a public repo serves it
+                shutil.copy(PHOTOS / f"{row['photo']}.jpg", IMAGES / f"{pid}.jpg")
+                piece["image"] = f"/img/{pid}.jpg"
+                piece["image_url"] = f"{REPO_RAW}/{row['photo']}.jpg"
+                piece["credit"] = credits[row["photo"]]
+            else:
+                (IMAGES / f"{pid}.svg").write_text(placeholder_svg(piece))
             pieces.append(piece)
 
     # the server keys pieces by id and the catalog keeps the first row of a duplicate id
@@ -171,6 +182,14 @@ def main() -> None:
     check_catalog_schema(out)
     (BOOK / "pieces.json").write_text(json.dumps(pieces, indent=1, ensure_ascii=False))
     (BOOK / "collectors.json").write_text(json.dumps(collectors, indent=1, ensure_ascii=False))
+
+    lines = ["# Photo credits", "",
+             "These photos stand in for fictional lots. Lot names, asks and resale figures are invented and say nothing about the pictured objects or their owners. Copies here are resized. Other pieces use placeholder art made for this project.", "",
+             "| File | Source title | Author | License | Source |", "|---|---|---|---|---|"]
+    for pid, c in sorted(credits.items()):
+        title, author = (c["title"].replace("|", " "), c["author"].replace("|", " ").replace("\n", " "))
+        lines.append(f"| {pid}.jpg | {title} | {author} | [{c['license']}]({c['license_url']}) | [{c['source']}]({c['landing_url']}) |")
+    (ROOT / "CREDITS.md").write_text("\n".join(lines) + "\n")
 
     (BOOK / "rankings_snapshot.json").unlink(missing_ok=True)  # ids changed, old rankings no longer apply
 
