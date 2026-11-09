@@ -32,12 +32,6 @@ An acquisition terminal for independent estate-jewelry dealers. A dealer with $8
 
 ![A lot's drawer listing each collector's Overall, Activity, Purchases and Tag match ranks](docs/screenshots/lot-ranks.jpg)
 
-## What we found
-
-- BehaviorGPT does not beat tag matching in our test: a hidden purchase ranked 3.8 of 20 against 3.1 for tags, with random at 10.5. The test favors tags, because the histories were simulated from tags. What BehaviorGPT does differently is read new pieces with no tagging and follow the order of events.
-- The fit-weighted value is a way to compare choices under this tool's assumptions. It is not a forecast of profit, and nothing here shows the tool would make a dealer money.
-- Past purchases push rankings toward more of the same. The model never concludes that someone already has enough.
-
 ## Run it
 
 Get a free key at [portal.unboxai.com](https://portal.unboxai.com), then put `UNBOXAI_API_KEY` and `UNBOXAI_CATALOG_ID` in `.env`.
