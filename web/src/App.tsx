@@ -29,7 +29,7 @@ type Result = {
   holdings: Holding[];
   in_stock: Record<string, string[]>;
   drift: Record<string, { gap: number; rising: string[]; fading: string[] }>;
-  meta: { source: string; rank_ms: number; solve_ms: number; calls: number };
+  meta: { source: string; rank_ms: number; solve_ms: number; calls: number; stopped_early: boolean };
 };
 type Signal = { type: "search" | "view"; q?: string; id?: string };
 type Settings = { fit_decay: number; holding_penalty: number; max_rank: number; slots: number; recency: number; capacity_tolerance: number; stretch_cost: number; relative: number };
@@ -272,6 +272,7 @@ export default function App() {
         <span className="status">
           <span className={`dot ${res?.meta.source === "snapshot" ? "off" : ""} ${busy ? "busy" : ""}`} />
           {res ? `BehaviorGPT ${res.meta.source}: ${res.meta.calls} rankings in ${res.meta.rank_ms} ms, solved in ${res.meta.solve_ms} ms` : "Reading the book…"}
+          {res?.meta.stopped_early && <span className="am">Solver stopped at its time limit, so this may not be the best answer</span>}
         </span>
         <span className="invented">Invented data, not market prices</span>
       </div>
@@ -810,6 +811,7 @@ function CollectorDrawer({ c, res, lotBy, signals, tolerance, onClose, addSearch
               <button key={s} className="sug" onClick={() => submit(s)}>{s}</button>
             ))}
           </div>
+          <div className="note" style={{ marginTop: 6 }}>What you type is sent to BehaviorGPT (Unbox AI) to re-rank. Please don't enter real names or personal details.</div>
           {signals.length > 0 && <div className="note" style={{ marginTop: 6 }}>Logged today: {signals.map((s) => (s.q ? `“${s.q}”` : lotBy[s.id!]?.name)).join(", ")}</div>}
         </div>
         {drift && (

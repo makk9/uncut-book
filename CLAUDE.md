@@ -30,6 +30,7 @@ Verified by running it (some of this differs from the README):
 - 2 catalog slots per key. Re-uploading the same file name refreshes the slot, so keep the name `the_book_catalog`.
 - Keep popularity columns (`sales_since`, `timestamp`, `frequency`) null: one-of-a-kind pieces have no sales history.
 - Pass market and timezone only, not gender or age. Rankings should read only what the collector did.
+- Rankings aren't perfectly repeatable: across 4 identical calls, 24 of 28 lenses swapped neighboring items, a few of them lots. A running server stays steady through its cache, but a fresh one can land on a slightly different score. Default request on all 24 lots: 35,936 or 36,204. So don't compare scores across restarts as if a difference were a real change.
 
 ## Architecture decisions
 
@@ -41,7 +42,16 @@ Verified by running it (some of this differs from the README):
 - The dealer's plan, shown as "parcel" in the UI, drives the app: `plan` in `/api/portfolio` is scored with `opt.evaluate`, and every summary number comes from it. It starts empty. `portfolio` is the solver's full suggestion and doesn't depend on the plan; `next` is what the solver would add with the capital left, around the plan's buyers. Going over capital and pieces with no buyer are allowed and shown. This replaced On desk, Buy and the force-it-in what-if.
 - Dealer inventory is every piece nobody bought: the 6 curated holdings plus unsold history pieces. `build_book.py` assigns those roles after drawing histories, so ids stay `his###` and catalog rows don't change. Inventory is ranked only against itself and doesn't affect the solver.
 - Demo moment: log a signal ("called about sapphires"), re-rank live, portfolio changes.
-- `rankings_snapshot.json` is the fallback if the API fails during the demo. The UI must show live vs snapshot.
+- `rankings_snapshot.json` is the fallback if the API fails during the demo. The UI must show live vs snapshot. A running server rewrites this file with live results, so don't commit that noise by accident.
+- Solver time limits are safety limits, well above real solve times. With a 4s limit, 0.1 CPU returned a worse portfolio (32,713 vs 35,936) and tag matching appeared to win. Don't tighten them; any solve that hits one sets `meta.stopped_early`, and the UI says so.
+- Solves run one at a time on a single thread, so the server keeps answering and requests can't starve each other of CPU. More than `MAX_WAITING_REQUESTS` (24) waiting gets a 503.
+- A public URL spends calls on the server's key. `LIVE_CALLS_PER_HOUR` (1000) caps all live calls; past it, stored rankings are served, labeled as snapshot, and signals with no stored ranking get a 429. `SIGNAL_CALLS_PER_MINUTE` (60) limits new signals per address, set high because a venue's Wi-Fi shares one. Unbox's free-key limits aren't documented, so these are our guesses.
+
+## Deployment
+
+Railway's free trial, for the Sundai demo: `Dockerfile` at the root, built from GitHub. Set `UNBOXAI_API_KEY` and `UNBOXAI_CATALOG_ID` as service variables, unquoted. The account must be verified through GitHub, because unverified trials have restricted outbound access, which can block BehaviorGPT. Railway has deprecated config files, so there's no `railway.json`. `render.yaml` is unused, and its free plan (0.1 CPU) takes about a minute per fresh solve.
+
+After deploying, run `scripts/check_e2e.py <url>`. On the opening 20 lots, expect THE BOOK at about 33,778 and tag matching at about 31,093, allowing for ranking jitter.
 
 ## Paths
 

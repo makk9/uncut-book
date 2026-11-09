@@ -16,6 +16,26 @@ import numpy as np
 from scipy.optimize import Bounds, LinearConstraint, milp
 from scipy.sparse import csr_matrix
 
+# Wall-clock safety limits, not tuning. Real solves finish at the first node in under a second on
+# one core, but a limit close to that makes the answer depend on the host's CPU: at 0.1 CPU a 4s
+# limit returned a worse portfolio. Anything that does hit a limit is counted and shown in the UI.
+SOLVE_SECONDS = 30.0
+PLACE_SECONDS = 10.0
+_early_stops = 0
+
+
+def bounded_milp(*args, **kwargs):
+    global _early_stops
+    res = milp(*args, **kwargs)
+    if res.status == 1:  # HiGHS: stopped at the limit, so the answer may not be the best one
+        _early_stops += 1
+    return res
+
+
+def early_stops() -> int:
+    """How many solves have stopped at a limit since the server started."""
+    return _early_stops
+
 
 @dataclass
 class Params:
@@ -78,7 +98,7 @@ def _eligible(p: Problem, q: Params) -> list[tuple[int, int]]:
     return pairs
 
 
-def solve(p: Problem, q: Params, gap: float = 0.002, time_limit: float = 4.0) -> dict:
+def solve(p: Problem, q: Params, gap: float = 0.002, time_limit: float = SOLVE_SECONDS) -> dict:
     """Pick lots and buyers. With resilience > 0, also protect the worst single buyer loss."""
     n, pairs = len(p.lots), _eligible(p, q)
     forced = {i for i, l in enumerate(p.lots) if l["id"] in p.forced}
@@ -163,8 +183,8 @@ def solve(p: Problem, q: Params, gap: float = 0.002, time_limit: float = 4.0) ->
         ub[over_s_at:over_s_at + m * m] = np.inf
         lb[-1], ub[-1] = -np.inf, np.inf
     A = csr_matrix((vals, (rows, cols)), shape=(r, nvars))
-    res = milp(c_obj, constraints=LinearConstraint(A, lo, hi), integrality=integrality,
-               bounds=Bounds(lb, ub), options={"time_limit": time_limit, "mip_rel_gap": gap})
+    res = bounded_milp(c_obj, constraints=LinearConstraint(A, lo, hi), integrality=integrality,
+                       bounds=Bounds(lb, ub), options={"time_limit": time_limit, "mip_rel_gap": gap})
     if res.x is None:
         return _result(p, q, {})
     assign = {i: j for k, (i, j) in enumerate(pairs) if res.x[n + k] > 0.5}
@@ -204,8 +224,8 @@ def place(p: Problem, q: Params, chosen: list[int], drop: int | None = None) -> 
     obj = [-(v[i, j] + q.holding_penalty * ask[i]) for i, j in pairs] + [q.stretch_cost] * m
     integrality = np.array([1.0] * n + [0.0] * m)
     upper = np.array([1.0] * n + [np.inf] * m)
-    res = milp(obj, constraints=LinearConstraint(csr_matrix((vals, (rows, cols)), shape=(r, n + m)), -np.inf, hi),
-               integrality=integrality, bounds=Bounds(0, upper), options={"time_limit": 0.5, "mip_rel_gap": 0.005})
+    res = bounded_milp(obj, constraints=LinearConstraint(csr_matrix((vals, (rows, cols)), shape=(r, n + m)), -np.inf, hi),
+                       integrality=integrality, bounds=Bounds(0, upper), options={"time_limit": PLACE_SECONDS, "mip_rel_gap": 0.005})
     if res.x is None:
         return {}
     return {pairs[k][0]: pairs[k][1] for k in range(n) if res.x[k] > 0.5}
@@ -353,8 +373,8 @@ def margin_strategy(p: Problem, q: Params) -> list[int]:
         return []
     margin = np.array([l["resale"] - l["ask"] for l in p.lots], float)
     ask = np.array([l["ask"] for l in p.lots], float)
-    res = milp(-margin, constraints=LinearConstraint(csr_matrix(ask[None, :]), -np.inf, q.budget),
-               integrality=np.ones(len(ask)), bounds=Bounds(0, 1))
+    res = bounded_milp(-margin, constraints=LinearConstraint(csr_matrix(ask[None, :]), -np.inf, q.budget),
+                       integrality=np.ones(len(ask)), bounds=Bounds(0, 1), options={"time_limit": SOLVE_SECONDS})
     return [i for i, x in enumerate(res.x) if x > 0.5] if res.x is not None else []
 
 

@@ -224,5 +224,15 @@ asked = solve(budget=80_000, radar=base20, plan=[lot], prefer={lot: worse})["pla
 check(asked["picks"] == plain["picks"] and asked["value"] == plain["value"], f"asking for a lower-ranked buyer ({worse}) is ignored")
 check(solve(budget=80_000, radar=base20, prefer={lot: worse})["portfolio"]["picks"] == p["picks"], "the suggestion itself does not read the preference")
 
+print("\n[11] public-URL guards")
+d = solve(budget=80_000, radar=base20)
+check(d["meta"]["stopped_early"] is False, "no solve stopped at its time limit")
+post = lambda **kw: client.post("/api/portfolio", json=kw).status_code
+check(post(budget=80_000, radar=base20 + base20[:1]) == 422, "a lot listed twice is refused")
+check(post(budget=80_000, radar=[base20[0]] * 65) == 422, "an oversized radar is refused")
+check(post(budget=80_000, plan=[base20[0]] * 65) == 422, "an oversized plan is refused")
+check(post(budget=80_000, passes=[[base20[0], "x"]] * 513) == 422, "an oversized pass list is refused")
+check(client.post("/api/portfolio", content=b"x" * 128_001, headers={"content-type": "application/json"}).status_code == 413, "an oversized body is refused")
+
 print("\nFAILURES:", failures)
 sys.exit(1 if failures else 0)

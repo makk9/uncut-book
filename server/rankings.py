@@ -14,9 +14,31 @@ import asyncio
 import hashlib
 import json
 import os
+import time
+from collections import deque
 from pathlib import Path
 
 from behaviorgpt import AsyncUnboxAIClient, Order, Search, View
+
+MAX_STORED = 2000  # rankings kept in memory and on disk, so a public URL can't grow them forever
+WORST_FIRST = ("limited", "missing", "snapshot", "live", "cache")
+
+
+class Spend:
+    """Sliding-window cap. Anyone with the URL spends live calls on the server's API key."""
+
+    def __init__(self, limit: int, window: float):
+        self.limit, self.window = limit, window
+        self.times: deque[float] = deque()
+
+    def take(self, n: int = 1) -> bool:
+        now = time.monotonic()
+        while self.times and now - self.times[0] > self.window:
+            self.times.popleft()
+        if len(self.times) + n > self.limit:
+            return False
+        self.times.extend([now] * n)
+        return True
 
 
 def to_events(rows: list[dict]) -> list:
@@ -40,6 +62,7 @@ class Ranker:
         self.sem = asyncio.Semaphore(8)
         self.client = None
         self.source = "snapshot"
+        self.spend = Spend(int(os.environ.get("LIVE_CALLS_PER_HOUR", "1000")), 3600)
         if os.environ.get("UNBOXAI_API_KEY") and os.environ.get("UNBOXAI_CATALOG_ID"):
             self.client = AsyncUnboxAIClient(
                 market="us", timezone="America/New_York",
@@ -50,29 +73,40 @@ class Ranker:
     def _key(rows: list[dict]) -> str:
         return hashlib.sha1(json.dumps(rows, sort_keys=True).encode()).hexdigest()
 
+    def is_new(self, rows: list[dict]) -> bool:
+        """Would ranking these events spend a live call?"""
+        return self.client is not None and self._key(rows) not in self.cache
+
     async def _rank(self, rows: list[dict]) -> tuple[list[str], str]:
-        """Ids best first. Falls back to the stored snapshot if the API is unreachable."""
+        """Ids best first. Falls back to the stored snapshot if the API is unreachable or the cap is reached."""
         key = self._key(rows)
         if key in self.cache:
             return self.cache[key], "cache"
+        limited = False
         if self.client is not None:
-            try:
-                async with self.sem:
-                    res = await self.client.complete(
-                        to_events(rows), limit=100, filters={"id": self.ids}, register_event=False
-                    )
-                order = [i.id for i in res.items]
-                self.cache[key] = order
-                self._persist(key, order)
-                return order, "live"
-            except Exception as exc:  # the demo must survive a network failure
-                print("ranking failed, using snapshot:", type(exc).__name__, str(exc)[:160], flush=True)
+            limited = not self.spend.take()
+            if not limited:
+                try:
+                    async with self.sem:
+                        res = await self.client.complete(
+                            to_events(rows), limit=100, filters={"id": self.ids}, register_event=False
+                        )
+                    order = [i.id for i in res.items]
+                    while len(self.cache) >= MAX_STORED:
+                        self.cache.pop(next(iter(self.cache)))
+                    self.cache[key] = order
+                    self._persist(key, order)
+                    return order, "live"
+                except Exception as exc:  # the demo must survive a network failure
+                    print("ranking failed, using snapshot:", type(exc).__name__, str(exc)[:160], flush=True)
         if key in self.snapshot:
             return self.snapshot[key], "snapshot"
-        return [], "missing"
+        return [], "limited" if limited else "missing"
 
     def _persist(self, key: str, order: list[str]) -> None:
-        """Keep every real ranking on disk, so an outage replays real output instead of failing."""
+        """Keep real rankings on disk, so an outage replays real output instead of failing."""
+        if len(self.snapshot) >= MAX_STORED:
+            return
         self.snapshot[key] = order
         try:
             self.snapshot_path.write_text(json.dumps(self.snapshot))
@@ -83,5 +117,6 @@ class Ranker:
         full_rows = events + signals
         order_rows = [e for e in events if e["type"] == "order"]
         (full, s1), (orders, s2) = await asyncio.gather(self._rank(full_rows), self._rank(order_rows))
-        return {"full": full, "orders": orders, "source": "live" if "live" in (s1, s2) else s1}
+        # report the weakest of the two lenses, so an outage or a cap is never shown as live
+        return {"full": full, "orders": orders, "source": next(s for s in WORST_FIRST if s in (s1, s2))}
 

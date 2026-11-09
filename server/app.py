@@ -5,18 +5,19 @@ import asyncio
 import json
 import os
 import time
+from concurrent.futures import ThreadPoolExecutor
 from dataclasses import replace
 from pathlib import Path
 
 import numpy as np
 from dotenv import load_dotenv
-from fastapi import FastAPI, HTTPException
-from fastapi.responses import FileResponse
+from fastapi import FastAPI, HTTPException, Request as HTTPRequest
+from fastapi.responses import FileResponse, JSONResponse
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel, Field
 
 from server import optimizer as opt
-from server.rankings import Ranker
+from server.rankings import Ranker, Spend
 
 ROOT = Path(__file__).resolve().parent.parent
 load_dotenv(ROOT / ".env")
@@ -36,6 +37,19 @@ VIEWED_BY = {i: [c["id"] for c in COLLECTORS if any(e["type"] == "view" and e["i
 
 ranker = Ranker(ALL_IDS, BOOK / "rankings_snapshot.json")
 app = FastAPI(title="THE BOOK")
+SOLVER = ThreadPoolExecutor(max_workers=1, thread_name_prefix="solver")
+MAX_WAITING = int(os.environ.get("MAX_WAITING_REQUESTS", "24"))
+waiting = 0
+SIGNAL_CALLS_PER_MINUTE = int(os.environ.get("SIGNAL_CALLS_PER_MINUTE", "60"))  # a venue's Wi-Fi shares one address
+SIGNAL_SPEND: dict[str, Spend] = {}
+MAX_BODY_BYTES = 128_000
+
+
+@app.middleware("http")
+async def refuse_oversized(http: HTTPRequest, call_next):
+    if int(http.headers.get("content-length") or 0) > MAX_BODY_BYTES:
+        return JSONResponse({"detail": "Request too large."}, status_code=413)
+    return await call_next(http)
 
 
 class Signal(BaseModel):
@@ -54,11 +68,11 @@ class Request(BaseModel):
     stretch_cost: float = Field(default=0.50, ge=0, le=5)
     recency: float = Field(default=0.6, ge=0, le=1)
     relative: float = Field(default=1.0, ge=0, le=3)
-    signals: dict[str, list[Signal]] = Field(default_factory=dict)
-    passes: list[tuple[str, str]] = Field(default_factory=list)
-    radar: list[str] | None = None  # lots visible to the dealer; None means all of them
-    plan: list[str] = Field(default_factory=list)  # what the dealer intends to buy; the suggestion works around it
-    prefer: dict[str, str] = Field(default_factory=dict)  # lot -> buyer the dealer was shown; only ever breaks exact ties
+    signals: dict[str, list[Signal]] = Field(default_factory=dict, max_length=64)
+    passes: list[tuple[str, str]] = Field(default_factory=list, max_length=512)
+    radar: list[str] | None = Field(default=None, max_length=64)  # lots visible to the dealer; None means all of them
+    plan: list[str] = Field(default_factory=list, max_length=64)  # what the dealer intends to buy; the suggestion works around it
+    prefer: dict[str, str] = Field(default_factory=dict, max_length=64)  # lot -> buyer the dealer was shown; only ever breaks exact ties
 
 
 def purchases(c: dict) -> dict:
@@ -107,7 +121,20 @@ def relative_ranks(position: dict[str, dict[str, float]], relative: float, ids: 
     }
 
 
-async def gather_rankings(req: Request) -> dict:
+def client_ip(http: HTTPRequest) -> str:
+    """The address the host's proxy saw. Earlier X-Forwarded-For entries can be set by the caller.
+    A caller can still get around this, so the hourly cap in `Ranker` is the real protection."""
+    forwarded = http.headers.get("x-forwarded-for", "")
+    return forwarded.rsplit(",", 1)[-1].strip() or (http.client.host if http.client else "unknown")
+
+
+def spend_for(ip: str) -> Spend:
+    if len(SIGNAL_SPEND) > 5000:
+        SIGNAL_SPEND.clear()
+    return SIGNAL_SPEND.setdefault(ip, Spend(SIGNAL_CALLS_PER_MINUTE, 60))
+
+
+async def gather_rankings(req: Request, ip: str) -> dict:
     for cid, sig in req.signals.items():
         if cid not in BY_ID or len(sig) > 12:
             raise HTTPException(422, "unknown collector or too many signals")
@@ -116,10 +143,12 @@ async def gather_rankings(req: Request) -> dict:
                 raise HTTPException(422, "unknown piece")
             if s.type == "search" and not (s.q or "").strip():
                 raise HTTPException(422, "empty search")
-    results = await asyncio.gather(*(
-        ranker.collector(c["events"], [s.model_dump(exclude_none=True) for s in req.signals.get(c["id"], [])])
-        for c in COLLECTORS
-    ))
+    logged = {c["id"]: [s.model_dump(exclude_none=True) for s in req.signals.get(c["id"], [])] for c in COLLECTORS}
+    # the opening rankings are shared by everyone, so only signals count against one connection
+    new = sum(ranker.is_new(c["events"] + logged[c["id"]]) for c in COLLECTORS if logged[c["id"]])
+    if new and not spend_for(ip).take(new):
+        raise HTTPException(429, "Too many new signals from this connection. Wait a minute and try again.")
+    results = await asyncio.gather(*(ranker.collector(c["events"], logged[c["id"]]) for c in COLLECTORS))
     return {c["id"]: r for c, r in zip(COLLECTORS, results)}
 
 
@@ -144,19 +173,24 @@ def book():
     }
 
 
-async def build(req: Request):
+async def build(req: Request, ip: str):
     """Rankings for this request, in the shape the solver takes."""
-    started = time.perf_counter()
-    raw = await gather_rankings(req)
-    rank_ms = (time.perf_counter() - started) * 1000
-    sources = {r["source"] for r in raw.values()}
-    if "missing" in sources:
-        raise HTTPException(503, "BehaviorGPT is unreachable and this signal has no stored ranking.")
-
     known = set(LOT_IDS)
     named = (req.radar or []) + req.plan
     if any(l not in known for l in named):
         raise HTTPException(422, "unknown lot")
+    if req.radar is not None and len(set(req.radar)) != len(req.radar):
+        raise HTTPException(422, "a lot is listed twice")
+
+    started = time.perf_counter()
+    raw = await gather_rankings(req, ip)
+    rank_ms = (time.perf_counter() - started) * 1000
+    sources = {r["source"] for r in raw.values()}
+    if "limited" in sources:
+        raise HTTPException(429, "This demo has reached its hourly limit of live rankings, and this signal has no stored ranking. Reset the signals, or try again later.")
+    if "missing" in sources:
+        raise HTTPException(503, "BehaviorGPT is unreachable and this signal has no stored ranking.")
+
     # ranks are taken among the lots the dealer can see, so "#3 of 20" stays true as offers come and go
     pool = LOT_IDS if req.radar is None else req.radar
 
@@ -223,8 +257,22 @@ def plan_and_next(problem: opt.Problem, q: opt.Params, plan: list[str], suggeste
 
 
 @app.post("/api/portfolio")
-async def portfolio(req: Request):
-    raw, sources, rank_ms, lens, tags, ranks, tag_ranks, lots, buyers, blocked, pool, problem, q = await build(req)
+async def portfolio(req: Request, http: HTTPRequest):
+    global waiting
+    if waiting >= MAX_WAITING:  # refuse before spending any live calls on it
+        raise HTTPException(503, "The desk is busy with other people's requests. Try again in a moment.")
+    waiting += 1
+    try:
+        built = await build(req, client_ip(http))
+        # one at a time on one thread: requests can't starve each other of CPU, and the server keeps answering
+        return await asyncio.get_running_loop().run_in_executor(SOLVER, answer, req, built)
+    finally:
+        waiting -= 1
+
+
+def answer(req: Request, built: tuple) -> dict:
+    raw, sources, rank_ms, lens, tags, ranks, tag_ranks, lots, buyers, blocked, pool, problem, q = built
+    stops_before = opt.early_stops()
 
     t1 = time.perf_counter()
     base = opt.solve(problem, q)
@@ -298,9 +346,10 @@ async def portfolio(req: Request):
         "in_stock": in_stock,
         "drift": drift,
         "meta": {
-            "source": "live" if "live" in sources else ("cache" if "cache" in sources else "snapshot"),
+            "source": "snapshot" if "snapshot" in sources else ("live" if "live" in sources else "cache"),
             "rank_ms": round(rank_ms), "solve_ms": round(solve_ms),
             "calls": 2 * len(COLLECTORS),
+            "stopped_early": opt.early_stops() > stops_before,
         },
     }
 
