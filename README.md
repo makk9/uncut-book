@@ -2,6 +2,8 @@
 
 **Know your buyers. Own the right stones.**
 
+Built for [Sundai](https://www.sundai.club/) Hack 148.
+
 An acquisition terminal for independent estate-jewelry dealers. A dealer with $80,000 to spend builds a parcel from incoming lots, sees which collector each piece is for, and compares their choices against an optimized suggestion. The dealer makes the decision.
 
 ![The opening screen: an empty parcel, incoming lots, and a suggested parcel of 8 lots](docs/screenshots/opening.jpg)
@@ -57,4 +59,4 @@ cd web && npm install && npm run dev
 
 Lot photos are stand-ins under open licenses, credited in [CREDITS.md](CREDITS.md) and in the app. Lot names, asks and resale figures are invented and say nothing about the pictured objects or their owners.
 
-Built at [Sundai](https://www.sundai.club/).
+Built at [Sundai](https://www.sundai.club/) for Sundai Hack 148.
