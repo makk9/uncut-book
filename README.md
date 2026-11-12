@@ -2,7 +2,7 @@
 
 **Know your buyers. Own the right stones.**
 
-Built for [Sundai](https://www.sundai.club/) Hack 148.
+Built at [Sundai](https://www.sundai.club/) Hack 148.
 
 An acquisition terminal for independent estate-jewelry dealers. A dealer with $80,000 to spend builds a parcel from incoming lots, sees which collector each piece is for, and compares their choices against an optimized suggestion. The dealer makes the decision.
 
